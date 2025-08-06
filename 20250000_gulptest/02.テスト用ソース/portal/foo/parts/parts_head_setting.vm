@@ -1,0 +1,61 @@
+## headタグ設定用vm
+## meta情報の設定や、CSSの読み込みをここで設定
+
+## ---コーディング着手時このコメントは削除 start
+## ★dirPath★の部分をページ用のパスに適宜検索置換してください。
+## キャッシュやOGPの末尾の「pagename」をdefine.vmで設定した文字列に検索置換してください。
+## 「ここにキーワード」を入稿された文字列に検索置換してください。
+## 「ここにディスクリプション」を入稿された文字列に検索置換してください。
+## ---コーディング着手時このコメントは削除 end
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+	<meta charset="UTF-8">
+	<title>タイトル｜dポイントマーケット</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+	<meta http-equiv="content-script-type" content="text/javascript">
+	<meta name="description" content="ここにディスクリプション">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<meta property="og:title" content="タイトル｜dポイントマーケット">
+	<meta property="og:description" content="ここにディスクリプション">
+	## OGP画像の指定が無い場合は以下の共通OGP画像を使用する★不要であればコメント・ソースごと削除をお願いします。
+	## 共通OGP画像用vm
+	#parse("$!{baseDirectory}/assets/parts/ogp/parts_ogp.vm")
+	## OGP画像の指定がある場合は以下ソースのコメントを外し、任意の画像名でパスを指定してください★不要であればコメント・ソースごと削除をお願いします。
+	## <meta property="og:image" content="$!{cdnServerUrl}/★dirPath★/img/ogp_pagename_foo.png">
+	<meta property="og:url" content="$!{portalServerUrl}/★dirPath★/">
+	<meta property="og:type" content="website">
+	<meta property="fb:app_id" content="197164534262354">
+	<meta name="twitter:card" content="summary_large_image">
+	<link rel="canonical" href="$!{portalServerUrl}/★dirPath★/">
+	## dマーケット内共通ファビコン・ホームアイコン用vm
+	#parse("$!{baseDirectory}/assets/parts/header/parts_header_favicon.vm")
+	## dPM共通CSS
+	<link rel="stylesheet" href="$!{aplServerUrl}/assets/style/style_css.cssv?v=$!{cache_css_assets}">
+	## プロジェクト用CSS★使わない場合は削除
+	## <link rel="stylesheet" href="$!{aplServerUrl}/★dirPath★/style/style_css.cssv?v=$!{cache_css_pagename}">
+	## 静的構造化データ
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "$!{breadcrumb_position1_name}",
+				"item": "$!{breadcrumb_position1_url}"
+			},{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "$!{breadcrumb_position2_name}",
+				"item": "$!{breadcrumb_position2_url}"
+			},{
+				"@type": "ListItem",
+				"position": 3,
+				"name": "$!{breadcrumb_position3_name}"
+			}]
+		}
+	</script>
+</head>

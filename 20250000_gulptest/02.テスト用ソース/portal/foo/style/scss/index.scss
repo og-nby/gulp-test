@@ -1,0 +1,44 @@
+// ★Mixin使用時の注意点 start ====
+// assetsからのMixinを読み込みたい場合は作成するページフォルダからみた相対パスで指定してください。
+// Mixinを使う場合は作業フォルダ内portal配下にassets/styleフォルダをまるごとコピーして配置してください。
+// 配置したassets/styleフォルダはコンパイル時のみ必要なフォルダですのでGitへのプッシュや検証 / 商用CMSにアップは不要です。
+// 例）portal/foo/style/scss/から見た相対パスの例。ページの階層によって適宜変更すること
+// 例：portal/campaign/foo/style/scss/の場合、../../../../assets/style/scss/setting/mixins
+// ★Mixin使用時の注意点 end ====
+
+// Mixin読み込み：assets/styleからMixinを呼出したい場合は以下のソースを有効化し、適宜パスを修正すること
+// @use "../../../assets/style/scss/setting/mixins" as *;
+
+// 共通変数 start ====
+// サーバードメイン
+$cdn: '$!{cdnServerUrl}';
+
+// 共通背景画像
+$common_img_dir: '$!{cdnServerUrl}/assets/img/';
+
+// 背景画像用キャッシュ：変数名部分「cache_css_pagename」はキャッシュファイル「define_cache_static_page」で設定した変数名とそろえてください。
+$bgImgCache: '?v=$!{cache_css_pagename}';
+// 共通変数 end ====
+
+
+@use "foo" as *;
+
+// ここから下にCSSを記述してください。★このコメントはコーディング着手時削除すること★
+.foo {
+	padding: 0;
+	line-clamp: 2;
+}
+.test6 {
+	width: 100px;
+	margin: 0;
+	font-size: 16px;
+	display: grid;
+	grid-template-columns: 1fr 130px;
+	gap: 8px;
+}
+
+.c-card {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 8px;
+}

@@ -1,0 +1,203 @@
+## bodyタグ設定用vm
+## ブラウザで表示するデザインや処理をここに記述
+
+## ---コーディング着手時このコメントは削除 start
+## ★dirPath★の部分をページ用のパスに適宜検索置換してください。
+## キャッシュやOGPの末尾の「pagename」をdefine.vmで設定した文字列に検索置換してください。
+## 「ここにキーワード」を入稿された文字列に検索置換してください。
+## 「ここにディスクリプション」を入稿された文字列に検索置換してください。
+## ---コーディング着手時このコメントは削除 end
+
+<body onunload="">
+
+	## dpm共通javaScript用vm
+	#parse("$!{baseDirectory}/assets/js/parts_setting_js.vm")
+
+	## ---コーディング着手時このコメントは削除 start
+	## Swiper等のライブラリ・プラグインがあればこの場所に適宜追加★不要であれば以下ひな形は削除
+	## ライブラリはassest/lib配下にライブラリ名のフォルダを作成し、jsやcssをまとめて格納※さらにバージョンごとの管理が必要な場合フォルダ「v**」を作成し格納すること
+	## jQueryはparts_setting_js.vm内で読み込んでいるので追加不要
+	## ---コーディング着手時このコメントは削除 end
+	## <script src="$!{cdnServerUrl}/assets/lib/foo/foo.js?v=$!{cache_js_pagename}"></script>
+
+	<div class="l-root">
+
+		## ヘッダー用vm
+		#parse("$!{baseDirectory}/assets/parts/header/parts_header.vm")
+
+		<main class="l-layout">
+			## ナビゲーション
+			#parse("$!{baseDirectory}/assets/parts/navigation/parts_navigation.vm")
+
+			## コンテンツ用メインコンテナ
+			<div class="l-content">
+
+				## プリローダー
+				<div class="c-preload" style="display: none;">
+					<div class="c-preload__img">
+						<img decoding="async" loading="lazy" src="$!{cdnServerUrl}/assets/img/icon_assets_preload.svg" alt="">
+					</div>
+					<div style="height: 100vh;"></div>
+				</div>
+
+				## ---コーディング着手時このコメントは削除 start
+				## c-sectuon配下に配置した要素はすべて16pxの間隔で配置されるので別途margin-topやmargin-bottomは設定不要
+				## inlineやinline-blockを配置すると横幅100%に広がってしまうのでdivで囲うことで回避できます。
+				## ---コーディング着手時このコメントは削除 end
+
+				## ★不要であれば以下削除
+				## ●●●●にはh1と同じ文言を入れる。h1が無いページについては文言を確認すること
+				## パンくずリストは出し分けに含めない
+				## ログイン・未ログで出し分け箇所が分かれてる場合はindex.vmでフラグ定義した方が良いかも？
+				## 未ログ時出し分けが必要な場合 start ===== ★不要コメントなので実装時削除
+
+				## #if($!{userInfo.acctId} != "")
+				## ## ログイン済
+				## 	ログインした際に表示されるソース
+
+				## #else
+				## ## 未ログイン
+				## 	<div class="c-frame-nologin">
+				## 		<p>●●●●を確認するには、dアカウントの発行、もしくはログインが必要です。</p>
+				## 		<a href="#clicklog("in01_foo_$!{linkIdDevice}_100_001_/foo/item/_99", "$!{loginUrl}", "$!{ablogout}")" class="c-button-primary">dアカウントの発行/ログイン</a>
+				## 	</div>
+				## 	<!-- /.c-frame-nologin -->
+
+				## #end
+				## 未ログ時出し分けが必要な場合 end ===== ★不要コメントなので実装時削除
+				
+				## ★不要であれば以下削除
+				## エラー時にまるごとページデザインを入れ替えるような場合はc-rootを別途用意
+				## <section class="c-root">
+				## 	<div class="c-root__top-content">
+				## 		<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+				## 	</div>
+				## 	<!-- /.c-root__top-content -->
+				## </section>
+				## <!-- /.c-root -->
+				
+				<section class="c-root">
+					<div class="c-root__top-content">
+						<h1 class="c-heading-root">ページメインタイトル</h1>
+						<p>ここにファーストビューで表示されるコンテンツを配置する</p>
+					</div>
+					<!-- /.c-root__top-content -->
+
+					<section class="c-section">
+						<h2 class="c-heading-lv1">大項目タイトル</h2>
+
+						## ★不要であれば以下削除
+						## 未ログ時出し分け不要な場合 start ===== ★不要コメントなので実装時削除
+						<p>c-section直下は16pxの等間隔で縦並びになる、ただしインライン要素の場合ブロック要素と同じような振る舞いになってしまうのでクラス指定無のdivで囲む</p>
+
+						<div>
+							<span>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</span>
+						</div>
+
+						<section class="c-layout-gap-y-default">
+							<h3 class="c-heading-lv2-gray100">中項目タイトル</h3>
+							<p>c-layout-gap-y-default直下は16pxの等間隔で縦並びになる、ただしインライン要素の場合ブロック要素と同じような振る舞いになってしまうのでクラス指定無のdivで囲む</p>
+
+							<section class="c-layout-gap-y-narrow">
+								<h4 class="c-heading-lv3">ページ内小項目見出し</h4>
+								<p>c-layout-gap-y-narrow直下は8pxの等間隔で縦並びになる、ただしインライン要素の場合ブロック要素と同じような振る舞いになってしまうのでクラス指定無のdivで囲む</p>
+							</section>
+							<!-- /.c-layout-gap-y-narrow -->						
+
+						</section>
+						<!-- /.c-layout-gap-y-default -->
+
+						## c-section配下特定の要素のみ縦方向8pxの等間隔で並べる場合はこのクラスを使用
+						<div class="c-layout-gap-y-narrow">
+							<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+						</div>
+						<!-- /.c-layout-gap-y-narrow -->
+
+
+						## imgタグひな形 start ==== ★不要コメントなので実装時削除
+						## ファイル名でCDN対応※ファイル名末尾に商用公開日を追加
+						<img decoding="async" loading="lazy" src="$!{cdnServerUrl}/★dirPath★/img/img_foo_yyyymmdd.jpg" alt="画像の内容を示すテキスト">
+						## publish変数でCDN対応※配信時に変数部分がタイムスタンプに置き換わる
+						<img decoding="async" loading="lazy" src="$!{cdnServerUrl}/★dirPath★/img/img_foo.jpg?v=$!{publish}" alt="画像の内容を示すテキスト">
+						## imgタグひな形 end ==== ★不要コメントなので実装時削除
+
+						## aタグひな形テキストタイプ※URL末尾にindex.htmlはつけないこと
+						<a href="#clicklog("in01_foo_$!{linkIdDevice}_100_001_/foo/item/_99", "$!{portalServerUrl}/foo/", "$!{ablogout}")" class="c-text-link">リンク</a>
+
+						## aタグひな形ボタンタイプ※URL末尾にindex.htmlはつけないこと
+						<a href="#clicklog("in01_foo_$!{linkIdDevice}_100_001_/foo/item/_99", "$!{portalServerUrl}/foo/", "$!{ablogout}")" class="c-button-primary">リンク</a>
+
+						## 未ログボタン
+						<a href="#clicklog("in01_foo_$!{linkIdDevice}_100_001_/foo/item/_99", "$!{loginUrl}", "$!{ablogout}")" class="c-button-primary">ログイン</a>
+						
+						
+
+						## ★不要であれば以下削除
+						## 実装前にデモで画面を出し分ける場合や未ログ画面を疑似的に表示させる場合は以下のソースのコメントを外して対応
+						## デザインパラメーターによる出し分け start ===== ★不要コメントなので実装時削除
+						## #set($design = $req.getParameter('design'))
+						## #if ($design && $!{design} != '')
+						## 	#if($design == '1')
+						## 		## パラメーターの値が1の場合
+						## 		#parse("$!{baseDirectory}/★dirPath★/parts/parts_******.vm")
+
+						## 	#elseif($design == '2')
+						## 		## パラメーターの値が2の場合
+						## 		#parse("$!{baseDirectory}/★dirPath★/parts/parts_******.vm")
+
+						## 	#end
+
+						## #else
+						## 	## パラメーター無の場合は以下のvmがパースされる
+						## 	#parse("$!{baseDirectory}/★dirPath★/parts/parts_******.vm")
+
+						## #end
+						## デザインパラメーターによる出し分け end ===== ★不要コメントなので実装時削除
+
+					</section>
+					<!-- /.c-section -->
+
+					## ---パンくずリストの設置について：コーディング着手時このコメントは削除 start
+					## パンくずリストの階層はURL設計書を確認してください。
+					## パンくずリストの階層はトップページからの階層で作成してください。
+					## パンくずリストの階層が増える分、c-list-breadcrumbs__itemをコピーして増やしてください。
+					## 現在位置にはリンクは設定せず、spanタグにc-text-breadcrumbs-currentを指定してください。
+					## パンくずリストは必ずc-sectionの外に配置してください。
+					## 広告バナーがフッターの上にあるページは広告バナーの上に設置してください。
+					## ---パンくずリストの設置について：コーディング着手時このコメントは削除 end
+					## パンくずリスト start =====
+					<div class="c-breadcrumbs-layout">
+						<ul class="c-breadcrumbs">
+							<li class="c-breadcrumbs__item"><a href="#clicklog("in01_top_$!{linkIdDevice}_095_001_/foo/_99", "$!{breadcrumb_position1_url}", "$!{ablogout}")" class="c-text-link">$!{breadcrumb_position1_name}</a></li>
+							<li class="c-breadcrumbs__item"><a href="#clicklog("in01_foo_$!{linkIdDevice}_095_002_/foo/_99", "$!{breadcrumb_position2_url}", "$!{ablogout}")" class="c-text-link">$!{breadcrumb_position2_name}</a></li>
+							<li class="c-breadcrumbs__item"><span class="c-text-breadcrumbs-current">$!{breadcrumb_position3_name}</span></li>
+						</ul>
+						<!-- /.c-breadcrumbs -->
+					</div>
+					<!-- /.c-breadcrumbs-layout -->
+					## パンくずリスト  end =====
+
+				</section>
+
+				<!-- /.c-root -->
+
+			</div>
+			<!-- /.l-content -->
+		</main>
+		<!-- /.l-layout -->
+
+		## dアカウント取得・ポイント処理用vm※削除不可
+		#parse("$!{baseDirectory}/assets/parts/header/parts_header_daccount_dpoint.vm")
+
+		## フッター
+		#parse("$!{baseDirectory}/assets/parts/footer/parts_footer.vm")
+
+	</div>
+	<!-- /.l-root -->
+
+	## 動的JS用★不要であれば削除
+	## <script src="$!{aplServerUrl}/★dirPath★/js/foo_js.jsv?v=$!{cache_js_pagename}"></script>
+	## 静的JS用★不要であれば削除
+	## <script src="$!{cdnServerUrl}/★dirPath★/js/foo.js?v=$!{cache_js_pagename}"></script>
+
+</body>

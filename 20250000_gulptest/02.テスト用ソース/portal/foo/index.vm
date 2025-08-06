@@ -1,0 +1,29 @@
+## ---コーディング着手時このコメントは削除 start
+## ★dirPath★の部分をページ用のパスに適宜検索置換してください。
+## キャッシュやOGPの末尾の「pagename」をdefine.vmで設定した文字列に検索置換してください。
+## 「ここにキーワード」を入稿された文字列に検索置換してください。
+## 「ここにディスクリプション」を入稿された文字列に検索置換してください。
+## ---コーディング着手時このコメントは削除 end
+
+## キャッシュ対応変数用vm
+#parse("$!{baseDirectory}/★dirPath★/define/define_cache_static_page.vm")
+
+## 実装に必要なdefine.vm
+## #parse(""$!{baseDirectory}/********/define/define_******.vm"")
+
+## ページ内処理
+## #parse(""$!{baseDirectory}/********/function/function_******.vm"")
+
+<!DOCTYPE HTML>
+<html lang="ja">
+
+	## headタグ配下をパース※meta情報やCSS設定用
+	#parse("$!{baseDirectory}/★dirPath★/parts/parts_head_setting.vm")
+
+	## bodyタグk配下をパース※ブラウザ表示部分
+	#parse("$!{baseDirectory}/★dirPath★/contents/content_default.vm")
+
+</html>
+
+## ログ出力が必要な場合parseする（第一引数のVMパスを設定する）
+## #log(""$!{baseDirectory}/********/******.vm"",$!{ablogout})"

@@ -1,0 +1,37 @@
+## 共通CSSキャッシュ用vm
+
+## assets配下キャッシュ用vm
+#parse("$!{baseDirectory}/assets/define/define_cache_static.vm")
+
+## CSS用キャッシュを定義
+#set($cache_css_pagename = "202301010001")
+
+## 画像用キャッシュを定義
+#set($cache_img_pagename = "202301010000")
+
+## JS用キャッシュを定義
+#set($cache_js_pagename  = "202301010000")
+
+## パンくず＆静的構造化データ テキスト名＆URL定義
+#set($breadcrumb_position1_name  = "トップ") ## 1階層目※トップページ
+#set($breadcrumb_position1_url  = "$!{portalServerUrl}/") ## 1階層目※トップページURL
+
+#set($breadcrumb_position2_name  = "2階層目表示用テキスト") ## 2階層目表示用テキスト
+#set($breadcrumb_position2_url  = "$!{portalServerUrl}/foo/") ## 2階層目URL
+
+#set($breadcrumb_position3_name  = "現在位置の表示用テキスト") ## 3階層目表示用テキスト
+## #set($breadcrumb_position3_url  = "$!{portalServerUrl}/bar/") ## 3階層目URL
+
+## #set($breadcrumb_position4_name  = "ミッション") ## 4階層目表示用テキスト
+## #set($breadcrumb_position4_url  = "$!{portalServerUrl}/bar/") ## 4階層目URL
+
+## #set($breadcrumb_position5_name  = "ミッション") ## 5階層目表示用テキスト
+## #set($breadcrumb_position5_url  = "$!{portalServerUrl}/bar/") ## 5階層目URL
+
+## ---パンくずリストの設置について：コーディング着手時このコメントは削除 start
+## パンくずリストの階層はURL設計書を確認してください。
+## パンくずリストの階層はトップページからの階層で作成してください。
+## 現在位置の定義は上記$breadcrumb_position*_nameのみ定義し、$breadcrumb_position*_urlは削除してください。
+## 階層が深くなる場合は上記$breadcrumb_position*_nameと$breadcrumb_position*_urlをコピーして階層を増やしてください。
+## aタグひな形※URL末尾はスラッシュまで記載、index.htmlは不要
+## ---パンくずリストの設置について：コーディング着手時このコメントは削除 end

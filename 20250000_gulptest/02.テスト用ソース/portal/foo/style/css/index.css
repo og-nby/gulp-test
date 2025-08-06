@@ -1,0 +1,23 @@
+.aaa {
+	display: flex;
+}
+
+.foo {
+	line-clamp: 2;
+	padding: 0;
+}
+
+.test6 {
+	display: grid;
+	font-size: 16px;
+	gap: 8px;
+	grid-template-columns: 1fr 130px;
+	margin: 0;
+	width: 100px;
+}
+
+.c-card {
+	display: grid;
+	gap: 8px;
+	grid-template-columns: 1fr;
+}
