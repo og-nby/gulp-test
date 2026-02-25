@@ -67,9 +67,7 @@ const compileSass = () => src('./scss/*.scss')
                   // Sassのコンパイルを実行
                   .pipe(sass
                     ({ // 形式を指定して出力
-                      outputStyle:'expanded',
-                      indentType: 'tab',
-                      indentWidth: 1
+                      style:'expanded'
                     }).on('error', sass.logError)
                   )
                   .pipe(autoprefixer([
