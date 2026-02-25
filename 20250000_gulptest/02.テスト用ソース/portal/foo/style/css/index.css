@@ -1,4 +1,5 @@
 .aaa {
+	align-items: baseline;
 	display: flex;
 }
 
