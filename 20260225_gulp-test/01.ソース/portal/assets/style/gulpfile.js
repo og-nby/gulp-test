@@ -4,8 +4,7 @@ const { src, dest, watch, series } = require('gulp');
 // Sassをコンパイルするプラグインの読み込み
 // v5 以降の gulp‑sass はファクトリ関数として動作し、内部で Dart Sass をバインドします。
 const sass = require('gulp-sass')(require('sass'));
-// 文字コード変換プラグイン
-const iconvLite = require('iconv-lite');
+// 文字コード変換用（タブ変換に使用）
 const through = require('through2');
 // ベンダープレフィックス自動付与
 const autoprefixer = require('gulp-autoprefixer');
@@ -38,12 +37,21 @@ exports.compileSass = () => src('./scss/*.scss')
                     ]
                   }))
                   // Sassのコンパイルを実行
+                  // ※ gulp-sass v6 以降は新しい Dart Sass API を使用するため、
+                  //   indentType / indentWidth オプションは無効です（タブ変換は後続の through2 で対応）。
                   .pipe(sass({
                     // 形式を指定して出力
                     outputStyle: 'expanded',
-                    indentType: 'tab',
-                    indentWidth: 1,
-                    // fibers オプションは削除しました
+                  }))
+                  // インデントをタブ文字に変換
+                  // （gulp-sass v6 の新 API では indentType: 'tab' が無効なため through2 で対処）
+                  .pipe(through.obj(function(file, enc, cb) {
+                    if (file.isBuffer()) {
+                      const content = file.contents.toString('utf8');
+                      const converted = content.replace(/^( {2})+/gm, (match) => '\t'.repeat(match.length / 2));
+                      file.contents = Buffer.from(converted, 'utf8');
+                    }
+                    cb(null, file);
                   }))
                   .pipe(autoprefixer([
                     'iOS >= 16.5',
@@ -56,13 +64,7 @@ exports.compileSass = () => src('./scss/*.scss')
                     'not Firefox > 0'
                   ])) // ベンダープレフィックスに関するバージョン設定
                   .pipe(csscomb())
-                                    .pipe(through.obj(function(file, enc, cb) {
-                    if (file.isBuffer()) {
-                      file.contents = Buffer.from(iconvLite.decode(file.contents, 'sjis'));
-                    }
-                    cb(null, file);
-                  }))
-                  .pipe(linePlugins.lineEndingCorrector({ // 改行コード変換
+                                    .pipe(linePlugins.lineEndingCorrector({ // 改行コード変換
                     verbose: false,
                     eolc: 'CRLF'
                   }))
