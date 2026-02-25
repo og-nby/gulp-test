@@ -65,11 +65,11 @@ const compileSass = () => src('./scss/*.scss')
                     ]
                   }))
                   // Sassのコンパイルを実行
+                  // ※indentType/indentWidthはgulp-sass 6.x(新しいDart Sass API)では非サポート
+                  // タブインデントはcsscomb()が.csscomb.jsonの設定に従って処理する
                   .pipe(sass
                     ({ // 形式を指定して出力
-                      outputStyle:'expanded',
-                      indentType: 'tab',
-                      indentWidth: 1
+                      style:'expanded',
                     }).on('error', sass.logError)
                   )
                   .pipe(autoprefixer([
