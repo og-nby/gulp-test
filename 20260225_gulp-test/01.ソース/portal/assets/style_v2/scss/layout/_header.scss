@@ -1,0 +1,296 @@
+// dpm共通ヘッダー
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// ヘッダー共通スタイル
+%l-header-base {
+	background-color: #fff;
+	display: grid;
+	left: 0;
+	max-width: 1080px;
+	position: sticky;
+	top: 0;
+	width: 100%;
+	z-index: 7000;
+}
+// ヘッダー（デフォルトデザイン）
+.l-header-top {
+	@extend %l-header-base;
+	align-items: center;
+	grid-template-columns: 32px 156px auto;
+	gap: 10px;
+	padding: 14px var(--bs16) 6px;
+	@include onlyPc() {
+		grid-template-columns: 156px auto;
+		left: calc((100% - 1080px) / 2);
+	}
+}
+// ヘッダー（サーバーエラー）：index〇〇系で使用★2023.11.20追加
+.l-header-server-error {
+	@extend %l-header-base;
+	padding: var(--bs16);
+	grid-template-columns: 156px auto;
+	@include onlyPc() {
+		left: calc((100% - 1080px) / 2);
+	}
+}
+
+// 削除予定 start
+// アカウント格納エリア
+.l-wrapper-account {
+	height: 16px;
+}
+// 未ログボタン格納エリア
+.l-wrapper-account-sign-on {
+	align-items: center;
+	display: flex;
+	height: 32px;
+}
+// 削除予定 end
+// アカウント格納エリア
+.l-layout-account {
+	height: 16px;
+}
+// 未ログボタン格納エリア
+.l-layout-account-sign-on {
+	align-items: center;
+	display: flex;
+	height: 32px;
+}
+.l-header-account {
+	display: flex;
+	justify-content: flex-end;
+	// ログイン時矢印
+	&.--loggedin {
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_lg.svg#{$bgImgCache}) no-repeat center right;
+		background-size: 8px auto;
+		padding-right: 14px;
+	}
+}
+// ユーザーアカウント表示
+.l-header-account-userid {
+	display: inline-block;
+	max-width: 122px;
+	min-width: 70px;
+	&__text {
+		font-size: var(--small-fontSize);
+		overflow: hidden;
+		text-align: right;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: var(--gray400);
+	}
+}
+// 未ログボタン
+.l-button-sign-on {
+	aspect-ratio: 90 / 27;
+	height: auto;
+	width: 90px;
+}
+// ポイント表示
+.l-header-dpoint {
+	display: flex;
+	align-items: flex-end;
+	padding-left: 18px;
+	background: url(#{$cdn}/assets/img/icon_assets_dpoint.png#{$bgImgCache}) no-repeat;
+	background-position: center left;
+	background-size: 16px auto;
+	font-weight: var(--bold-700);
+	&__unit {
+		font-size: var(--small-fontSize);
+	}
+}
+// ランキング・ポイント
+.l-header-account__bottom {
+	display: grid;
+	grid-template-columns: 16px 1fr;
+	align-items: center;
+}
+
+// 検索窓、カテゴリをさがす格納ブロック
+.l-header-find {
+	background-color: #fff;
+	padding: 0 var(--bs16) var(--bs16);
+}
+
+// 検索窓
+.l-header-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	&__input {
+		align-items: center;
+		display: flex;
+		flex: 1;
+		width: 100%;
+		height: 38px;
+		background-color: var(--gray050);
+		border: 1px solid var(--gray200);
+		border-radius: 4px;
+	}
+	&__clear {
+		flex: 0 0 60px;
+	}
+}
+// 検索入力テキスト・プレースホルダー
+// 共通スタイル
+%l-header-search-textarea {
+	flex: 1;
+	width: 100%;
+	height: auto;
+	display: block;
+	padding: 11px 8px;	
+}
+// 検索用入力テキスト
+.l-header-search-textarea {
+	@extend %l-header-search-textarea;
+	// プレースホルダー
+	&::placeholder {
+		color: var(--gray400);
+	}
+}
+// ヘッダー側ダミープレースホルダー
+.l-header-search-textarea-placeholder {
+	@extend %l-header-search-textarea;
+	color: var(--gray400);
+}
+.l-header-search-button {
+	flex: 0 0 38px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	cursor: pointer;
+	height: 100%;
+	background-color: var(--gray200);
+	aspect-ratio: 1 / 1;
+	img {
+		width: 16px;
+		aspect-ratio: 1 / 1;
+	}
+}
+
+// カテゴリをさがす
+.l-header-category-select {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	// ボタン
+	&__button {
+		border: 1px solid var(--gray800);
+		color: var(--gray800);
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		padding: 2px 4px;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 10px;
+		line-height: 1.2;
+		font-weight: var(--bold-700);
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 6004;
+		background-color: #fff;
+		&.is-opened-category {
+			border-radius: 4px 4px 0 0;
+			border-width: 1px 1px 0;
+		}
+		&:after {
+			content: "";
+			display: block;
+			width: 14px;
+			height: auto;
+			aspect-ratio: 16 / 10;
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_updown.svg#{$bgImgCache}) no-repeat top center;
+			background-size: contain;
+			margin: auto;
+			transition: .3s ease;
+		}
+		&.is-opened-category:after {
+			content: "";
+			transform: rotate(180deg);
+		}
+	}
+}
+// カテゴリをさがすメニュー
+.l-header-category-select-menu {
+	display: none;
+	transition: .3s ease;
+	position: absolute;
+	top: 37px;
+	right: 0;
+	z-index: 6003;
+	width: 190px;
+	&::after {
+		content: "";
+		display: block;
+		width: 60px;
+		height: 2px;
+		background-color: #fff;
+		position: absolute;
+		top: -1px;
+		right: 0;
+		z-index: 10;
+	}
+	&.is-opened-category {
+		display: block;
+	}
+}
+.l-header-category-list {
+	padding: 12PX;
+	border-radius: 4px 0 4px 4px;
+	background-color: #fff;
+	border: 1px solid var(--gray800);
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 4px;
+	overflow-y: auto;
+	li {
+		width: 100%;
+		height: auto;
+		min-height: 27px;
+	}
+}
+// カテゴリをさがす背景用オーバーレイ
+.l-header-category-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	z-index: 6002;
+	transition: ease .3s;
+	&.is-opened-category {
+		display: block;
+	}
+}
+
+.l-header-link-cat-name {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	&__icon {
+		flex: 0 0 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 27px;
+	}
+	&__text {
+		font-size: var(--small-fontSize);
+		font-weight: var(--bold-700);
+		color: var(--gray600);
+	}
+}
+.l-header-search-menu-list {
+	display: none;
+	&.is-search-menu-list-open {
+		display: block;
+	}
+}

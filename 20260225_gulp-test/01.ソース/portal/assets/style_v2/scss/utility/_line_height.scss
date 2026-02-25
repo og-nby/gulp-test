@@ -1,0 +1,24 @@
+// 行間調整
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 廃止確定 start ====
+.u-lineheight-narrow {
+	line-height: var(--narrow-lineHeight);
+}
+
+.u-lineheight-wide {
+	line-height: var(--wide-lineHeight);
+}
+// 廃止確定 end ====
+
+// 変更確定 start ====
+// 狭い行間
+.u-lineHeight-narrow {
+	line-height: var(--narrow-lineHeight);
+}
+// 広い行間
+.u-lineHeight-wide {
+	line-height: var(--wide-lineHeight);
+}
+// 変更確定 end ====

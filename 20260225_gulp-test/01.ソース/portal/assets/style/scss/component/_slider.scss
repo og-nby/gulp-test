@@ -1,0 +1,122 @@
+// スライダー用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 廃止 start ====
+// スライダー枠
+.c-layout-slider {
+	background-color: #fff;
+	padding-left: var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	// スクロールバーと商品リンクが干渉しないよう隙間を作る
+	padding-bottom: var(--bs8);
+	// スクロールバーのデザイン
+	&::-webkit-scrollbar {
+		background-color:#fff;
+		height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--gray200);
+		border-radius: 5px
+	}
+}
+
+// スライダー枠(背景グレー)
+.c-layout-slider-gray {
+	background-color: var(--gray100);
+	padding: var(--bs16) 0 var(--bs16) var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	@include onlyPc() {
+		overflow-x: scroll;
+	}
+}
+
+// .c-slider {
+// 	display: flex;
+// 	width: 100%;
+// 	gap: 8px;
+// }
+// 廃止 end ====
+
+.c-slider-card-wrapper {
+	padding-right: var(--bs16);
+}
+
+// 変更予定
+// スライダー枠
+.c-slider {
+	background-color: #fff;
+	padding-left: var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	// スクロールバーと商品リンクが干渉しないよう隙間を作る
+	padding-bottom: var(--bs8);
+	// スクロールバーのデザイン
+	&::-webkit-scrollbar {
+		background-color:#fff;
+		height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--gray200);
+		border-radius: 5px
+	}
+	// pc以外はスクロールバーを非表示
+	&.--scrollbar-hidden {
+		padding-bottom: 0;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		@include onlyPc() {
+			padding-bottom: var(--bs8);
+			&::-webkit-scrollbar {
+				display: block;
+			}
+		}
+	}
+	// スライダー本体
+	&__inner {
+		display: flex;
+		gap: var(--bs8);
+		&::after {
+			content: "";
+			display: block;
+			width: 100%;
+			height: 100%;
+			flex: 0 0 8px;
+		}
+	}
+}
+
+// カルーセルバナー
+.c-banner-slider {
+	overflow-x: hidden;
+	@include onlyPc() {
+		max-width: 752px;
+	}
+}
+.c-banner-slider__inner {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 4px;
+	-webkit-overflow-scrolling: touch;
+	overflow-x: auto;
+	padding-bottom: var(--narrow);
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+}
+.c-banner-slider__inner::-webkit-scrollbar {
+	background-color: #ffffff;
+	height: 8px;
+}
+.c-banner-slider__inner::-webkit-scrollbar-thumb {
+	background-color: var(--gray200);
+	border-radius: 5px;
+}
+.c-banner-slider__inner li {
+	flex: 0 0 100px;
+}

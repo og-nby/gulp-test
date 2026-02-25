@@ -1,0 +1,10 @@
+// margin / paddingの調整
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.u-space-top-m8 {
+	margin-top: 8px;
+}
+.u-space-top-p8 {
+	padding-top: 8px;
+}

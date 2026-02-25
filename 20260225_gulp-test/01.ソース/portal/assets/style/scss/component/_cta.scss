@@ -1,0 +1,80 @@
+// CTAで使用されるUIパーツ用スタイル
+// 2025.6.17現在はプログラム詳細ページ専用
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// お気に入りボタンとお買い物ボタン用コンテナ
+.c-cta-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	height: 49px;
+	// お気に入りボタン用コンテナ
+	&__favorite {
+		flex: 0 0 60px;
+		@include onlyPc(){
+			order: 2; /* 後ろに */
+		}
+		// お気に入りボタン調整
+		> .--favorite {
+			gap: 4px;
+			font-size: var(--xsm);
+			font-weight: 400;
+			flex-direction: column;
+			white-space: nowrap;
+			height: 49px;
+			padding: 7px 5px;
+			&::before {
+				content:"";
+				width: 16px;
+				height: 15px
+			}
+			// 固定ボタン用
+			.c-cta-fixed & {
+				// お気に入りボタン押下後の吹き出し
+				.c-tooltip-favorite {
+					width: 180px;
+					box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+					@include notPc() {
+						top: -61px;
+						left: 0;
+						right: initial;
+					}
+					@include onlyPc() {
+						top: -61px;
+						left: initial;
+						right: 0;
+					}
+				}
+			}
+			// フローティングボタン用
+			.c-cta-floating & {
+				// お気に入りボタン押下後の吹き出し
+				.c-tooltip-favorite {
+					width: 180px;
+					box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+					position: absolute;
+					@include notPc() {
+						top: -97px;
+						left: 0;
+					}
+					@include onlyPc() {
+						top: -77px;
+						left: -104px;
+					}
+				}
+			}
+
+		}
+	}
+	// お買い物ボタン用コンテナ
+	&__shop {
+		flex: 1 1 100%;
+		@include onlyPc(){
+			order: 1; /* 前に */
+		}
+	}
+}
+

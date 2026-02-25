@@ -1,0 +1,217 @@
+// ボタン用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+// 共通ボタン用スタイル
+%c-btn-default {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	border-radius: var(--rc-narrow);
+	font-weight: var(--bold-700);
+	font-size: var(--md);
+	letter-spacing: .01em;
+	cursor: pointer;
+	padding: 14px;
+	position: relative;
+	&:has(.c-icon-newTab) {
+		gap: 4px;
+	}
+}
+%c-btn-small {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	border-radius: var(--rc-narrow);
+	font-weight: var(--bold-700);
+	font-size: var(--small-fontSize);
+	letter-spacing: .01em;
+	cursor: pointer;
+	padding: var(--narrow);
+	position: relative;
+	&:has(.c-icon-newTab) {
+		gap: 4px;
+	}
+}
+
+// Primary
+.c-button-primary {
+	@extend %c-btn-default;
+	background-color: var(--primary500);
+	color: #fff;
+	&:hover,&:active,&:visited {
+		color: #fff;
+	}
+	&.--disable {
+		background-color: var(--gray100);
+		cursor: default;
+		color: var(--Semantic-Text_gray);
+		&:hover,&:active,&:visited {
+			color: var(--Semantic-Text_gray)
+		}
+	}
+}
+.c-button-primary-sm {
+	@extend %c-btn-small;
+	background-color: var(--primary500);
+	color: #fff;
+	&:hover,&:active,&:visited {
+		color: #fff;
+	}
+	&.--disable {
+		background-color: var(--gray100);
+		cursor: default;
+		color: var(--Semantic-Text_gray);
+		&:hover,&:active,&:visited {
+			color: var(--Semantic-Text_gray)
+		}
+	}
+}
+.c-button-primary-short {
+	display: inline-block;
+	background-color: var(--primary500);
+	color: #fff;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: var(--bold-700);
+	&:hover,&:active,&:visited {
+		color: #fff;
+	}
+}
+
+// Secondary
+.c-button-secondary {
+	@extend %c-btn-default;
+	background-color: #fff;
+	color:  var(--Semantic-Text_normal);
+	border: 1px solid var(--gray400);
+	&:hover,&:active,&:visited {
+		color:  var(--Semantic-Text_normal);
+	}
+	&.--favorite {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		&::before {
+			content: "";
+			display: block;
+			background: url(#{$cdn}/assets/img/icon_assets_like.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+			width: 20px;
+			height: 18px;
+		}
+		&.is-favorite-added::before {
+			content: "";
+			background: url(#{$cdn}/assets/img/icon_assets_like_added.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+	}
+}
+
+.c-button-secondary-sm {
+	@extend %c-btn-small;
+	background-color: #fff;
+	color: var(--Semantic-Text_normal);
+	border: 1px solid var(--gray400);
+	&:hover,&:active,&:visited {
+		color:  var(--Semantic-Text_normal);
+	}
+}
+
+// Tertiary
+.c-button-tertiary {
+	@extend %c-btn-default;
+	background-color: #fff;
+	color: var(--primary500);
+	font-weight: var(--bold-700);
+	border: 1px solid var(--primary500);
+	&:hover,&:active,&:visited {
+		color:  var(--primary500);
+	}
+}
+.c-button-tertiary-sm {
+	@extend %c-btn-small;
+	background-color: #fff;
+	color: var(--primary500);
+	font-weight: var(--bold-700);
+	border: 1px solid var(--primary500);
+	&:hover,&:active,&:visited {
+		color:  var(--primary500);
+	}
+}
+
+.c-btn-icon-favarite {
+	margin-right: var(--narrow);
+}
+// 吹き出し付きボタンにする場合のラッパー
+.c-layout-btn-balloon {
+	&__text {
+		width: 250px;
+		margin: 0 auto;
+		border: 1px solid var(--primary500);
+		border-radius: 12px;
+		background-color: #fff;
+		padding: 6px 0;
+		position: relative;
+		z-index: 1;
+		color: var(--primary500);
+		font-weight: var(--bold-700);
+		text-align: center;
+		white-space: nowrap;
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -5px;
+			left: 42px;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 6.7px 6.25px 0 6.25px;
+			border-color: #fff transparent transparent transparent;
+		}
+	}
+	&__btnwrap {
+		margin-top: -5px;
+	}
+}
+
+// 非活性ボタン
+// プレースホルダー
+%buttonDisabled {
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	width: 100%;
+	border-radius: var(--rc-narrow);
+	font-weight: var(--bold-700);
+	letter-spacing: .01em;
+	position: relative;
+	background-color: var(--gray100);
+	cursor: default;
+	color: var(--Semantic-Text_gray);
+}
+// 標準
+.c-button-disabled {
+	@extend %buttonDisabled;
+	padding: 14px;
+	font-size: var(--md);
+}
+// 小
+.c-button-disabled-sm {
+	@extend %buttonDisabled;
+	padding: var(--narrow);
+	font-size: var(--sm);
+}
+
+// ボタンレイアウト要素
+// W195 ※2024.11.13追加
+.c-button-layout-narrow {
+	width: 195px;
+	margin-inline: auto;
+}

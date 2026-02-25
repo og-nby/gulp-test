@@ -1,0 +1,10 @@
+// デバイス別に表示非表示を切り替える
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.u-display-hide-pc {
+	display: block;
+	@include onlyPc() {
+		display: none;
+	}
+}

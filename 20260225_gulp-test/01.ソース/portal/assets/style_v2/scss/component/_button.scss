@@ -1,0 +1,78 @@
+// ボタン用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// ボタンのベーススタイル用Mixin「btnGenerate」を使用して生成する
+// 第1引数 $btnDisplayAttribute：ディスプレイ属性(inline-block)※nullの場合はflexでセットされる
+// 第2引数 $btnRoundCorner：角丸サイズ(var(--radius-low)) ※nullの場合はvar(--radius-medium)がセットされる
+// 第3引数 $btnFontSize：文字サイズ(var(--medium-fontSize))※nullの場合は設定なし
+// 第4引数 $btnFontColor：文字色(#fff)※nullの場合は設定なし
+// 第5引数 $btnPadding：余白サイズ(14px)
+// 第6引数 $btnBgColor：背景色(var(--primary500))※nullの場合は#fffでセットされる
+// 第7引数 $btnBdrWidth：線の太さ(1px)※nullの場合はプロパティは展開されない
+// 第8引数 $btnBdrColor：線の色(var(--gray400))※nullの場合はプロパティは展開されない
+// 第9引数 $noExpand：ボタンの幅を伸長させない(true)※falseの場合はwidth:100%が追加される、trueの場合はwidthプロパティは追加されない
+// 呼び出し例(赤ボタン) @include btnGenerate(null, var(--radius-medium), var(--medium-fontSize), #fff, 14px, var(--primary500), null, null, $noExpand:false);
+
+
+// Primary
+// default
+.c-button-primary {
+	@include btnGenerate(null, null, var(--medium-fontSize), #fff, 14px, var(--primary500), null, null, false);
+}
+// small
+.c-button-primary-sm {
+	@include btnGenerate(null, var(--radius-low), var(--small-fontSize), #fff, var(--bs8), var(--primary500), null, null, false);
+}
+
+// Secondary
+// default
+.c-button-secondary {
+	@include btnGenerate(null, null, var(--medium-fontSize), var(--gray800), 14px, #fff, 1px, var(--gray400), false);
+}
+
+// お気に入りボタン専用
+.c-button-secondary-favorite {
+	@include btnGenerate(null, null, var(--medium-fontSize), var(--gray800), 14px, #fff, 1px, var(--gray400), false);
+	gap: 6px;
+	&::before {
+		content: "";
+		display: block;
+		background: url(#{$cdn}/assets/img/icon_assets_like.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		width: 20px;
+		height: 18px;
+	}
+	&.is-favorite-added::before {
+		content: "";
+		background: url(#{$cdn}/assets/img/icon_assets_like_added.svg#{$bgImgCache}) no-repeat center center;
+	}
+}
+
+// Tertiary
+// default
+.c-button-tertiary {
+	@include btnGenerate(null, null, var(--medium-fontSize), var(--primary500), 14px, #fff, 1px, var(--primary500), false);
+}
+.c-button-tertiary-sm {
+	@include btnGenerate(null, var(--radius-low), var(--small-fontSize), var(--primary500), var(--bs8), #fff, 1px, var(--primary500), false);
+}
+
+// Disabled
+// Default
+.c-button-disabled {
+	@include btnGenerate(null, null, var(--medium-fontSize), var(--gray600), 14px, var(--gray100), null, null, false);
+}
+.c-button-disabled-sm {
+	@include btnGenerate(null, var(--radius-low), var(--small-fontSize), var(--gray600), var(--bs8), var(--gray100), null, null, false);
+}
+
+// カード等の商品リンク内で汎用的に使用されている、ポイント詳細ポップアップを表示するためのボタン要素
+.c-button-dpoint-detail {
+	font-weight: var(--bold-700);
+	color: var(--gray400);
+	font-size: var(--small-fontSize);
+	margin-left: 2px;
+	text-decoration: underline;
+	white-space: nowrap;
+}

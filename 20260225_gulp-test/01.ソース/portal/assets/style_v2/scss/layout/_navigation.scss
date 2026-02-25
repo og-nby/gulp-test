@@ -1,0 +1,108 @@
+// ナビゲーション用scss
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.l-navigation-pc {
+	display: none;
+	@include onlyPc() {
+		display: block;
+	}
+}
+.l-navigation-not-pc {
+	position: relative;
+	display: none;
+	@include notPc() {
+		display: block;
+	}
+}
+.l-navigation {
+	overflow-y: auto;
+	background-color: #fff;
+	height: 100%;
+	@include notPc() {
+		width: calc(100% - 55px);
+		min-height: 100vh;
+		min-height: -webkit-fill-available;
+		position: fixed;
+		left: -100%;
+		top: 0;
+		transition: .3s ease;
+		z-index: 8001;
+		&.is-opened-nav {
+			left: 0;
+		}
+	}
+	// ナビゲーションヘッダー
+	&__header {
+		padding: var(--bs16) var(--bs16) var(--bs16) calc(var(--bs16) + 73px);
+		background-color: var(--bg100);
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		background: url(#{$cdn}/assets/img/img_assets_daccount.png#{$bgImgCache}) no-repeat 16px 50%;
+		background-size: 73px auto;
+	}
+	// ナビゲーションボディ
+	&__body {
+		padding: 0 var(--bs16);
+		@include notPc() {
+			overflow-y: auto;
+		}
+	}
+}
+// サイドナビアカウント表示※2023.8.39追加
+.l-navigation-account-link {
+	background: url(#{$cdn}/assets/img/icon_assets_nav_account_arrow.svg#{$bgImgCache}) no-repeat center right;
+	background-size: 12px auto;
+	max-width: 162px;
+	min-width: 130px;
+	padding-right: 20px;
+	&__userid {
+		display: block;
+		font-weight: var(--bold-700);
+		font-size: var(--small-fontSize);
+		overflow: hidden;
+		text-align: right;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+// ナビゲーションリスト用セクション
+.l-navigation-sec {
+	display: grid;
+	grid-template-rows: auto;
+	padding: var(--bs16) 0 var(--bs24);
+	gap: 24px;
+	&:not(:first-child) {
+		border-top: 1px solid var(--gray200);
+	}
+	&__header {
+		font-size: 18px;
+		font-weight: var(--bold-700);
+	}
+}
+// メニューリスト
+.l-navigation-list {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 24px;
+}
+// メニューリンク
+.l-navigation-link {
+	display: grid;
+	align-items: center;
+	gap: 8px;
+	grid-template-columns: 24px 1fr;
+	// アイコン無
+	&.--not-icon {
+		grid-template-columns: 1fr;
+	}
+	&__icon {
+		width: 24px;
+		height: auto;
+		aspect-ratio: 1 / 1;
+	}
+	&__text {
+		font-weight: var(--bold-700);
+	}
+}

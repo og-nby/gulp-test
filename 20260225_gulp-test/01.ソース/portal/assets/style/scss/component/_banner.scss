@@ -1,0 +1,28 @@
+// パンくずリスト
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+.c-banner {
+    background-color: var(--gray100);
+    padding: var(--wide) var(--default);
+	display: grid;
+	gap : var(--narrow) 0;
+}
+// ページ最上部の新規ユーザー・編成枠キャンペーンバナー ※2025.08追加
+.c-banner-fv {
+	margin-bottom: var(--narrow);
+	height: 40px;
+	overflow: hidden;
+	display: block;
+	img {
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+// TOPページのみ左右の余白を調整
+.p-top-firstView {
+  .c-banner-fv {
+    margin-inline: -16px;
+  }
+}

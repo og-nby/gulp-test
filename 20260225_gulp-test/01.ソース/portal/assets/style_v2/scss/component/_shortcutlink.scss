@@ -1,0 +1,33 @@
+// ショートカットリンク用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// サービス導線 ★2024.4.23 余白修正
+.c-layout-shortcutlink {
+	display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+	gap: 16px 6px;
+	margin-bottom: -8px;
+}
+
+// ★2024.4.25 吹き出しラベル配置用にposition: relative;を設定
+.c-link-shortcut {
+	display: grid;
+    grid-template-rows: auto;
+    justify-content: center;
+	gap: 8px;
+	position: relative;
+	&__icon {
+        width: 32px;
+        height: 32px;
+        aspect-ratio: 1 / 1;
+        margin-inline: auto;
+    }
+	&__text {
+		text-align: center;
+		line-height: var(--narrow-lineHeight);
+		font-size: var(--xsmall-fontSize);
+		font-weight: var(--bold-700);
+	}
+}

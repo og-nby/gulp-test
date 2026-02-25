@@ -1,0 +1,111 @@
+// ポップアップ
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+.c-popup {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	position: relative;
+}
+
+.c-popup__container {  
+	@include media("pc") {
+		position: relative;  
+	} 
+}
+
+.c-popup__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin-left: 3px;
+	width: 16px;
+	height: 16px;
+}
+
+.c-popup__content-wrapper {
+	z-index: 6800;
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--monoWhite);
+	padding: var(--default);
+	border-radius: 8px;
+	border: 2px solid var(--gray400);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+	width: 331px;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+	pointer-events: none;
+	@include media("pc") {
+		left: 18px;
+		top: 0;  
+		transform: translateX(0); 
+		&--top {
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+}
+
+// 上に表示させる（PC時）
+.c-popup__content-wrapper--top {
+	@include media("pc") {
+		top: 50%;
+		transform: translateY(-50%);
+	} 
+}
+
+.c-popup__content-wrapper.is-active {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.c-popup__content {
+	position: relative;
+	line-height: var(--narrow-lineHeight);
+}
+
+// ポップアップ用テキストクラス
+// 赤強調
+.c-popup__text-bold700-primary {
+	color: var(--primary);
+	font-weight: var(--bold-700);
+}
+// グレー注釈文
+.c-popup__text-notes {
+	color: var(--Semantic-Text_gray);
+	font-size: var(--small-fontSize);
+	position: relative;
+	padding-left: var(--rem);
+	&::before {
+		content: "※";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--rem);
+		height: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+}
+
+// 閉じるボタン 
+.c-popup__close-btn {
+	background: none;
+	border: none;
+	position: absolute;
+	top: -29px;
+	right: -29px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+}

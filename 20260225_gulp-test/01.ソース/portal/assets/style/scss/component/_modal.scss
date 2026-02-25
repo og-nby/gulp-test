@@ -1,0 +1,198 @@
+// モーダル
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+.c-modal-overlay {
+	@include baseOverlay(8000);
+}
+.dispModalLock {
+	overflow: hidden;
+	width: 100%;
+	position: fixed;
+	&:has(.modalFixedCancel) {
+		overflow: auto;
+		position: inherit;
+	}
+}
+
+// モーダル外枠
+.c-modal {
+	width: calc(100% - 32px);
+	max-width: 680px;
+	margin: auto;
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	z-index: 8001;
+	border-radius: 16px;
+	border: 1px solid var(--gray200);
+	// モーダルが画面の高さを超えた場合に画面固定をキャンセルするクラス
+	&.modalFixedCancel {
+		position: absolute;
+		top: 57px;
+		transform: translate(-50%, 0);
+	}
+	padding: 32px;
+	// 閉じるボタン(c-modal-close)がある場合のみpadding-topを48pxにする
+	&:has(.c-modal-close) {
+		padding: 48px 32px 32px;
+	}
+	//確認事項モーダル専用 DPMDEV-6069
+	&.--rules {
+		padding: 48px var(--wide) 32px;
+	}
+}
+
+// 閉じるボタン
+.c-modal-close {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	height: auto;
+	justify-content: center;
+	line-height: 1;
+	position: absolute;
+	right: 8px; // ★2025.04 クリック領域を広げる対応をしたため8pxに調整
+	top: 8px; // ★2025.04 クリック領域を広げる対応をしたためため8pxに調整
+	width: 32px;
+	z-index: 6002;
+	aspect-ratio: 1 / 1;
+}
+// ★2025.04 クリック領域を広げるため画像サイズ固定
+.c-modal-close img {
+    display: inline;
+    height: 16px;
+	vertical-align: middle;
+}
+
+.c-modal-content {
+	position: relative;
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs16);
+	// 改良版ソース：閉じるボタン配置エリア
+	&__btnArea {
+		margin: -16px -16px 0;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		min-height: 16px;
+	}
+}
+// 閉じるボタン：改良版用ソース
+.c-modal-closeBtn {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	height: auto;
+	justify-content: center;
+	width: 16px;
+	aspect-ratio: 1 / 1;
+}
+
+.c-modal-content-inner {
+	display: grid;
+	gap: var(--bs8);
+	grid-template-rows: 1fr;
+}
+
+// ショップ詳細、プログラム詳細でショップを見る、ポイントをゲットするボタン押下時に表示する注意事項用
+.c-modal-textArea-scroll-y {
+	max-height: 248px;
+    overflow-y: auto;
+	// スクロールバーのデザイン
+	// &::-webkit-scrollbar {
+	// 	background-color:#fff;
+	// 	width: 8px;
+	// }
+	// &::-webkit-scrollbar-thumb {
+	// 	background-color: var(--gray200);
+	// 	border-radius: 5px
+	// }
+}
+
+
+// ★2025.06追加 お気に入り追加モーダル 初回のみ表示
+.c-modal-addFavoriteFirst {
+	padding: 56px 32px 32px;
+	width: calc(100% - 32px);
+	max-width: 680px;
+	margin: auto;
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	z-index: 8001;
+	border-radius: 16px;
+	border: 1px solid var(--gray200);
+	&__icon {
+		width: 100px;
+		height: 100px;
+		min-height: 0;
+		margin: 0 auto;
+		flex-shrink: 0;
+		img {
+			height: 100px;
+			display: inline-block;
+		}
+	}
+	&__link {
+		text-align: center;
+	}
+	&__linkText {
+		line-height: var(--narrow-lineHeight);
+		display: inline;
+		color: var(--textLink);
+		&:hover,&:active{
+			color: var(--textLink);
+		}
+	}
+	&__button {
+		max-width: 279px;
+		width: 100%;
+		margin: 0 auto;
+	}
+	&__message {
+		font-weight: var(--bold-700);
+		font-size: var(--lg);
+		text-align: center;
+}
+}
+.c-modal-addFavoriteFirst-information {
+	flex-grow: 1;
+	display: grid;
+	grid-template-rows: auto;
+	@include notSp() {
+		text-align: center;
+	}
+	&__mainText {
+		line-height: var(--default-lineHeight);
+	}
+	&__subText {
+		font-size: var(--small-fontSize);
+		line-height: var(--default-lineHeight);
+	}
+}
+// 確認事項モーダルh3を内包するセクション DPMDEV-6069
+.c-modal-rules-section {
+	padding-top: var(--narrow);
+	display: grid;
+	gap: var(--default);
+}
+
+// 確認事項モーダル スクロールエリア DPMDEV-6069
+.c-modal-rules-scrollable {
+	width: 100%;
+	overflow-y: auto;
+	min-height: 71px;
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--wide);
+	// 画面上下余白:32px、上部padding:80px、h2:27px、gap:32px、ボタン:49px、モーダル外枠border:2pxを引いた値をmax-heightに設定
+	max-height: calc(100 * var(--vh-unit) - 32px - 48px - 27px - 16px - 16px - 49px - 32px - 2px);
+}

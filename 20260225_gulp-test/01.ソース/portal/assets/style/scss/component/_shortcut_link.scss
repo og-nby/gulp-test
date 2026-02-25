@@ -1,0 +1,65 @@
+// ショートカットリンク用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// レイアウト用リスト
+.c-shortcutLink {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	justify-content: center;
+	margin-block-end: -8px;
+	li {
+		display: grid;
+		align-items: flex-end;
+		// スペース確保用疑似要素
+		&::before {
+			content: "";
+			display: block;
+			width: 100%;
+			height: 0;
+		}
+		// 2行目(5番目)以降は疑似要素に高さを設定する
+		&:nth-child(n+5) {
+			&::before {
+				content: "";
+				height: 16px;
+			}
+		}
+		// liタグ配下に吹き出しが設置されている場合は疑似要素の高さを0にする
+		&:has(.c-shortcutLink-balloon) {
+			&::before {
+				content: "";
+				height: 0;
+			}
+		}
+	}
+}
+
+// ショートカットリンクaタグ配下
+.c-shortcutLink-link {
+	display: grid;
+	grid-template-rows: auto;
+	justify-content: center;
+	gap: 8px;
+	// アイコン
+	&__icon {
+		width: 32px;
+		height: 32px;
+		aspect-ratio: 1 / 1;
+		margin-inline: auto;
+	}
+	// リンク先テキスト
+	&__text {
+		text-align: center;
+		line-height: var(--narrow-lineHeight);
+		font-size: var(--xsmall-fontSize);
+		font-weight: var(--bold-700);
+	}
+}
+
+// 吹き出し
+.c-shortcutLink-balloon {
+	width: 74px;
+	height: 24px;
+	margin-inline: auto;
+}

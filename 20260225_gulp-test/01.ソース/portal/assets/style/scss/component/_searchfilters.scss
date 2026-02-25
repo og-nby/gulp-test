@@ -1,0 +1,377 @@
+// 検索結果画面の絞り込み用スタイル
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 絞り込み用タグボタンメニュー
+.c-searchfilters {
+	display: flex;
+	@include onlyPc() {
+		// PCは折り返し表示
+		flex-wrap: wrap;         
+	}
+	@include notPc() {
+		// SPは1行表示でスクロール
+		flex-wrap: nowrap; 
+		height: 31px;
+		overflow-x: auto;
+	}
+	-webkit-overflow-scrolling: touch;
+	white-space: nowrap;
+	gap: var(--narrow);
+	margin-inline: calc(-1 * var(--default));
+	padding: 0 var(--default);
+	// スクロールバー
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+%tagBase {
+	position: relative;
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid var(--gray200);
+	display: inline-flex;
+	cursor: pointer;
+}
+%tagActive {
+	border-color: var(--Semantic-Primary_light);
+	color: var(--Semantic-Primary_light);
+}
+// アイコン付きタグ
+%tagHasIcon {
+	padding-right: 19px;
+	background-size: 10px 10px;
+	background-repeat: no-repeat;
+	background-position: calc(100% - 6px) 50%;
+}
+
+// タグボタン
+.c-searchfilters-tagButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: fit-content;
+	height: 31px;
+	padding: 6px 7px;
+	border-radius: var(--veryNarrow);
+	border: 1px solid var(--gray200);
+	background-color: #fff;
+	cursor: pointer;
+	// 押下後に活性化
+	&[aria-pressed="true"] {
+		@extend %tagActive;
+	}
+	// ドロップダウンモーダル展開中
+	&--dropdown {
+		&::after {
+			content: "";
+			display: block;
+			width: var(--narrow);
+			height: var(--narrow);
+			margin-left: var(--veryNarrow);
+			background-image: url(#{$cdn}/assets/img/icon_assets_tag_arrow_down_20250603.svg);
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: 100%;
+		}
+		// 非活性
+		&[aria-disabled="true"] {
+			color: var(--gray400);
+			background-color: var(--gray100);
+			border-color: var(--gray200);
+			&::after {
+				content: "";
+				display: block;
+				width: var(--narrow);
+				height: var(--narrow);
+				margin-left: var(--veryNarrow);
+				background-image: url(#{$cdn}/assets/img/icon_assets_tag_arrow_down_disabled_20250603.svg);
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 100%;
+			}
+		}
+		// ボタン押下
+		&[aria-pressed="true"] {
+			&::after {
+				content: "";
+				display: block;
+				width: var(--narrow);
+				height: var(--narrow);
+				margin-left: var(--veryNarrow);
+				background-image: url(#{$cdn}/assets/img/icon_assets_tag_arrow_down_pressed_20250603.svg);
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: auto;
+			}
+		}
+		// メニュー展開
+		&[aria-expanded="true"] {
+			&::after {
+				content: "";
+				display: block;
+				width: var(--narrow);
+				height: var(--narrow);
+				margin-left: var(--veryNarrow);
+				background-image: url(#{$cdn}/assets/img/icon_assets_tag_arrow_up_20250603.svg);
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: auto;
+			}
+		}
+		// ボタン押下・メニュー展開
+		&[aria-pressed="true"][aria-expanded="true"] {
+			background-color: var(--secondary200);
+			@extend %tagActive;
+			&::after {
+				content: "";
+				display: block;
+				width: var(--narrow);
+				height: var(--narrow);
+				margin-left: var(--veryNarrow);
+				background-image: url(#{$cdn}/assets/img/icon_assets_tag_arrow_up_pressed_20250603.svg);
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: auto;
+			}
+		}
+	}
+
+	&--closable[aria-pressed="true"] {
+		@extend %tagActive;
+		&::after {
+			content: "";
+			display: block;
+			width: 6px;
+			height: 7px;
+			margin-left: var(--veryNarrow);
+			background-image: url(#{$cdn}/assets/img/icon_assets_tag_close_20250603.svg);
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: auto;
+		}
+	}
+	// テキスト
+	&__text {
+		max-width: 100px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		// 価格帯の場合以下をつける
+		&--noTruncate {
+			max-width: none;
+			overflow: visible;
+			text-overflow: initial;
+		}
+	}
+}
+// すべて解除するボタン
+.c-searchfilters-resetAllButton {
+	font-size: var(--small-fontSize);
+	line-height: var(--narrow-lineHeight);
+	color: var(--textLink);
+	cursor: pointer;
+	// 非活性時
+	&[aria-disabled="true"] {
+		color: var(--text-disabled);
+		pointer-events: none;
+		cursor: default;
+		align-self: center;
+		color: var(--Semantic-Text_light);
+	}
+}
+
+
+// --以下ドロップダウンメニューのスタイル-- //
+// ドロップダウンメニュー設置用ブロック
+.c-searchfilters-dropdownMenu-base {
+	position: relative;
+	margin-inline: calc(-1 * var(--default));
+	/* 高さ・アニメーション */
+	// ドロップダウンメニューのスライドアニメーション
+	--dropdown-slide-animation: transform 0.3s ease-in-out;
+	// SP表示画面の高さ
+	--sp-screen-max-height: calc(var(--vh-unit) * 100);
+	// ヘッダーからタグメニュー(224px)＋メニュー下余白(42px)の合計を100vhから引いた数値
+	--dropdown-max-height: calc(var(--sp-screen-max-height) - 266px);
+	// ドロップダウンメニュー内部の最大高さ
+	--dropdown-landscape-max-height: calc(var(--sp-screen-max-height) - 224px);
+	// ドロップダウンメニュー内部の最大高さ
+	--dropdown-inner-max-height: calc(var(--dropdown-max-height) - 24px);
+	// ドロップダウンメニュー内部の最大高さ
+	--dropdown-inner-landscape-max-height: calc(var(--dropdown-landscape-max-height) - 24px);
+
+	// オーバーレイ
+	.c-searchfilters-dropdownMenu-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: var(--sp-screen-max-height);
+		background-color: var(--Semantic-Bg_overlay);
+		z-index: 6000;
+		@include onlyPc() {
+			width: 100%;
+			background-color: rgba(0, 0, 0, 0.01);
+		}
+	}
+
+	// ドロップダウンメニュー格納用
+	.c-searchfilters-dropdownMenu-wrapper {
+		@include notPc() {
+			overflow: hidden;
+		}
+		@include onlyPc() {
+			width: 375px;
+		}
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 0;
+		z-index: 6001;
+		&:has(.showDropdown) {
+			height: auto;
+		}
+	}
+
+	// ドロップダウンメニュー本体
+	.c-searchfilters-dropdownMenu {
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		padding: var(--narrow) 32px var(--default);
+		border-radius: 0 0 var(--default) var(--default);
+		width: 100vw;
+		max-height: var(--dropdown-max-height); 
+		transform: translateY(-100%);
+		transition: var(--dropdown-slide-animation);
+		@include notPc() {
+			// 画面横向き
+			@media screen and (orientation: landscape) {
+				height: var(--dropdown-landscape-max-height);
+				max-height: 100%;
+				border-radius: 0;
+			}
+		}
+		// PC表示
+		@include onlyPc() {
+			padding: var(--default) 32px var(--default);
+			border-radius: var(--default);
+			width: 100%;
+			max-height: 803px; // PC時の最大高さ
+			padding-top: var(--wide);
+			border-radius: var(--default);
+			box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.10);
+			display: none;
+			margin-left: var(--default);
+		}
+
+		&.showDropdown {
+			transform: translateY(0);
+			transition: var(--dropdown-slide-animation);
+			// PC表示
+			@include onlyPc() {
+				display: flex;
+			}
+		}
+	}
+
+	// ドロップダウンメニュー内コンテンツ格納エリア
+	.c-searchfilters-dropdownMenu-main {
+		overflow-y: hidden;
+		display: flex;
+		flex-direction: column;
+		@include notPc() {
+			// ドロップダウンメニュー内部の高さ計算
+			max-height: var(--dropdown-inner-max-height);
+			// 画面横向き
+			@media screen and (orientation: landscape) {
+				height:var(--dropdown-inner-landscape-max-height);
+				height: 100%;
+			}
+			// ボタンエリアがない場合
+			&:has(.c-searchfilters-dropdownMenu-main__control) {
+				.c-searchfilters-dropdownMenu-main__content {
+					max-height: calc(var(--dropdown-inner-max-height) - 97px);
+					// 画面横向き
+					@media screen and (orientation: landscape) {
+						height:calc(var(--dropdown-inner-landscape-max-height) - 97px);
+						max-height: 100%;
+					}
+				}
+			}
+		}
+		&__content {
+			overflow-y: auto;
+			flex: 1 1 auto;
+			min-height: 0;
+			min-width: 0;
+			@include verticalScrollbarStyle();
+			@include onlyPc() {
+				max-height: 600px;
+				overflow-y: auto;
+				padding-right: 0;
+			}
+			// スクロールバー
+			&::-webkit-scrollbar {
+				background-color: #fff;
+				width: 8px;
+			}
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--gray200);
+				border-radius: 5px;
+			}
+		}
+		// ボタンエリア
+		&__control {
+			height: 97px;
+			flex-shrink: 0;
+			padding-top: var(--default);
+			display: grid;
+			gap: var(--narrow);
+		}
+	}
+}
+
+// モーダルオープン時背景固定（SPのみ）
+.is-dropDownModal-open {
+	overflow: hidden;
+	position: fixed;
+	width: 100%;
+	@include onlyPc() {
+		position: static;
+		overflow: visible;
+		width: min(100%, 1080px);
+
+	}
+	// SP横向き時
+	@media screen and (orientation: landscape) and (max-width: 1000px) {
+		position: static;
+		overflow: visible;
+	}
+}
+
+
+// 条件を解除する（モーダル内）
+// 非活性状態
+.c-tag-dropDown-reset {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    font-size: var(--small-fontSize);
+    cursor: default;
+	pointer-events: none;
+    line-height: var(--narrow-lineHeight);
+	color: var(--Semantic-Text_light);
+	&__text {
+		pointer-events: auto;
+	}
+	// JSで以下のクラスを付与することを想定（活性状態）
+	&.is-reset-active {
+		color: var(--textLink);
+		cursor: pointer;
+	}
+}

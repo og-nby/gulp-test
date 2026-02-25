@@ -1,0 +1,176 @@
+// 見出しスタイル管理用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+
+// 見出しに注釈、サブテキストを追加する
+%notes {
+	&:has(.c-heading-notes) {
+		display: flex;
+		align-items: baseline;
+	}
+	// 廃止 start
+	&.--notes {
+		display: flex;
+		align-items: baseline;
+	}
+	// 廃止 end
+	.c-heading-notes {
+		font-size: var(--small-fontSize);
+		line-height: 1;
+		font-weight: normal;
+		margin-left: var(--bs8);
+	}
+}
+
+
+// h1用見出し
+.c-heading-root {
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+
+// セクション内見出し
+.c-heading-lv1 {
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+	// ラベル付き
+	&:has(.c-label-secondary200-xsm),&:has(.c-label-gray100-xsm){
+		display: flex;
+		gap: 4px;
+	}
+	// 1行省略
+	&.--ellipsis-1 {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
+		word-break: break-all;
+	}
+}
+// 廃止 start
+// 赤文字
+.c-heading-lv1-primary {
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	color: var(--primary);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+// 廃止 end
+
+.c-heading-lv2 {
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	line-height: var(--narrow-lineHeight);
+	background-color: var(--bg-h3);
+	margin: 0 -16px;
+	padding: var(--bs8) var(--bs16);
+}
+.c-heading-lv2-noBg {
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	line-height: var(--narrow-lineHeight);
+	margin: 0 -16px;
+	padding: var(--bs8) var(--bs16);
+}
+
+// 廃止 start
+.c-heading-lv2-gray100 {
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	line-height: var(--narrow-lineHeight);
+	background-color: var(--gray100);
+	margin: 0 -16px;
+	padding: var(--bs8) var(--bs16);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+// 廃止 end
+
+.c-heading-lv3 {
+	font-weight: var(--bold-700);
+	line-height: var(--narrow-lineHeight);
+	font-size: var(--medium-fontSize);
+}
+
+// 廃止 start
+// 赤文字の見出し
+.c-heading-primary-lv1 {
+	color: var(--primary);
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+.c-heading-primary-lv2 {
+	color: var(--primary);
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+.c-heading-primary-lv3 {
+	color: var(--primary);
+	font-weight: var(--bold-700);
+	font-size: var(--small-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+
+// 中央寄せ
+// 共通スタイル
+%heading-centered {
+	font-weight: var(--bold-700);
+	text-align: center;
+}
+// h1,h2
+.c-heading-centered-lv1 {
+	@extend %heading-centered;
+	font-size: var(--medium-fontSize);
+}
+// h3
+.c-heading-centered-lv2 {
+	@extend %heading-centered;
+	font-size: var(--medium-fontSize);
+}
+// h4
+.c-heading-centered-lv3 {
+	@extend %heading-centered;
+	font-size: var(--small-fontSize);
+}
+// 廃止 end
+
+// もっと見るの位置をh2の横に移動
+.c-heading-layout-justify-end {
+	display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+	align-items: flex-end;
+    gap: var(--narrow);
+    width: 100%;
+    height: 100%;
+	.c-text-link-arrow {
+		line-height: 16px;
+		white-space: nowrap;
+	}
+	// お気に入りショップの人気商品用セクション
+	// h2を1行省略した際にもっと見るの崩れを防ぐ
+	&:has(.c-heading-lv1.--ellipsis-1) {
+		gap: var(--default);
+		.c-text-link-arrow {
+			flex: 0 0 74px;
+			min-width: 74px;
+		}
+	}
+}
+
+// ｈ1見出しにデフォルトのフォントをつける　※2024.12.16追加
+.c-heading-suffix {
+	font-size: var(--medium-fontSize);
+	font-weight: normal;
+}

@@ -1,0 +1,247 @@
+// チェックボックス、ラジオボタン
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// チェックボックス
+.c-form-checkbox {
+	input[type=checkbox] {
+		display: none;
+	}
+	&__value {
+		line-height: 135%;
+		cursor: pointer;
+		display: inline-block;
+		padding-left: 27px;
+		position: relative;
+		&::before {
+			content: "";
+			display: block;
+			width: 19px;
+			height: 19px;
+			position: absolute;
+			top: -1px;
+			left: 0px;
+			background: url(#{$cdn}/assets/img/bg_assets_checkbox.svg#{$bgImgCache}) no-repeat left top; 
+			background-size: contain;
+		}
+	}
+
+}
+// 選択状態
+.c-form-checkbox input[type=checkbox]:checked + .c-form-checkbox__value::before {
+	content: "";
+	display: block;
+	width: 19px;
+	height: 19px;
+	position: absolute;
+	top: -1px;
+	left: 0px;
+	background: url(#{$cdn}/assets/img/bg_assets_checkbox_checked.svg#{$bgImgCache}) no-repeat left top;
+	background-size: contain;
+}
+// 非活性状態
+.c-form-checkbox input[type=checkbox]:disabled + .c-form-checkbox__value {
+	color: var(--gray400);
+	pointer-events: none;
+	&::before {
+		content: "";
+		background: url(#{$cdn}/assets/img/bg_assets_checkbox_disabled.svg#{$bgImgCache}) no-repeat left top;
+	}
+}
+
+// ラジオボタン
+// 廃止 start ====
+.c-form-radiobutton {
+	input[type=radio] {
+		display: none;
+	}
+	&__value {
+		line-height: 135%;
+		cursor: pointer;
+		display: inline-block;
+		padding-left: 27px;
+		position: relative;
+		&::before {
+			content: "";
+			display: block;
+			width: 19px;
+			height: 19px;
+			position: absolute;
+			top: -1px;
+			left: 0px;
+			background: url(#{$cdn}/assets/img/bg_assets_radiobutton.svg#{$bgImgCache}) no-repeat left top;
+			background-size: contain;
+		}
+		// ボタンを無効化
+		&.--disabled-radio {
+			color: var(--gray500);
+			pointer-events: none;
+			&::before {
+				content: "";
+				background: url(#{$cdn}/assets/img/bg_assets_radiobutton_disabled.svg#{$bgImgCache}) no-repeat left top;
+				background-size: contain;
+			}
+		} 
+	}
+}
+// 選択状態
+.c-form-radiobutton input[type=radio]:checked + .c-form-radiobutton__value {
+	&::before {
+		content: "";
+		display: block;
+		width: 19px;
+		height: 19px;
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		background: url(#{$cdn}/assets/img/bg_assets_radiobutton_checked.svg#{$bgImgCache}) no-repeat left top;
+		background-size: contain;
+	}
+	// ボタンを無効化
+	&.--disabled-radio {
+		color: var(--gray500);
+		pointer-events: none;
+		&::before {
+			content: "";
+			background: url(#{$cdn}/assets/img/bg_assets_radiobutton_checked_disabled.svg#{$bgImgCache}) no-repeat left top;
+			background-size: contain;
+		}
+	} 
+}
+// 非活性状態
+.c-form-radiobutton input[type=radio]:disabled + .c-form-radiobutton__value {
+	color: var(--gray500);
+	pointer-events: none;
+	&::before {
+		content: "";
+		display: block;
+		width: 19px;
+		height: 19px;
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		background: url(#{$cdn}/assets/img/bg_assets_radiobutton_disabled.svg#{$bgImgCache}) no-repeat left top; 
+		background-size: contain;
+	}
+}
+// 廃止 end ===
+
+// 変更 start ===
+// ラジオボタン
+.c-form-radioButton {
+	input[type=radio] {
+		display: none;
+	}
+	&__value {
+		line-height: 135%;
+		cursor: pointer;
+		display: inline-block;
+		padding-left: 27px;
+		position: relative;
+		&::before {
+			content: "";
+			display: block;
+			width: 19px;
+			height: 19px;
+			position: absolute;
+			top: -1px;
+			left: 0px;
+			background: url(#{$cdn}/assets/img/bg_assets_radiobutton.svg#{$bgImgCache}) no-repeat left top;
+			background-size: contain;
+		}
+		// ボタンを無効化
+		&.--disabled-radio {
+			color: var(--gray500);
+			pointer-events: none;
+			&::before {
+				content: "";
+				background: url(#{$cdn}/assets/img/bg_assets_radiobutton_disabled.svg#{$bgImgCache}) no-repeat left top;
+				background-size: contain;
+			}
+		} 
+	}
+}
+// 選択状態
+.c-form-radioButton input[type=radio]:checked + .c-form-radioButton__value {
+	&::before {
+		content: "";
+		display: block;
+		width: 19px;
+		height: 19px;
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		background: url(#{$cdn}/assets/img/bg_assets_radiobutton_checked.svg#{$bgImgCache}) no-repeat left top;
+		background-size: contain;
+	}
+	// ボタンを無効化
+	&.--disabled-radio {
+		color: var(--gray500);
+		pointer-events: none;
+		&::before {
+			content: "";
+			background: url(#{$cdn}/assets/img/bg_assets_radiobutton_checked_disabled.svg#{$bgImgCache}) no-repeat left top;
+			background-size: contain;
+		}
+	} 
+}
+// 非活性状態
+.c-form-radioButton input[type=radio]:disabled + .c-form-radioButton__value {
+	color: var(--gray500);
+	pointer-events: none;
+	&::before {
+		content: "";
+		display: block;
+		width: 19px;
+		height: 19px;
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		background: url(#{$cdn}/assets/img/bg_assets_radiobutton_disabled.svg#{$bgImgCache}) no-repeat left top; 
+		background-size: contain;
+	}
+}
+// 変更 end ===
+
+// 検索窓
+.c-form-search {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 38px;
+	background-color: var(--bg100);
+	border: 1px solid var(--gray200);
+	border-radius: 4px;
+	&__input {
+		flex: 1;
+		width: 100%;
+		height: auto;
+		display: block;
+		font-size: 14px;
+		padding: 11px 0 11px 8px;
+		&::placeholder {
+			color: var(--gray400);
+		}
+	}
+	&__clear {
+		flex: 0 0 40px;
+		width: auto;
+		height: 100%;
+		padding: 11px 8px 11px 11px;
+		cursor: pointer;
+	}
+	&__button {
+		flex: 0 0 32px;
+		width: auto;
+		padding: 11px 0 11px 11px;
+		cursor: pointer;
+		height: 100%;
+	}
+}
+// 検索窓画像用
+[class^="c-form-search__"] > img {
+	width: 16px;
+	height: 16px;
+}
+
+

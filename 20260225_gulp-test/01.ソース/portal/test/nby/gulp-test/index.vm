@@ -1,0 +1,14 @@
+## キャッシュ対応変数用vm
+#parse("$!{baseDirectory}/test/nby/gulp-test/define/define_cache_static_page.vm")
+
+<!DOCTYPE HTML>
+<html lang="ja">
+
+	## headタグ配下をパース※meta情報やCSS設定用
+	#parse("$!{baseDirectory}/test/nby/gulp-test/parts/parts_head_setting.vm")
+
+	## bodyタグk配下をパース※ブラウザ表示部分
+	#parse("$!{baseDirectory}/test/nby/gulp-test/contents/content_default.vm")
+
+</html>
+

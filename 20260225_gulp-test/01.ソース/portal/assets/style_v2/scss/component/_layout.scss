@@ -1,0 +1,48 @@
+// 要素のレイアウト用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// スライダー枠
+.c-layout-slider {
+	background-color: #fff;
+	padding-left: var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	// スクロールバーと商品リンクが干渉しないよう隙間を作る
+	padding-bottom: var(--bs8);
+	// スクロールバーのデザイン
+	&::-webkit-scrollbar {
+		background-color:#fff;
+		height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--gray200);
+		border-radius: 5px
+	}
+}
+
+// スライダー枠(背景グレー)
+.c-layout-slider-gray {
+	background-color: var(--gray100);
+	padding: var(--bs16) 0 var(--bs16) var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	@include onlyPc() {
+		overflow-x: scroll;
+	}
+}
+
+// パンくずリスト用※SPのみ
+.c-layout-breadcrumbs {
+	padding: 0 var(--bs16) var(--bs16);
+	// ページネーションと隣接時にボーダーと上方向のpaddingを指定する※SPのみ
+	@include onlySp() {
+		.c-layout-pagination + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+	}
+}
+

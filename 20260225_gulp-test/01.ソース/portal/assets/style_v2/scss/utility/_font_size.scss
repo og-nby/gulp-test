@@ -1,0 +1,16 @@
+// フォントサイズ
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 文字サイズ大
+.u-fontSize-lg {
+	font-size: var(--large-fontSize);
+}
+// 文字サイズ小
+.u-fontSize-sm {
+	font-size: var(--small-fontSize);
+}
+// 文字サイズ最小
+.u-fontSize-xsm {
+	font-size: var(--xsmall-fontSize);
+}

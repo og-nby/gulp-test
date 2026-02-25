@@ -1,0 +1,15 @@
+// Mixin読み込み：assets/styleからMixinを呼出したい場合は以下のソースを有効化し、適宜パスを修正すること
+@use "../../../assets/style/scss/setting/mixins" as *;
+
+// 共通変数 start ====
+// サーバードメイン
+$cdn: '$!{cdnServerUrl}';
+
+// 共通背景画像
+$common_img_dir: '$!{cdnServerUrl}/assets/img/';
+
+// 背景画像用キャッシュ：変数名部分「cache_css_pagename」はキャッシュファイル「define_cache_static_page」で設定した変数名とそろえてください。
+$bgImgCache: '?v=$!{cache_css_pagename}';
+// 共通変数 end ====
+
+// ここから下にCSSを記述してください。★このコメントはコーディング着手時削除すること★

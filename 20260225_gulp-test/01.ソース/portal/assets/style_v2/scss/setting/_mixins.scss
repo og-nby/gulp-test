@@ -1,0 +1,298 @@
+// Mixin管理用
+@use "variables" as *;
+// line-heightの上下の余白を打ち消す
+@mixin lineHeightCrop($line-height) {
+	&::before {
+		display: block;
+		width: 0;
+		height: 0;
+		margin-top: calc((1 - #{$line-height}) * .5em);
+		content: "";
+	}
+	&::after {
+		display: block;
+		width: 0;
+		height: 0;
+		margin-bottom: calc((1 - #{$line-height}) * .5em);
+		content: "";
+	}
+}
+
+// 旧メディアクエリ start ==========================
+// PC専用
+@mixin onlyPc() {
+	@media screen and (min-width: 1000px) {
+		@content;
+	}
+}
+
+// PCを除いたデバイス
+@mixin notPc() {
+	@media screen and (max-width: 999px) {
+		@content;
+	}
+}
+
+// SPを除いたデバイス
+@mixin notSp() {
+	@media screen and (min-width: 641px) {
+		@content;
+	}
+}
+
+// タブレット専用
+@mixin onlyTab() {
+	@media screen and (min-width: 641px) and (max-width: 999px) {
+		@content;
+	}
+}
+
+// SP専用
+@mixin onlySp() {
+	@media screen and (max-width: 640px) {
+		@content;
+	}
+}
+
+// SPを除いたデバイス
+@mixin notSp() {
+	@media screen and (min-width: 641px) {
+		@content;
+	}
+}
+
+// 低解像度SP
+@mixin lowSp() {
+	@media screen and (max-width: 360px) {
+		@content;
+	}
+}
+// 旧メディアクエリ end ==========================
+
+
+// オーバーレイ汎用
+@mixin baseOverlay($zindexNum: 7000) {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: $zindexNum;
+	transition: ease .3s;
+}
+
+@mixin landscape() {
+	@media (orientation: landscape) {
+		@content;
+	}
+}
+
+// 新メディアクエリ start ==========================
+// ブレイクポイントのマップを定義
+$breakpoints: (
+	"pc":         1000px,
+	"tablet":     641px,
+	"sp":         640px,
+	"low-res-sp": 360px
+);
+// メディアクエリのMixinを定義
+@mixin media($breakpoint) {
+	$breakpoint-value: map-get($breakpoints, $breakpoint);
+
+	@if $breakpoint-value {
+
+		@if $breakpoint == "pc" {
+			@media (min-width: #{$breakpoint-value}) {
+				@content;
+			}
+		} @else if $breakpoint == "tablet" {
+			@media (min-width: #{$breakpoint-value}) and (max-width: 999px) {
+				@content;
+			}
+			
+		} @else if $breakpoint == "sp" {
+			@media (max-width: #{$breakpoint-value}) {
+				@content;
+			}
+		
+		} @else if $breakpoint == "low-res-sp" {
+			@media (max-width: #{$breakpoint-value}) {
+				@content;
+			}
+		}
+		
+
+	} @else {
+		@error "無効なブレークポイント: #{$breakpoint}";
+
+	}
+}
+// 使用例
+// .foo {
+// 	width: 100%;
+// 	@include media("pc") {
+// 	// PC専用スタイル
+// 	}
+// 	@include media("tablet") {
+// 	// タブレット専用スタイル
+// 	}
+// 	@include media("sp") {
+// 	// SP専用スタイル
+// 	}
+// 	@include media("low-res-sp") {
+// 	// 低解像度SP専用スタイル
+// 	}
+// 	@include media("foo") {
+// 	// エラーメッセージが表示されます
+// 	}
+// }
+// 新メディアクエリ end   ==========================
+
+// ツールチップ位置調整用Mixin
+//  第1引数：クラスの種別（コンポーネントクラス(c) or プロジェクトクラス(p)）
+//  第2引数：ユニークな小カテゴリ名（最終的な用途が予測できる語句が望ましい）
+//  第3引数：topの数値※単位まで含めること、calc関数も可
+//  第4引数：rightの数値※単位まで含めること、calc関数も可
+@mixin tooltipStyle($type: 'c', $parentName:null, $top: '-62px', $right: '1px') {
+	.c-tooltip-favorite {
+		// 基準となるユニークな親クラスの配下で位置決め
+		.#{$type}-tooltip-parent-#{$parentName} & {
+			position: absolute;
+			top: $top;
+			right: $right;
+		}
+	}
+}
+
+// 画像系スタイルに背景用プリローダーを仕込んである場合、読み込み後にプリローダーbgを消す
+@mixin imgLoadedStyle() {
+	&.is-image-loaded {
+		background-image: none;
+	}
+}
+
+// テキスト省略用スタイル用Mixin
+@mixin textOverflowStyle($num) {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: #{$num};
+	overflow: hidden;
+}
+
+// 枠付きリスト型リンク用矢印背景画像設置用疑似要素
+@mixin listLinkArwStyle() {
+	&:after {
+		content: "";
+		background: url(#{$cdn}/assets/img/arw_assets_gry400.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		display: block;
+		height: 12px;
+		width: 12px;
+		@content;
+	}
+}
+
+// テキスト省略用
+// テキスト省略用スタイル用Mixin
+@mixin textOverflowStyle($num) {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: #{$num};
+	overflow: hidden;
+}
+// アニメーション
+@mixin transitionStyle($speed: ".3s") {
+	transition: #{$speed} ease;
+}
+
+// ラジオボタン、チェックボックスのチェックありなしで兄弟要素のスタイルを変更する
+@mixin inputBtnStyle ($elmName, $inputType) {
+	.c-form-#{$inputType} {
+		// チェックボックスを非表示
+		input[type=#{$inputType}] {
+			display: none;
+			// チェックボックスにチェックが入っていた場合の兄弟要素のスタイル
+			&:checked + .#{$elmName} {
+				@content;
+			} 
+		}
+	}
+}
+
+
+// 情報常時枠作成用
+@mixin infoStyle($bdw: '1px', $bdc: 'var(--gray200)') {
+	background-color: #fff;
+	border: #{$bdw} solid #{$bdc};
+	padding: var(--bs16);
+	width: 100%;
+	@content;
+}
+
+// ボタンスタイル生成用Mixin
+@mixin btnGenerate ($btnDisplayAttribute:null,
+ $btnRoundCorner:null, 
+ $btnFontSize:null, 
+ $btnFontColor:null, 
+ $btnPadding:null, 
+ $btnBgColor:null, 
+ $btnBdrWidth:null, 
+ $btnBdrColor:null, 
+ $noExpand:false) {
+	// 以下の変数を設定：()内は記述例
+	// 第1引数 $btnDisplayAttribute：ディスプレイ属性(inline-block)※nullの場合はflexでセットされる
+	// 第2引数 $btnRoundCorner：角丸サイズ(var(--radius-low)) ※nullの場合はvar(--radius-medium)がセットされる
+	// 第3引数 $btnFontSize：文字サイズ(var(--medium-fontSize))※nullの場合は設定なし
+	// 第4引数 $btnFontColor：文字色(#fff)※nullの場合は設定なし
+	// 第5引数 $btnPadding：余白サイズ(14px)
+	// 第6引数 $btnBgColor：背景色(var(--primary500))※nullの場合は#fffでセットされる
+	// 第7引数 $btnBdrWidth：線の太さ(1px)※nullの場合はプロパティは展開されない
+	// 第8引数 $btnBdrColor：線の色(var(--gray400))※nullの場合はプロパティは展開されない
+	// 第9引数 $noExpand：ボタンの幅を伸長させない(true)※falseの場合はwidth:100%が追加される、trueの場合はwidthプロパティは追加されない
+	// 呼び出し例(赤ボタン) @include btnGenerate(null, var(--radius-medium), var(--medium-fontSize), #fff, 14px, var(--primary500), null, null, $noExpand:false);
+	font-weight: var(--bold-700);
+	letter-spacing: .01em;
+	cursor: pointer;
+	position: relative;
+	@content;
+	// 以下引数の有無により分岐
+	@if $btnDisplayAttribute != null {
+		display: $btnDisplayAttribute;
+	} @else {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	@if $btnRoundCorner != null {
+		border-radius: $btnRoundCorner;
+	} @else {
+		border-radius: var(--radius-medium);
+	}
+	@if $btnFontSize != null {
+		font-size: $btnFontSize;
+	}
+	@if $btnFontColor!= null {
+		color: $btnFontColor;
+		&:hover,&:active,&:visited {
+			color: $btnFontColor;
+		}
+	}
+	@if $btnFontSize != null {
+		padding: $btnPadding;
+	} @else {
+		padding: 14px;
+	}
+	@if $btnBgColor != null {
+		background-color: $btnBgColor;
+	} @else {
+		background-color: #fff;
+	}
+	@if $btnBdrWidth != null {
+		border: solid $btnBdrWidth $btnBdrColor;
+	}
+	@if $noExpand == false {
+		width: 100%;
+	}
+}

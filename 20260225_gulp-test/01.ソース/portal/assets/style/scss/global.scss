@@ -1,0 +1,15 @@
+// PC用スタイル
+// 変数
+@use "setting" as *;
+
+// リセット・ベーススタイル読み込み
+@use "foundation" as *;
+
+// レイアウト読み込み
+@use "layout" as *;
+
+// UIスタイル読み込み
+@use "component" as *;
+
+// 調整用スタイル読込
+@use "utility" as *;

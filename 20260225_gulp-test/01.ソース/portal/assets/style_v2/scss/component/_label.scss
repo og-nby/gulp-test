@@ -1,0 +1,35 @@
+// ラベル用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// ラベル共通スタイル用プレースホルダー
+%labelStyle {
+	align-items: center;
+	width: min-content;
+	min-block-size: 18px;
+	font-weight: var(--bold-700);
+	padding: 2px 3px;
+	border-radius: var(--rc-mostNarrow);
+	font-size: var(--xsm);
+	white-space: nowrap;
+	line-height: calc(var(--xsm) / (var(--xsm) * 1.5));
+	@include lowSp() {
+		zoom: 0.9;
+	}
+}
+// カード内や商品詳細等で商品情報に付随する情報を表示するラベル
+.c-label-promotion {
+	@extend %labelStyle;
+	display: flex;
+	color: #fff;
+	background-color: var(--primary500);
+}
+
+// 商品名や説明文の頭に挿入されるラベル
+.c-label-info {
+	@extend %labelStyle;
+	display: inline-flex;
+	border: 1px solid var(--gray500);
+	margin-right: 4px;
+	background-color: #fff;
+}

@@ -1,0 +1,602 @@
+// このファイルに古いクラス名を集めます
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+
+// 項番1
+.c-wrapper-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+// 項番2
+.c-card {
+	// 商品検索ページで表示する簡易カード用
+	.c-wrapper-card.--narrow-card & {
+		flex: 0 0 96px;
+	}
+}
+// 項番3
+.c-container-card-col2 {
+	display: grid;
+	grid-template-columns: 130px 1fr;
+	gap: var(--bs8);
+	@include lowSp() {
+		grid-template-columns: 80px 1fr;
+	}
+}
+// 項番4
+.c-container-card-inner {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 4px;
+	flex-wrap: wrap;
+}
+// 項番5
+.c-wrapper-dpoint {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+// 項番6
+// (新)：2023.11.21～
+.c-wrapper-housepoint {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	&__plus {
+		flex: 0 0 8px;
+		width: 8px;
+	}
+	&__point {
+		flex: 0 0 20px;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		width: 20px;
+		> img {
+			object-fit: cover;
+		}
+	}
+}
+	// (旧)
+	.c-icon-plus {
+		flex: 0 0 var(--bs8);
+	}
+	.c-icon-housepoint {
+		flex: 0 0 16px;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		border-radius: 100%;
+		width: 16px;
+		> img {
+			object-fit: cover;
+		}
+	}
+	.c-text-housepoint {
+		font-size: var(--small-fontSize);
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+	}
+
+// 項番7
+.c-wrapper-category {
+	border: 1px solid var(--gray200);
+}
+// 項番8
+.c-wrapper-category-showmore {
+	border: solid var(--gray200);
+	border-width: 0 1px 1px;
+	&__btn {
+		display: block;
+		padding: 8px;
+		width: 100%;
+		text-align: center;
+	}
+}
+// 項番9
+.c-wrapper-list-bottomline-arrowright {
+	align-items: center;
+	display: flex;
+	padding: 0 22px var(--bs16) 0;
+	border-bottom: 1px solid var(--gray200);
+	position: relative;
+	&::after {
+		content: "";
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_right_gry.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		width: 12px;
+		height: 12px;
+		right: 0;
+		position: absolute;
+	}
+}
+
+// 項番10
+.c-wrapper-list-frame-border {
+	border-color: var(--gray200);
+	border-style: solid;
+	border-width: 2px 2px 0 2px;
+}
+// 項番11
+.c-container-pointdetail {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 16px;
+}
+	// 項番11
+	.c-container-pointdetail {
+		+ .c-section-pointdetail-info {
+			padding-top: 16px;
+		}
+	}
+// 項番12
+.c-container-point-expectation {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	&__label {
+		font-weight: var(--bold-700);
+		font-size: 16px;
+	}
+	&__point {
+		background: url(#{$cdn}/assets/img/img_assets_dlogo_v2.svg#{$bgImgCache}) no-repeat center left;
+		background-size: 16px auto;
+		padding-left: 20px;
+		font-weight: var(--bold-700);
+		color: var(--primary);
+	}
+}
+//  項番13
+.c-container-pointdetail-membershiprank {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px;
+	background-color: #F4F4F4;
+	&__label {
+		font-size: var(--xsmall-fontSize);
+		margin-right: 3px;
+	}
+	&__star {
+		flex: 0 0 23px;
+		aspect-ratio: 23 / 22;
+		transform: translateY(-1px);
+		.rankImg {
+			background-size: 23px!important;
+			// aspect-ratio: 404 / 388;
+		}
+	}
+	&__name {
+		font-size: 16px;
+		font-weight: var(--bold-700);
+	}
+}
+// 項番14
+.c-container-pointdetail-breakedown {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 16px;
+
+	// 倍率表示用
+	&__calc {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	// 固定表示用
+	&__pointup {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px dashed var(--gray400);
+		padding-top: var(--bs16);
+	}
+	&__reduction {
+		border-top: 1px dashed var(--gray400);
+		padding-top: var(--bs16);
+	}
+	&__pointsheld {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+// 項番15
+.c-container-pointdetail-calc {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 10px;
+	&__item {
+		display: grid;
+		grid-template-rows: 1fr;
+		gap: 6px;
+		justify-content: center;
+		dt {
+			font-size: var(--xsmall-fontSize);
+			white-space: nowrap;
+		}
+		dd {
+			text-align: center;
+			font-size: 16px;
+			font-weight: var(--bold-700);
+			white-space: nowrap;
+			line-height: 14px;
+		}
+	}
+	// Xアイコン
+	&__cross {
+		display: block;
+		flex: 0 0 10px;
+		background: url(#{$cdn}/assets/img/icon_assets_modal_close.svg#{$bgImgCache}) no-repeat bottom center;
+		background-size: 10px auto;
+		aspect-ratio: 1 / 1;
+		transform: translateY(-2px);
+	}
+}
+// 項番16
+.c-container-pointdetail-loginlink {
+	text-align: right;
+}
+// 項番17
+.c-wrapper-pointdetail-publisher {
+	align-items: flex-start;
+	background: url(#{$cdn}/assets/img/icon_assets_plus_1.svg#{$bgImgCache}) no-repeat center 8px;
+	background-size: 16px auto;
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	padding: 40px 0 var(--bs16);
+}
+	// アイコン画像
+	.c-wrapper-pointdetail-publisher__icon {
+		display: inline-block;
+		aspect-ratio: 1 / 1;
+		width: 16px;
+		height: 16px;
+		img {
+			width: 16px;
+			height: auto;
+			display: inline;
+		}
+	}
+	// テキスト
+	.c-wrapper-pointdetail-publisher__name {
+		font-weight: var(--bold-700);
+		line-height: var(--narrow-lineHeight);
+		letter-spacing: -0.05em;
+		line-height: 19px;
+	}
+
+// 項番18
+.c-wrapper-sort {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+}
+// 項番19
+.c-wrapper-order {
+	padding: 6px var(--bs16);
+	border-radius: 8px;
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	top: 22px;
+	left: 0;
+	width: 214px;
+	height: auto;
+	z-index: 5001;
+}
+// 項番20
+.c-wrapper-filter-category {
+	display: table;
+	table-layout: fixed;
+	width: auto;
+	transition: .5s ease-out;
+	&__slide {
+		display: table-cell;
+		width: 100%;
+		height: 100%;
+	}
+}
+// 項番21
+.c-container-btn-balloon {
+	&__text {
+		width: 250px;
+		margin: 0 auto;
+		border: 1px solid var(--primary);
+		border-radius: 12px;
+		background-color: #fff;
+		padding: 6px 0;
+		position: relative;
+		z-index: 1;
+		color: var(--primary);
+		font-weight: var(--bold-700);
+		text-align: center;
+		white-space: nowrap;
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -5px;
+			left: 42px;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 6.7px 6.25px 0 6.25px;
+			border-color: #fff transparent transparent transparent;
+		}
+	}
+	&__btnwrap {
+		margin-top: -5px;
+	}
+}
+// 項番22
+.c-wrapper-card {
+	display: flex;
+	gap: var(--bs8);
+	&::after {
+		content: "";
+		display: block;
+		width: 100%;
+		height: 100%;
+		flex: 0 0 8px;
+	}
+}
+// 項番23
+.c-wrapper-card-virtical {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs8);
+}
+// 項番24
+.c-wrapper-card-3col {
+	display: grid;
+	gap: 8px;
+	grid-template-columns: repeat(3,1fr)
+}
+	// 旧クラス名
+	.c-wrapper-sort-result {
+		display: grid;
+		gap: 8px;
+		grid-template-columns: repeat(3,1fr)
+	}
+// 項番25
+.c-wrapper-slider {
+	background-color: #fff;
+	padding-left: var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+
+	// スクロールバーと商品リンクが干渉しないよう隙間を作る
+	padding-bottom: var(--bs8);
+	// スクロールバーのデザイン
+	&::-webkit-scrollbar {
+		background-color:#fff;
+		height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--gray200);
+		border-radius: 5px
+	}
+}
+
+// 項番26
+.c-wrapper-slider-gray {
+	background-color: var(--gray100);
+	padding: var(--bs16) 0 var(--bs16) var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	@include onlyPc() {
+		overflow-x: scroll;
+	}
+}
+// 項番27
+.c-section__nospacing {
+	margin: 0 -16px;
+	overflow: hidden;
+}
+// 項番28
+.c-container-breadcrumbs {
+	padding: 0 var(--bs16) var(--bs16);
+	// ページネーションと隣接時にボーダーと上方向のpaddingを指定する※SPのみ
+	@include onlySp() {
+		.c-container-pagination + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+	}
+}
+// 項番29
+.c-container-pagination {
+	@include onlySp() {
+		border-top: 1px solid var(--gray200);
+	}
+}
+// 項番30
+.c-wrapper-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+// セクション内に要素を定間隔で配置※新スタイル
+%cGap {
+	display: grid;
+	grid-template-rows: auto;
+}
+// 項番31
+.c-gap-very-narrow {
+	@extend %cGap ;
+	gap: 4px;
+}
+// 項番32
+.c-gap-narrow {
+	@extend %cGap ;
+	gap: var(--bs8);
+}
+// 項番33
+.c-gap-default {
+	@extend %cGap ;
+	gap: var(--bs16);
+}
+// 項番34
+.c-gap-wide {
+	@extend %cGap ;
+	gap: var(--bs24);
+}
+// 項番35
+.c-wrapper-pointdetail-detail {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 16px;
+	overflow-y: auto;
+	background-color: #fff;
+	@include landscape() {
+		overflow-y: scroll;
+		height: 100vh;
+	}
+}
+// 項番36
+.c-wrapper-shortcutlink {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	justify-content: center;
+	gap: 8px;
+}
+// 項番37
+.c-container-filter {
+	.c-wrapper-filter-category__slide:nth-child(1) & {
+		height: calc(82vh - 32px); // 32px：モーダルのpadding-topの値
+	}
+}
+// 項番38
+.c-wrapper-pulldown-filter {
+	position: relative;
+}
+// 項番39
+.c-wrapper-list-filter {
+	border-radius: 0 0 var(--radius-low) var(--radius-low);
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	border-width: 0 1px 1px;
+	width: 100%;
+	height: auto;
+	z-index: 5001;
+}
+// 項番40
+.c-wrapper-list-filter__item {
+	padding: var(--bs8) 12px;
+	cursor: pointer;
+	&:has(.c-list-filter-terms-radio:checked) {
+		background-color: #FFF6F8;
+	}
+}
+// 項番41
+.c-wrapper-pulldown-filter {
+	position: relative;
+}
+// 項番42
+.c-wrapper-list-filter {
+	border-radius: 0 0 var(--radius-low) var(--radius-low);
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	border-width: 0 1px 1px;
+	width: 100%;
+	height: auto;
+	z-index: 5001;
+}
+// 項番43
+.c-wrapper-list-filter__item {
+	padding: var(--bs8) 12px;
+	cursor: pointer;
+	&:has(.c-list-filter-terms-radio:checked) {
+		background-color: #FFF6F8;
+	}
+}
+// 項番44
+.c-section__justify {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	width: 100%;
+}
+
+// 以下誤記修正前のクラス名
+
+// パンくずリスト誤記修正前名称
+.c-list-bredcrumbs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.c-list-bredcrumbs__item {
+	display: flex;
+	align-self: center;
+	gap: 6px;
+	line-height: var(--narrow-lineHeight);
+	&:not(:first-child) {
+		&:before {
+			content: "";
+			display: block;
+			flex: 0 0 12px;
+			width: 12px;
+			height: auto;
+			aspect-ratio: 1 / 1.35;
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_bredcrumbs.svg#{$bgImgCache}) no-repeat center left;
+			background-size: contain;
+		}
+	}
+}
+
+
+// 旧ページネーション★今後廃止予定
+// 表示件数
+.c-pagelist-nav-result {
+	padding: 5px;
+	text-align: center;
+	border: solid var(--gray200);
+	border-width: 1px 0;
+}
+
+// 要素を定間隔で配置する
+// セクション内に要素を8pxの定間隔で配置※旧スタイル
+.c-section-inner {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 8px;
+}
+// セクション内に要素を定間隔で配置※新スタイル
+%cGap {
+	display: grid;
+	grid-template-rows: auto;
+}
+.c-gap-very-narrow {
+	@extend %cGap ;
+	gap: 4px;
+}
+.c-gap-narrow {
+	@extend %cGap ;
+	gap: var(--bs8);
+}
+.c-gap-default {
+	@extend %cGap ;
+	gap: var(--bs16);
+}
+.c-gap-wide {
+	@extend %cGap ;
+	gap: var(--bs24);
+}

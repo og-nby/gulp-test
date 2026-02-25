@@ -1,0 +1,108 @@
+// プリロード用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.c-preload {
+	width: 100%;
+	display: grid;
+	grid-template-rows: 100px 1fr;
+	&__img {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		img {
+			width: 32px;
+			height: auto;
+			aspect-ratio: 1 / 1;
+		}
+	}
+}
+
+
+// スワイパー用プリローダー ★2024.3.15追加 →2024.04.08画像サイズ個別指定の為、独自クラスに戻しました。
+// .c-preloader-swiper {
+	// display: grid;
+	// grid-template-rows: 1fr;
+	// gap: 16px;
+	// width: 100%;
+	// background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center;
+    // background-size: 32px auto;
+    // aspect-ratio: 1/1;
+    // @include notSp() {
+        // aspect-ratio: 16/9;
+    // }
+	// &__pagination {
+		// display: flex;
+		// gap: 12px;
+		// align-items: center;
+		// justify-content: center;
+	// }
+// }	
+
+// スワイパーページネーション用プリローダー 
+// ★2024.4.08追加 .c-preloader-swiper__paginationよりクラス名変更
+.c-preload-swiper-pagination {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: center;
+}
+
+// ★2024.4.08追加 .c-preloader-swiper-pagination-bulletよりクラス名変更
+.c-preload-swiper-pagination__bullet {
+	flex: 0 0 8px;
+	aspect-ratio: 1 / 1;
+	background-color: var(--gray200);
+	border-radius: 100%;
+	.--ball-plus & {
+		&:nth-child(1) {
+			animation: scale 0.75s -0.24s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
+		}
+		
+		&:nth-child(2) {
+			animation: scale 0.75s -0.12s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
+		}
+		
+		&:nth-child(3) {
+			animation: scale 0.75s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
+		}
+		
+	}
+}
+
+@keyframes scale {
+	0% {
+	-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
+	}
+	45% {
+	-webkit-transform: scale(0.1);
+		transform: scale(0.1);
+		opacity: 0.7;
+	}
+	80% {
+	-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+.c-preload-visitHistory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 168px;
+    &::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        background: url(#{$cdn}/assets/img/icon_assets_preload.svg) no-repeat center center;
+        background-size: 32px auto;
+    }
+}

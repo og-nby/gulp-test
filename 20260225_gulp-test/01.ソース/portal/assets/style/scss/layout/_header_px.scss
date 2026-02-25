@@ -1,0 +1,69 @@
+// dpm共通ヘッダー
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// ヘッダー外枠
+.l-header-px-kuji {
+	background-color: #fff;
+	display: flex;
+	left: 0;
+	max-width: 1080px;
+	position: sticky;
+	top: 0;
+	width: 100%;
+	z-index: 7000;
+	align-items: center;
+	justify-content: center;
+	padding: 14px var(--bs16) 6px;
+	@include onlyPc() {
+		grid-template-columns: 156px auto;
+		left: calc((100% - 1080px) / 2);
+	}
+	&__logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+	}
+}
+.l-header-px-kuji-logo {
+	width: 156px;
+	display: block;
+	transform: translateX(-32px);
+}
+
+// アカウント格納エリア
+.l-wrapper-account {
+	height: 16px;
+}
+// 未ログボタン格納エリア
+.l-wrapper-account-sign-on {
+	align-items: center;
+	display: flex;
+	height: 32px;
+}
+.l-header-account {
+	display: flex;
+	justify-content: flex-end;
+	// ログイン時矢印
+	&.--loggedin {
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_lg.svg#{$bgImgCache}) no-repeat center right;
+		background-size: 8px auto;
+		padding-right: 14px;
+	}
+}
+// ユーザーアカウント表示
+.l-header-account-userid {
+	display: inline-block;
+	max-width: 122px;
+	min-width: 70px;
+	&__text {
+		font-size: var(--small-fontSize);
+		overflow: hidden;
+		text-align: right;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: var(--gray400);
+	}
+}
+

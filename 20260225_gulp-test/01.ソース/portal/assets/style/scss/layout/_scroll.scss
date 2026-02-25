@@ -1,0 +1,31 @@
+// スクロールブロック用scss
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 横スクロール用ブロック※デフォルトは左右16px
+.l-scroll-x {
+	display: flex;
+	flex-wrap: nowrap;
+	width: 100%;
+	overflow-x: auto;
+	padding: 0 var(--default);
+	// pc以外はスクロールバーを非表示
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	// pcのみスクールバー表示
+	@include onlyPc() {
+		// スクロールバーと商品リンクが干渉しないよう隙間を作る
+		padding-bottom: var(--narrow);
+		&::-webkit-scrollbar {
+			display: block;
+			background-color:#fff;
+			height: 8px;
+		}
+		// スクールバーのデザイン
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--gray200);
+			border-radius: 5px;
+		}
+	}
+}

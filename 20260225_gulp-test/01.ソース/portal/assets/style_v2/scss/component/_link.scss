@@ -1,0 +1,96 @@
+// リンク
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+$bgImgCache: '?v=$!{cache_css_assets}&d=$!{categoryOfDevice}';
+
+// 枠付きリスト
+.c-list-frame {
+	border: 2px solid var(--gray200);
+	li:not(:last-child) {
+		border-bottom: 2px solid var(--gray200)
+	}
+}
+// 枠付きリスト2カラム
+.c-list-frame-col-2 {
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	border: solid var(--gray200);
+	border-width: 1px 0 0 1px;
+	margin: -1px;
+	li {
+		border: solid var(--gray200);
+		border-width: 0 1px 1px 0;
+	}
+}
+// 折り畳みリスト用初期表示4アイテムのみ表示
+.c-list-frame-col-2.is-init-only4item li:nth-child(n+5) {
+	display: none;
+}
+// 枠付きリスト内リンク
+// 余白8px/16px
+.c-list-frame-link-wide {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 16px;
+	@include listLinkArwStyle() {
+		flex: 0 0 12px;
+	}
+}
+// 余白8px
+.c-list-frame-link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	padding: 8px;
+	@include listLinkArwStyle() {
+		flex: 0 0 12px;
+	}
+}
+// カテゴリリスト用要素
+// アイコン付きレイアウト
+.c-list-frame-link-layout {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	gap: 6px;
+}
+// カテゴリリンク用アイコン
+.c-list-frame-link-category-icon {
+	flex: 0 0 22px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+// カテゴリリンク用カテゴリ名テキスト
+.c-list-frame-link-category-name {
+	font-weight: var(--bold-700);
+	font-size: var(--small-fontSize);
+}
+
+
+// 枠付きリスト内リンク
+.c-link-frame {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 16px;
+	border: 2px solid var(--gray200);
+	width: 100%;
+	height: 100%;
+	li:not(:last-child) & {
+		margin-block-end: -2px;
+	}
+	// + .c-link-frame {
+	// 	margin-block-start: -2px;
+	// }
+	@include listLinkArwStyle() {
+		flex: 0 0 12px;
+	}
+}

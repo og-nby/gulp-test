@@ -1,0 +1,52 @@
+// /*
+//  * スペーシング用レイアウトクラス
+//  * 要素間のギャップを管理するためのレイアウトクラス
+//  * 
+//  * 使用方法:
+//  *   - .l-space-grid-y: CSS Gridを使用した垂直スペーシング
+//  *   - .l-space-margin-y: Marginを使用した垂直スペーシング
+//  * 
+//  * バリエーション:
+//  *   - default: 16px
+//  *   - narrow: 8px  
+//  *   - veryNarrow: 4px
+//  */
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// CSS Gridを使用した垂直スペーシング
+.l-space-grid-y {
+    display: grid;
+    gap: var(--default);
+    width: 100%;
+    // gap: 8px（narrow）
+    &.--narrow {
+        gap: var(--narrow);
+    }
+    
+    // gap: 4px（veryNarrow）
+    &.--veryNarrow {
+        gap: var(--veryNarrow);
+    }
+}
+
+// Marginを使用した垂直スペーシング
+.l-space-margin-y {
+    > * + * {
+        margin-top: var(--default);
+    }
+    
+    // margin-top: 8px（narrow） 
+    &.--narrow {
+        > * + * {
+            margin-top: var(--narrow);
+        }
+    }
+    
+    // margin-top: 4px（veryNarrow） 
+    &.--veryNarrow {
+        > * + * {
+            margin-top: var(--veryNarrow);
+        }
+    }
+}

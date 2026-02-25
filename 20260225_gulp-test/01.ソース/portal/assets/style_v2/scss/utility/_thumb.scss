@@ -1,0 +1,14 @@
+// サムネイル用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.u-thumb-square {
+	display: block;
+	overflow: hidden;
+	aspect-ratio: 1 / 1;
+	img {
+		object-fit: contain;
+		width: 100%;
+		height: 100%;
+	}
+}

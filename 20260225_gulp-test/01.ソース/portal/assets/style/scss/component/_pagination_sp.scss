@@ -1,0 +1,67 @@
+// SPページネーション用
+// 2023.12.14追加
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// ページネーション用コンテナ
+.c-layout-pagination {
+	@include onlySp() {
+		border-top: 1px solid var(--gray200);
+	}
+}
+// ページネーション本体
+.c-pagination {
+    align-items: center;
+	display: none;
+	@include onlySp() {
+		display: flex;
+	}
+    height: 50px;
+	width: auto;
+	// 矢印生成用Mixin
+	@mixin c-pagination-arrow($direction) {
+		&__#{$direction} {
+			aspect-ratio: 1 / 1;
+			display: block;
+			width: 100%;
+			height: 100%;
+			flex: 0 0 50px;
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_#{$direction}.svg#{$bgImgCache}) no-repeat center center;
+			background-size: 8px 20px;
+			color: transparent;
+			&.c-pagination__#{$direction}--hidden {
+				visibility: hidden;
+			}
+		}
+	}
+	// 戻る
+	@include c-pagination-arrow(prev);
+	// 進む
+	@include c-pagination-arrow(next);
+	//  最初に戻る
+	&__back-to-top {
+		aspect-ratio: 1 / 1;
+		display: block;
+		width: 100%;
+		height: 100%;
+		flex: 0 0 50px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_back-to-top.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 16px 17px;
+		color: transparent;
+		border-right: 1px solid var(--gray200);
+		&.c-pagination__back-to-top--hidden {
+			display: none;
+		}
+	}
+	// 件数カウンター
+	&__counter {
+		font-size: var(--small-fontSize);
+		font-weight: var(--bold-700);
+		color: var(--gray600);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+		
+	}
+}

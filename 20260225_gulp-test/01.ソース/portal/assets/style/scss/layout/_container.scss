@@ -1,0 +1,60 @@
+// レイアウト用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.l-root {
+	width: min(100%, 1080px);
+	margin: auto;
+}
+// 旧クラス名※削除予定
+.l-wrapper {
+	width: 100%;
+	position: relative;
+	@include onlyPc() {
+		display: grid;
+		grid-template-columns: 320px 1fr;
+		gap: 8px;
+	}
+}
+.l-container {
+	background-color: #fff;
+	width: 100%;
+}
+// 新クラス名
+.l-layout {
+	width: 100%;
+	position: relative;
+	@include onlyPc() {
+		display: grid;
+		grid-template-columns: 320px 1fr;
+		gap: 8px;
+	}
+}
+.l-content {
+	background-color: #fff;
+	width: 100%;
+	min-width: 0;
+    min-height: 0;
+}
+//  c-sectionが並列に並ぶページでh1を配置する場合の
+.l-section {
+	background-color: #fff;
+	width: 100%;
+}
+.l-section__heading {
+	border-top: 4px solid var(--gray200);
+	padding: var(--bs24) var(--bs16) var(--bs16);
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	// 注釈、サブテキスト付
+	&.--notes {
+		display: flex;
+		align-items: baseline;
+	}
+	.c-heading-notes {
+		font-size: 12px;
+		line-height: 1;
+		font-weight: normal;
+		margin-left: 4px;
+	}
+}

@@ -1,0 +1,16 @@
+## ページ専用CSS
+@charset "UTF-8";
+## ブラウザキャッシュをさせるために、Last-Modifiedをセット
+$res.setHeader('Last-Modified','Tue, 27 Jun 2017 17:10:30 GMT')
+
+## dpmサイト内共通キャッシュファイル
+#parse("$!{baseDirectory}/assets/define/define_cache_static.vm")
+
+## swiper
+#parse("$!{baseDirectory}/assets/lib/swiper/v6/swiper.min.vm")
+
+## 新CSS
+#parse("$!{baseDirectory}/assets/style_v2/vm/global.vm")
+
+## 共通CSS用vm
+#parse("$!{baseDirectory}/assets/style/vm/global.vm")

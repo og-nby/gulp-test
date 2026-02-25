@@ -1,0 +1,239 @@
+// フローティング用スタイル
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 画面下部にボタンを固定
+.c-floating-btn {
+	position: fixed;
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+	width: 100%;
+	z-index: 199;
+	padding: var(--bs16);
+	@include onlyPc() {
+		left: calc(50% + 164px);
+	}
+}
+
+// プログラム詳細ページ、商品詳細ページ用フローティング要素用スタイル
+// フローティングボタン関連用
+// フローティングエリア
+.c-floating-detailPage {
+	// 商品詳細専用 start ================================
+	// PC用フローティングキャンセル用クラス.--staticが無かった場合のみ適用される
+	&:not(.--static) {
+		background-color: #fff;
+		position: fixed;
+		z-index: 199;
+		display: none;
+		@include notPc() {
+			left: 50%;
+			bottom: 0;
+			-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+			width: 100%;
+			padding: 8px var(--default) var(--default) var(--default);
+			box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+		}
+		@include onlyPc() {
+			right: calc((((100% - 1080px) / 2) + var(--default)));
+			bottom: var(--default);
+			width: 547px;
+			padding: var(--default);
+			box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.20);
+			border-radius: var(--narrow);
+		}
+		// 以下スタイルは.--staticが無かった場合のみ適用される
+		// 還元率・出稿主ポイントテキスト・吹き出し・ボタンのレイアウト用ブロック
+		.c-floating-detailPage-inner {
+			display: grid;
+			gap: 8px 16px;
+			position: relative;
+			// SP
+			@include notPc() {
+				grid-template-rows: auto;
+				grid-template-areas: 
+					"p-shop-floating-inner__info"
+					"p-shop-floating-inner__btnWrap";
+			}
+		
+			@include onlyPc() {
+				grid-template-columns: 156px 1fr;
+				grid-template-areas: 
+					"p-shop-floating-inner__info p-shop-floating-inner__btnWrap";
+			}
+			&__info {
+				grid-area: p-shop-floating-inner__info;
+				display: flex;
+				align-items: center;
+			}
+
+		
+		}
+		.c-floating-detailPage-flInfo {
+			display: flex;
+			align-items: center;
+			@include onlyPc() {
+				display: grid;
+				grid-template-rows: auto;
+				margin: 2px 0;
+				gap: 1px;
+				height: 44px;
+			}
+			height: 20px;
+			gap: 4px;
+		}
+		.c-floating-detailPage-shop-flInfo {
+			@include onlyPc() {
+				display: grid;
+				gap: 4px 0;
+			}
+			@include notPc() {
+				height: 20px;
+				display: flex;
+				gap: 0 4px;
+			}
+		}
+
+		// 出稿主ポイントテキスト
+		.c-floating-detailPage-flInfo-housepointText {
+			display: inline-flex;
+			align-items: center;
+			&__plus {
+				display: flex;
+				width: 8px;
+				flex: 0 0 8px;
+				height: 20px;
+				align-items: center;
+				margin-right: 4px;
+				@include onlyPc() {
+					margin: 0 2px 0 4px;
+				}
+			}
+			&__icon {
+				display: inline-block;
+				flex: 0 0 20px;
+				width: 20px;
+				height: 20px;
+				margin-right: 2px;
+			}
+			&__text {
+				font-size: var(--sm);
+				// line-height: 1;
+				-webkit-box-orient: vertical;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				overflow: hidden;
+			}
+		}
+
+	}
+	// PC固定表示
+	&.--static {
+		padding: var(--narrow) 0;
+		.c-floating-detailPage-flInfo-balloon,
+		.c-floating-detailPage-inner__info {
+			display: none;
+		}
+	}
+	// 商品詳細専用 end ================================
+
+	// プログラム詳細専用 start ================================
+	&.c-cta-floating {
+		display: initial;
+		bottom: -100px;
+		opacity: 0;
+		transition:
+			bottom 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+		@include notPc() {
+			left: 50%;
+			-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+			width: 100%;
+			padding: 8px var(--default) var(--default) var(--default);
+			box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+		}
+		@include onlyPc() {
+			right: calc((((100% - 1080px) / 2) + var(--default)));
+			width: 547px;
+			padding: var(--default);
+			box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.20);
+			border-radius: var(--narrow);
+		}
+		// ボタン表示用クラス
+		&.dispCta {
+			opacity: 1;
+			@include notPc() {
+				bottom: 0;
+			}
+			@include onlyPc() {
+				bottom: var(--default);
+			}
+		}
+	}
+	// プログラム詳細専用 end ================================
+}
+
+	// 商品詳細専用 start ================================
+// 商品詳細：お気に入りボタン・ショップでお買い物ボタン
+.c-floating-detailPage-inner__btnWrap {
+	grid-area: p-shop-floating-inner__btnWrap;
+	display: grid;
+	gap: 8px;
+	@include notPc() {
+		grid-template-columns: 60px 1fr;
+		grid-template-areas: 
+			"btn-favorite btn-shopping";
+	}
+	@include onlyPc() {
+		grid-template-columns: 1fr 60px;
+		grid-template-areas: 
+		"btn-shopping btn-favorite";
+	}
+	// お気に入りボタン
+	> .--favorite {
+		grid-area: btn-favorite;
+		gap: 4px;
+		font-size: var(--xsm);
+		font-weight: normal;
+		flex-direction: column;
+		white-space: nowrap;
+		height: 49px;
+		padding: 7px 5px;
+		&::before {
+			content: "";
+			width: 16px;
+			height: 15px;
+		}
+		// お気に入りショップ追加ボタン
+		.c-tooltip-favorite {
+			width: 180px;
+			box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+			position: absolute;
+			left: 0;
+			@include onlySp() {
+				top: -98px;
+			}
+			@include onlyTab() {
+				top: -98px;
+			}
+			@include onlyPc() {
+				top:-78px;
+				left: -104px;
+				.--static & {
+					top: -62px;
+				}
+			}
+		}
+
+	
+	}
+	// ショップでお買物ボタン
+	> .c-button-primary {
+		grid-area: btn-shopping;
+		height: 49px;
+	}
+}
+// 商品詳細専用 end ================================

@@ -1,0 +1,72 @@
+// 見出しスタイル管理用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+
+// 見出しに注釈、サブテキストを追加する
+// 見出しの子要素に見出し内用注釈テキストクラスが含まれていたら以下のようにプロパティを追加する
+%notes {
+	&:has(.c-heading-notes) {
+		display: flex;
+		align-items: baseline;
+	}
+}
+// 見出し内用注釈テキスト
+.c-heading-notes {
+	font-size: var(--small-fontSize);;
+	line-height: 1;
+	font-weight: normal;
+	margin-left: 8px;
+}
+
+// h1用見出し
+.c-heading-root {
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+
+// セクション内見出し(H2相当)
+.c-heading-lv1 {
+	font-weight: var(--bold-700);
+	font-size: var(--large-fontSize);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+
+// セクション内見出し(H3相当)
+// 背景なし
+.c-heading-lv2 {
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	line-height: var(--narrow-lineHeight);
+	padding: var(--bs8) var(--bs16);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+// 背景あり(グレー)
+.c-heading-lv2-bg {
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	line-height: var(--narrow-lineHeight);
+	background-color: var(--bg-h3);
+	margin: 0 -16px;
+	padding: var(--bs8) var(--bs16);
+	// 注釈、サブテキスト付
+	@extend %notes;
+}
+
+// セクション内見出し(H4相当)
+.c-heading-lv3 {
+	font-weight: var(--bold-700);
+	line-height: var(--narrow-lineHeight);
+	font-size: var(--medium-fontSize);
+}
+
+// セクション内見出し(H5相当)
+.c-heading-lv4 {
+	font-weight: var(--bold-700);
+	line-height: var(--narrow-lineHeight);
+	font-size: var(--medium-fontSize);
+}

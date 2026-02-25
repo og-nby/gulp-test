@@ -1,0 +1,45 @@
+// dpmベーススタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+html {
+	font-family: "Meiryo", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+	font-size: var(--medium-fontSize);
+	color: var(--gray800);
+	line-height: var(--default-lineHeight);
+	// ご確認事項が禁則文字だけの場合改行されない事象対応
+	overflow-wrap: anywhere;
+}
+
+body {
+	background-color:  #F5F5F5;
+	padding: 0;
+}
+
+a,
+a:hover,
+a:active {
+	text-decoration: none;
+	color: var(--gray800);
+}
+
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+	vertical-align: baseline;
+}
+
+ul,ol,li {
+	list-style: none;
+}
+dt,dd {
+	display: block;
+	font-weight: normal;
+}
+
+// iPhone Safariでinputタグに文字入力時拡大されてしまう事象対応
+input[type=number], 
+input[type=text] {
+	font-size: 16px;
+}

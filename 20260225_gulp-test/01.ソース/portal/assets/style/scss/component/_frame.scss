@@ -1,0 +1,219 @@
+// 汎用枠
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 角丸枠
+.c-frame {
+	background-color: #fff;
+	border: 1px solid var(--gray200);
+	padding: var(--bs16);
+	border-radius: var(--radius-medium);
+	&__inner {
+		display: grid;
+		grid-template-rows: 1fr;
+		gap: var(--bs16);
+	}
+}
+
+// 緊急告知
+.c-frame-emergency {
+	background-color: #fff;
+	border: 1px solid var(--primary);
+	padding: var(--bs8);
+}
+
+// 背景グレー
+.c-frame-gray100 {
+	background-color: var(--gray100);
+	padding: var(--bs8);
+}
+
+// 背景セカンダリー200カラー
+.c-frame-secondary200 {
+	background-color: var(--secondary200);
+	padding: var(--bs8);
+	border-radius: var(--radius-low);
+}
+
+// 枠内レイアウト用汎用フレーム
+// 縦方向
+.c-frame-inner-vt8 {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs8);
+}
+.c-frame-inner-vt16 {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs16);
+}
+// 上下両端ぞろえ
+.c-frame-inner-vt-justify {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+// 横方向
+.c-frame-inner-hn8 {
+	display: flex;
+	gap: var(--bs8);
+}
+.c-frame-inner-hn16 {
+	display: flex;
+	gap: var(--bs16);
+}
+// 左右両端ぞろえ
+.c-frame-inner-hn-justify {
+	display: flex;
+	justify-content: space-between;
+}
+
+// 商品がなかった場合等に表示されるメッセージ
+.c-frame-message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--bs16);
+	aspect-ratio: 343 / 168;
+	min-height: 168px;
+	background-color: #fff;
+	&__text {
+		text-align: center;
+		font-size: var(--large-fontSize);
+		line-height: var(--wide-lineHeight);
+		font-weight: var(--bold-700);
+	}
+}
+// ショップ情報※2024.1.10現在未使用
+.c-info-program {
+	display: flex;
+	gap: 16px;
+	&__logo {
+		flex: 0 0 76px;
+	}
+	&__info {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 4px;
+	}
+}
+
+// エラー、インフォメーション
+// グレー枠(gray200) テキスト中央寄せ★クラス名誤記のため廃止予定
+.c-frame-infomation {
+    background-color: #fff;
+    border: 1px solid var(--gray200);
+    padding: var(--bs16);
+	&__text {
+		line-height: var(--wide-lineHeight);
+		text-align: center;
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		min-height: 134px;
+	}
+}
+
+// グレー枠(gray200) テキスト中央寄せ★クラス名修正版2024.1.10
+.c-frame-information {
+    background-color: #fff;
+    border: 1px solid var(--gray200);
+    padding: var(--bs16);
+	width: 100%;
+	&__text {
+		line-height: var(--wide-lineHeight);
+		text-align: center;
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		min-height: 134px;
+	}
+	&__content {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		min-height: 134px;
+		* {
+			width: 100%;
+		}
+	}
+}
+
+// API取得失敗時エラー表示用スタイル★2023.11.6追加 start ========
+// エラー表示がページメイン
+.c-frame-error {
+	background-color: #fff;
+	border: 1px solid var(--primary);
+	padding: var(--bs16);
+	// 廃止start ====
+	&__text {
+		color: var(--primary);
+		font-size: 16px;
+		font-weight: var(--bold-700);
+	}
+	// 廃止end ====
+}
+.c-text-message-primary {
+	color: var(--primary);
+	font-size: 16px;
+	font-weight: var(--bold-700);
+}
+// エラー表示がページ途中
+.c-frame-error-secondary {
+	background-color: #fff;
+	border: 1px solid var(--gray200);
+	padding: var(--bs8);
+	display: grid;
+	gap: var(--bs16);
+	place-content: center;
+	min-height: 205px;
+	&__text {
+		text-align: center;
+		line-height: var(--wide-lineHeight);
+	}
+}
+// エラーコード
+// 廃止 start ====
+.c-text-error-code {
+	font-size: var(--large-fontSize);
+	color: var(--gray400);
+	text-align: right;
+}
+// 廃止 end ====
+// ︎API取得失敗時エラー表示用スタイル★2023.11.6追加 end ========
+
+//  未ログイン用画面 ★2023.11.28追加
+.c-frame-nologin {
+	border: 1px solid var(--gray200);
+	display: grid;
+	gap: 16px;
+	grid-template-rows: auto;
+	padding: var(--bs16);
+}
+
+
+// 変更確定 start ====
+// 角丸枠、ボーダー色gray200
+.c-frame-gray200 {
+	background-color: #fff;
+	border: 1px solid var(--gray200);
+	padding: var(--bs16);
+	border-radius: var(--radius-medium);
+}
+// 変更確定 end ====
+
+// 破線ボーダー余白16px(2025.1.29)
+// 検索結果で商品やショップが0件だった場合の表示
+.c-frame-notFound {
+    border: 1px dashed var(--gray400);
+    padding: 0 var(--default);
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	&__text {
+		height: 19px;
+		display: inline-block;
+	}
+}

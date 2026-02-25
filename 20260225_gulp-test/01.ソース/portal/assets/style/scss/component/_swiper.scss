@@ -1,0 +1,58 @@
+// Swiperカスタマイズ
+.swiper-container {
+	width: 100%;
+	height: auto!important;
+}
+
+// ページネーション
+// 廃止 start
+.c-dpm-swiper-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	gap: var(--bs16);
+	flex-wrap: wrap;
+}
+// 廃止 end
+
+
+// Swiperカスタマイズ start ----------------
+.swiper-pagination-bullet {
+	width: 6px;
+	height: 6px;
+	background: var(--gray200);
+	opacity: 1;
+}
+.swiper-pagination-bullet-active {
+	background: var(--primary)
+}
+// デフォルトシステムの打消し
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+	margin: 0;
+}
+
+// c-section内での要素がSwiperのみ、c-sectionの下余白24pxを打ち消してページネーションを配置する際に使用すること
+.c-swiper-standalone {
+	margin-bottom: calc(-1 * var(--wide));
+}
+
+// Swiperページネーション共通スタイル
+.c-swiper-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 36px;
+	gap: var(--default);
+	.swiper-pagination-bullet {
+		width: 4px;
+		height: 4px;
+		background: var(--gray200);
+		opacity: 1;
+	}
+	.swiper-pagination-bullet-active {
+		background: var(--primary500)
+	}
+
+}

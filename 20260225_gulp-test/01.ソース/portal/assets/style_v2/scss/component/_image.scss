@@ -1,0 +1,24 @@
+// 画像枠
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// メイン画像：ビューポート幅によってアスペクト比が変化する
+// SP時：1 /1 PCTAB：16:9
+.c-image-mainVisual {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center;
+    background-size: 32px auto;
+    aspect-ratio: 1/1;
+    @include notSp() {
+        aspect-ratio: 16/9;
+    }
+    @include imgLoadedStyle();
+    > img {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+    }
+}
+

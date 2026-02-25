@@ -1,0 +1,22 @@
+// Utilityスタイル管理用
+@forward "position";
+@forward "text-size";
+@forward "text-decoration";
+@forward "text-nowrap";
+@forward "space";
+@forward "reader";
+@forward "color";
+@forward "preload";
+@forward "font_size";
+@forward "font_weight";
+@forward "line_height";
+@forward "container";
+@forward "slider";
+@forward "thumb";
+@forward "wrapper"; // TODO：クラス名変更完了後削除
+@forward "layout";
+@forward "../../../style_v2/scss/utility/layout";
+@forward "../../../style_v2/scss/utility/text_overflow";
+@forward "display";
+@forward "no_break";
+@forward "visually";

@@ -1,0 +1,104 @@
+// パンくずリスト
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 2024.2.15 以下クラスは今後c-layout-breadcrumbsに変更予定
+.c-layout-breadcrumbs {
+	padding: 0 var(--bs16) var(--bs16);
+	// ページネーションと隣接時にボーダーと上方向のpaddingを指定する※SPのみ
+	@include onlySp() {
+		.c-container-pagination + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+	}
+}
+.c-list-breadcrumbs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 6px;
+}
+
+.c-list-breadcrumbs__item {
+	display: flex;
+	align-self: center;
+	gap: 6px;
+	line-height: var(--narrow-lineHeight);
+	&:not(:first-child) {
+		&:before {
+			content: "";
+			display: block;
+			flex: 0 0 12px;
+			width: 12px;
+			height: auto;
+			aspect-ratio: 1 / 1.35;
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_breadcrumbs.svg#{$bgImgCache}) no-repeat center left;
+			background-size: contain;
+		}
+	}
+}
+.c-text-breadcrumbs-current {
+	display: inline-block;
+	font-size: var(--small-fontSize);
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	color: var(--gray600);
+}
+
+// 新クラス名
+.c-breadcrumbs-layout {
+	padding: 0 var(--bs16) var(--bs16);
+	// ページネーションと隣接時にボーダーと上方向のpaddingを指定する※SPのみ
+	@include onlySp() {
+		// 旧1
+		.c-container-pagination + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+		// 旧2
+		.c-layout-pagination + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+		// 新
+		.c-pagination-layout + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+	}
+}
+.c-breadcrumbs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 6px;
+	&__item {
+		display: flex;
+		align-self: center;
+		gap: 6px;
+		line-height: var(--narrow-lineHeight);
+		&:not(:first-child) {
+			&:before {
+				content: "";
+				display: block;
+				flex: 0 0 12px;
+				width: 12px;
+				height: auto;
+				aspect-ratio: 1 / 1.35;
+				background: url(#{$cdn}/assets/img/icon_assets_arrow_breadcrumbs.svg#{$bgImgCache}) no-repeat center left;
+				background-size: contain;
+			}
+		}
+	}
+}
+// カレントテキスト
+.c-breadcrumbs-currentText {
+	display: inline-block;
+	font-size: var(--small-fontSize);
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	color: var(--gray600);
+}

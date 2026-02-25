@@ -1,0 +1,108 @@
+// 人気のショップ用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 768px以上でデザインを切り替える為のMixin
+@mixin minW768() {
+	@media screen and (min-width: 768px) {
+		@content;
+	}
+}
+
+.c-popularShops {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--narrow);
+	overflow: hidden;
+	// カテゴリボタンスライダー
+	&__categories {
+		height: 30px;
+		flex-grow: 0;
+		padding: 0 var(--default);
+		display: flex;
+		flex-wrap: nowrap; 
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		white-space: nowrap;
+		gap: var(--veryNarrow);
+		align-items: center;
+		scrollbar-width: none;
+		scroll-behavior: smooth;
+		@include onlyPc() {
+			overflow-x: auto;
+			scrollbar-width: auto;
+			height: 46px;
+			align-items: flex-start;
+		}
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		// PC時のみスクロールバーを表示
+		@include onlyPc() {
+			&::-webkit-scrollbar {
+				display: block;
+				height: var(--narrow);
+			}
+			&::-webkit-scrollbar-track {
+				background: transparent;
+				border-radius: var(--veryNarrow);
+			}
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--gray200);
+				border-radius: var(--veryNarrow);
+			}
+		}
+	}
+	// コンテンツ
+	&__content {
+		flex-shrink: 0;
+		padding: 0 var(--default);
+	}
+	// ショップリンクレイアウト用
+	&__cardList {
+		--card-width: 113px; // ※DPMDEV-6111にて追加
+		display: grid;
+		// ~767px:8件表示
+		@include notPc() {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 10px var(--narrow);
+		}
+		// 768px～999px:6件表示
+		@include minW768() {
+			grid-template-columns: repeat(6, var(--card-width));
+			justify-content: flex-start; 
+			gap: var(--narrow);
+			.c-card {
+				&:nth-child(7),
+				&:nth-child(8) {
+					display: none;
+				}
+			}
+		}
+		// 1000px~:5件表示※DPMDEV-6111にて追加
+		@include onlyPc() {
+			grid-template-columns: repeat(5, var(--card-width));
+			justify-content: flex-start; 
+			gap: var(--narrow);
+			.c-card {
+				&:nth-child(6),
+				&:nth-child(7),
+				&:nth-child(8) {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+// 0件表示等のエラーメッセージ
+.c-popularShops-error {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&__text {
+		text-align: center;
+		line-height: var(--wide-lineHeight);
+	}
+}

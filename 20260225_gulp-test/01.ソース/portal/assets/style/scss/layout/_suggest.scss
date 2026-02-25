@@ -1,0 +1,93 @@
+// サジェスト用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+
+.l-suggest {
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	height: 100vh;
+	width: 100%;
+	z-index: 7001;
+	display: none;
+	@include onlyPc() {
+		max-width: 1080px;
+	}
+}
+.l-suggest__search {
+	padding: var(--default);
+}
+.l-suggest__body {
+	max-height: calc(100svh - 70px);
+	height: auto;
+    overflow-y: auto;
+	// 先頭のみグレーラインをつける　★2025.2追加
+	&--border-first {
+		border-top: 4px solid var(--gray200);
+	}
+}
+
+// 検索履歴　★2025.2追加
+.l-suggest__body-history {
+	max-height: calc(100svh - 257px);
+	height: auto;
+    overflow-y: auto;
+}
+
+// 検索履歴が0件のメッセージ　★2025.2追加
+.l-suggest-message-none {
+	padding: var(--default);
+	line-height: var(--narrow-lineHeight);
+	text-align: center;
+}
+
+// ショップから探す・カテゴリから探す・検索履歴見出し　★2024.12追加
+.l-suggest-list {
+	&:not(:last-child) {
+		border-bottom: 1px solid var(--gray100);
+	}	
+}
+.l-suggest-link {
+	display: grid;
+	align-items: center;
+	padding: 12px var(--default);
+	gap: 4px;
+	grid-template-columns: 24px 1fr;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_suggest.svg#{$bgImgCache}) no-repeat center right 16px;
+	background-size: 10px auto;
+}
+.l-suggest-heading {
+	font-weight: var(--bold-700);
+	font-size: var(--medium-fontSize);
+	background-color: var(--bg-h3);
+	padding: var(--bs8) var(--bs16);
+}
+.l-suggest-wrapper {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--gray100);
+	align-items: center;
+}
+.l-suggest-text {
+	width: 100%;
+	cursor: pointer;
+	padding: var(--default);
+}
+.l-suggest-text__word {
+	margin-top: -5px;
+}
+.l-suggest-text__category {
+	color: var(--primary500);
+	font-size: var(--xsmall-fontSize);
+	margin-top: 4px;
+	line-height: 6px;
+}
+.l-suggest-clear-container {
+	padding-right: var(--default);
+}
+.l-suggest-clear-button {
+	aspect-ratio: 1/1;
+	width: 18px;
+	height: 18px;
+}

@@ -1,0 +1,195 @@
+// ページネーション用スタイル
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 共通ページネーション用コンテナ
+.c-pagination-layout {
+	@include onlySp() {
+		border-top: 1px solid var(--gray200); 
+		// ページネーションと隣接時にボーダーと上方向のpaddingを指定する※SPのみ
+		+ .c-breadcrumbs-layout {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+	}
+}
+
+// PCTAB用 start =====
+// 表示件数
+.c-pagination-notSp-counter {
+	display: none;
+	@include notSp() {
+		display: block;
+	}
+	padding: 5px;
+	text-align: center;
+	border: solid var(--gray200);
+	border-width: 1px 0;
+}
+// ページネーション
+.c-pagination-notSp {
+	display: none;
+	@include notSp() {
+		display: flex;
+	}
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--bs16) 0;
+	// ページNo表示エリア
+	&__numArea {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		flex: 1;	
+	}
+	// 左（戻る）エリア
+	&__prevArea {
+		display: flex;
+		align-items: center;
+		flex: 0 0 80px;
+		&.--hidden {
+			opacity: 0;
+		}
+	}
+	// 右（進む）エリア
+	&__nextArea {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		flex: 0 0 80px;
+		&.--hidden {
+			opacity: 0;
+			// 親要素に`--hidden`が含まれていた場合は矢印を非表示
+			[class^="c-pagination-notSp-item-"] {
+				display: none;
+			}
+		}
+	}
+}
+// ページネーション表示要素
+// 共通プレースホルダー
+%cPagenationItemStyle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	flex: 0 0 30px;
+	aspect-ratio: 1 / 1;
+	font-size: 15px;
+	font-weight: var(--bold-700);
+	color: var(--gray400);
+	cursor: pointer;
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--gray400);
+	}	
+}
+// デフォルト（数字）
+.c-pagination-notSp-item {
+	@extend %cPagenationItemStyle;
+	// カレント
+	&.--current {
+		color: var(--gray800);
+		cursor: default;
+	}
+}
+// 左矢印
+.c-pagination-notSp-item-prev {
+	@extend %cPagenationItemStyle;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_left.svg#{$bgImgCache}) no-repeat center center;
+	background-size: 7px 16px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	aspect-ratio: 1 / 1;
+	&.--hidden {
+		display: none;
+	}
+}
+// 右矢印
+.c-pagination-notSp-item-next {
+	@extend %cPagenationItemStyle;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_right.svg#{$bgImgCache}) no-repeat center center;
+	background-size: 7px 16px;
+	display: block;
+	width: 30px;
+	height: 30px;
+	aspect-ratio: 1 / 1;
+}
+//  最初に戻る
+.c-pagination-notSp-item-first {
+	@extend %cPagenationItemStyle;
+	aspect-ratio: 1 / 1;
+	display: block;
+	width: 100%;
+	height: 100%;
+	flex: 0 0 38px;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_back-to-top.svg#{$bgImgCache}) no-repeat center center;
+	background-size: auto 14px;
+	&.--hidden {
+		display: none;
+	}
+}
+// PCTAB用 end  =====
+
+// SP用 start =====
+.c-pagination-sp {
+    align-items: center;
+	display: none;
+	@include onlySp() {
+		display: flex;
+	}
+    height: 50px;
+	width: auto;
+	// 矢印生成用Mixin
+	@mixin c-pagination-arrow($direction) {
+		&__#{$direction} {
+			aspect-ratio: 1 / 1;
+			display: block;
+			width: 100%;
+			height: 100%;
+			flex: 0 0 50px;
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_#{$direction}.svg#{$bgImgCache}) no-repeat center center;
+			background-size: 8px 20px;
+			color: transparent;
+			&.--hidden {
+				visibility: hidden;
+			}
+		}
+	}
+	// 戻る
+	@include c-pagination-arrow(prev);
+	// 進む
+	@include c-pagination-arrow(next);
+	//  最初に戻る
+	&__first {
+		aspect-ratio: 1 / 1;
+		display: block;
+		width: 100%;
+		height: 100%;
+		flex: 0 0 50px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_back-to-top.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 16px 17px;
+		color: transparent;
+		border-right: 1px solid var(--gray200);
+		&.--hidden {
+			display: none;
+		}
+	}
+	// 件数カウンター
+	&__counter {
+		font-size: var(--small-fontSize);
+		font-weight: var(--bold-700);
+		color: var(--gray600);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+		
+	}
+}
+
+// SP用 end   =====

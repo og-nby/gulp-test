@@ -1,0 +1,439 @@
+// // 並べ替え・絞り込み
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 並べ替え・絞り込み画面起動部分
+.c-sort-operate {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	// 並べ替えボタン
+	&__button-order {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		cursor: pointer;
+		color: var(--gray600);
+		font-weight: var(--bold-700);
+		&::after {
+			content: "";
+			display: block;
+			width: 11px;
+			height: 12px;
+			flex: 0 0 11px;
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_sort.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+		&.is-order-list-open::after {
+			content: "";
+			transform: rotate(180deg);
+		}
+		&.is-order-selected {
+			color: #0C7ECC;
+			&::after {
+				background: url(#{$cdn}/assets/img/icon_assets_arrow_sort_selected.svg#{$bgImgCache}) no-repeat center center;
+				background-size: contain;
+			}
+		}
+	}
+	// 絞り込みボタン
+	&__button-filter {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		cursor: pointer;
+		color: var(--gray600);
+		font-weight: var(--bold-700);
+		&::before {
+			content: "";
+			display: block;
+			width: 18px;
+			height: 18px;
+			flex: 0 0 18px;
+			background: url(#{$cdn}/assets/img/icon_assets_sort_filter.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+		&.is-fliter-selected {
+			color: var(--primary300);
+			&::before {
+				background: url(#{$cdn}/assets/img/icon_assets_sort_filter_selected.svg#{$bgImgCache}) no-repeat center center;
+				background-size: contain;
+			}
+		}
+	}
+	
+}
+
+// 並び替え
+.c-sort-order-list {
+	padding: 6px var(--bs16);
+	border-radius: 8px;
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	top: 22px;
+	left: 0;
+	width: 214px;
+	height: auto;
+	z-index: 5001;
+	li {
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--gray100);
+		}
+	}
+}
+.c-sort-order-terms {
+	&__value {
+		cursor: pointer;
+		display: block;
+		padding: var(--bs8) 0;
+	}
+	input[type=radio] {
+		display: none;
+		&:checked + .c-sort-order-terms__value {
+			font-weight: var(--bold-700);
+			color: var(--textLink);
+			cursor: default;
+			padding-right: var(--bs16);
+			background: url(#{$cdn}/assets/img/icon_assets_sort_order_terma_selected.svg#{$bgImgCache}) no-repeat center right; 
+			background-size: var(--bs16) auto;
+		}
+	}
+}
+
+// 並び替え用オーバーレイ
+.c-sort-order-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	z-index: 5000;
+}
+
+// 絞り込み start ============
+
+
+// 絞り込み系スタイル start ===========
+
+// 絞り込み画面オーバーレイ
+.c-ovaerlay-filter {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 7000;
+}
+
+
+// 絞り込み画面外枠部分
+.c-sort-filter-content {
+	z-index: 7001;
+	background-color: #fff;
+	padding: 32px 32px 0;
+	width: 100%;
+	height: 82vh;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	border-radius: var(--bs16) var(--bs16) 0 0;
+	@media screen and (min-width: 1000px) {
+		max-width: 750px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border-radius: var(--bs16);
+	}
+	// スライド格納部分
+	&__inner {
+		overflow: hidden;
+		width: 100%;
+	}
+}
+
+// 絞り込み画面スライド切替用 start ============
+.c-sort-filter-slider {
+	display: table;
+	table-layout: fixed;
+	width: auto;
+	transition: .5s ease-out;
+	&__item {
+		display: table-cell;
+		width: 100%;
+		height: 100%;
+	}
+}
+// 絞り込み画面スライド切替用 end ============
+
+// 絞り込み項目配置用コンテナ start ============
+.c-layout-filter {
+	display: grid;
+	grid-template-rows: 1fr;
+	height: calc(82vh - 78px); // 78px：モーダルのpadding-top + 戻るボタンのheightの合計値 + 戻るボタンの下の余白★2023.11.1修正
+	.c-layout-filter-category__slide:nth-child(1) & {
+		height: calc(82vh - 32px); // 32px：モーダルのpadding-topの値
+	}
+	// フィルター項目エリア★スクロール有り
+	&__main {
+		display: grid;
+		grid-template-rows: auto;
+		width: 100%;
+		overflow-y: auto;
+		scroll-snap-type: y;
+		max-height: calc(82vh - 155px); // 155px：モーダルのpadding-top + 戻るボタンのheight + ボタンのheightの合計値 + 戻るボタンの下の余白★2023.11.1修正
+		gap: 24px;
+		@include onlyPc() {
+			overflow-y: scroll;
+			margin-right: -20px; // スクロールバー分右にオフセットさせる
+			padding-right: 20px;
+		}
+	}
+	// 選択したフィルター項目の決定ボタンエリア
+	&__btnarea {
+		background-color: #fff;
+		padding: 17px 0 14px;
+		max-height: 80px;
+	}
+	// 項目が少なくレイアウト崩れる場合のスタイル★2023.11.1追加
+	&__mainitemlittle {
+		overflow-y: auto;
+		scroll-snap-type: y;
+		width: 100%;
+		max-height: calc(82vh - 155px);
+		@include onlyPc() {
+			overflow-y: scroll;
+			margin-right: -20px;
+			padding-right: 20px;
+		}
+	}
+}
+// 絞り込み項目配置用コンテナ end ============
+
+// フィルター項目用セクション start ============
+.c-sort-filter-section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--bs16);
+	&__header {
+		flex: 0 0 18px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 3px;
+		cursor: pointer;
+		&::after {
+			content: "";
+			display: block;
+			flex: 0 0 var(--bs16);
+			aspect-ratio: 1 / 1;
+			background: url(#{$cdn}/assets/img/icon_assets_filter_arrow.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+		&.is-filter-open::after {
+			transform: rotate(180deg);
+		}
+	}
+	&__body {
+		display: none;
+		&.is-filter-open {
+			display: block;
+		}
+	}
+	// 項目が少なくレイアウト崩れる際の各セクションに設置（gap:24px;の代わり）★2023.11.1追加
+	&.--main-item-little-padding-bottom {
+		padding-bottom: 24px;
+	}
+}
+// フィルター項目用セクション end ============
+
+// フィルター画面内タグ配置用ラッパー start ============
+.c-sort-filter-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 10px;
+}
+// フィルター画面内タグ配置用ラッパー end ============
+
+// 絞り込み画面カテゴリ選択後用タグ
+.c-sort-filter-selectedItem {
+	position: relative;
+	min-width: 35px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 8px 12px;
+	border: 1px solid var(--gray200);
+	display: inline-block;
+	cursor: pointer;
+	border-color: var(--primary300);
+	color: var(--primary300);
+	padding-left: 26px;
+	background: url(#{$cdn}/assets/img/icon_assets_category_tag_close.svg#{$bgImgCache}) no-repeat 8px 50%;
+	background-size: 14px auto;
+}
+
+// 価格系　start ============
+.ui-widget-header {
+	border-width: 0;
+	background-color: #333;
+}
+.ui-widget.ui-widget-content {
+	border: none;
+	background-color: #ddd;
+}
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+	border-width: 0;
+	background: #ddd;
+	font-weight: normal;
+	color: #454545;
+	border-radius: 100%;
+}
+// 価格系　end ============
+
+// カテゴリ選択系 start ============
+// カテゴリ選択画面用戻るリンク
+.c-sort-filter-navigation {
+	display: flex;
+	align-items: center;
+	height: 27px;
+	margin-bottom: var(--bs16); // リンク下の16pxの余白用スタイル★2023.11.1追加
+}
+// 選択カテゴリリスト
+.c-list-fliter-category {
+	li {
+		border-bottom: 1px solid var(--gray200);
+	}
+}
+// 選択カテゴリ共通スタイル
+%categoryItemStyle {
+	font-size: var(--small-fontSize);
+	background: url(#{$cdn}/assets/img/icon_assets_filter_category.svg#{$bgImgCache}) no-repeat center right; 
+	background-size: 12px auto;
+	cursor: pointer;
+	color: var(--gray600);
+}
+// 1階層目
+c-sort-filter-category-lv1 {
+	@extend %categoryItemStyle;
+	font-weight: var(--bold-700);
+	padding: var(--bs8) 12px var(--bs8) 0;
+}
+// 2階層目
+.c-sort-filter-category-lv2 {
+	@extend %categoryItemStyle;
+	padding: var(--bs8) 12px;
+}
+// 3階層目
+.c-sort-filter-category-lv3 {
+	@extend %categoryItemStyle;
+	padding: var(--bs8) 12px var(--bs8) 24px;
+}
+// 4階層目
+.c-sort-filter-category-lv4 {
+	display: block;
+	padding: var(--bs8) 0 var(--bs8) 36px;
+	cursor: pointer;
+	// カテゴリ名テキスト
+	&__value {
+		font-size: var(--small-fontSize);
+		color: var(--gray600);
+	}
+	// ラジオボタン
+	input[type=radio]:checked + .c-sort-filter-category-lv4__value {
+		font-weight: var(--bold-700);
+		background: url(#{$cdn}/assets/img/icon_assets_checkmark.svg#{$bgImgCache}) no-repeat center right;
+		background-size: 12px auto;
+	}
+}
+
+// 選択済みカテゴリ名 -------
+// 選択カテゴリ名共通CSS
+%categoryItemSelected {
+	font-size: var(--small-fontSize);
+	font-weight: var(--bold-700);
+	border-bottom: 1px solid var(--gray200);
+	color: var(--gray600);
+	cursor: pointer;
+	// 選択済みアイテム
+	&.--item-checked {
+		background: url(#{$cdn}/assets/img/icon_assets_checkmark.svg#{$bgImgCache}) no-repeat center right; 
+		background-size: 12px auto;
+		padding-right: 12px;
+	}
+}
+// カテゴリ画面各階層の選択カテゴリ名表示用
+.c-sort-filter-category-lv1-selected {
+	@extend %categoryItemSelected;
+	padding: var(--bs8) 0;
+}
+.c-sort-filter-category-lv2-selected {
+	@extend %categoryItemSelected;
+	padding: var(--bs8) 0 var(--bs8) 12px;
+}
+.c-sort-filter-category-lv3-selected {
+	@extend %categoryItemSelected;
+	padding: var(--bs8) 0 var(--bs8) 24px;
+}
+// カテゴリ選択系 end ============
+
+// 絞り込み系スタイル end ===========
+
+
+// 絞り込みプルダウン start ============
+
+.c-layout-list-filter {
+	border-radius: 0 0 var(--radius-low) var(--radius-low);
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	border-width: 0 1px 1px;
+	width: 100%;
+	height: auto;
+	z-index: 5001;
+}
+
+.c-list-filter-terms-radio {
+	display: none;
+}
+.c-list-filter-terms {
+	display: block;
+	cursor: pointer;
+}
+.c-list-filter-terms-radio:checked + .c-list-filter-terms {
+	font-weight: var(--bold-700);
+	color: var(--other-red);
+	padding-right: var(--bs16);
+	background: url(#{$cdn}/assets/img/icon_assets_pulldown_check.svg#{$bgImgCache}) no-repeat center right; 
+	background-size: var(--bs16) auto;
+}
+
+// カテゴリーアイテム（1階層目のみ）用スタイル★2023.11.1追加 start ========
+.c-sort-filter-categorySelect {
+	display: block;
+	cursor: pointer;
+	padding: var(--bs8) 0;
+	// カテゴリ名テキスト
+	&__value {
+		font-size: var(--small-fontSize);
+		color: var(--gray600);
+		font-weight: var(--bold-700);
+	}
+	// ラジオボタン
+	input[type=radio] {
+		display: none;
+		&:checked + .c-sort-filter-categorySelect__value {
+			background: url(#{$cdn}/assets/img/icon_assets_checkmark.svg#{$bgImgCache}) no-repeat center right;
+			background-size: 12px auto;
+		}
+	}
+}
+// ︎カテゴリーアイテム（1階層目のみ）用スタイル★2023.11.1追加 end ========

@@ -1,0 +1,21 @@
+// 一定の行数を超えたらリーダー表示にするUtility
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// テキスト省略用スタイル用Mixin
+@mixin u-overflow-reader-base($num) {
+	.u-overflow-reader-#{$num} {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: #{$num};
+		overflow: hidden;
+	}
+}
+// Max 1行
+@include u-overflow-reader-base(1);
+// Max 2行
+@include u-overflow-reader-base(2);
+// Max 3行
+@include u-overflow-reader-base(3);
+// Max 4行
+@include u-overflow-reader-base(4);

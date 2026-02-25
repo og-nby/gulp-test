@@ -1,0 +1,18 @@
+## 基本設定用vm
+
+## 共通CSSキャッシュ用vm
+
+## CSS用キャッシュを定義
+#set($cache_css_assets = "202602171000")
+
+## 画像用キャッシュを定義
+#set($cache_img_assets = "202511141343")
+
+## JS用キャッシュを定義
+#set($cache_js_assets  = "202507151000")
+
+## お気に入り商品JS用キャッシュを定義
+#set($cache_js_assets_favoriteItems  = "202506031000")
+
+## お気に入りショップJS用キャッシュを定義
+#set($cache_js_assets_favoriteShops  = "202509171000")
