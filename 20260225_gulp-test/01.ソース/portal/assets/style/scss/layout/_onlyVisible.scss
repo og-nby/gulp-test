@@ -1,0 +1,35 @@
+// デバイス別に表示非表示を切り替える
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// PCのみ非表示にする
+.l-onlyVisible-tabSp {
+	display: block;
+	@include onlyPc() {
+		display: none;
+	}
+}
+
+// SP（縦向き）の時のみ非表示にする
+.l-onlyVisible-sp {
+	display: block;
+	@include notSp() {
+		display: none;
+	}
+	@include onlySp() {
+		@include landscape() {
+			display: none;
+		}
+	}
+}
+
+// PC・TB・SP横向きの時は非表示にする
+.l-onlyVisible-pcTab {
+	display: block;
+	@include onlySp() {
+		display: none;
+		@include landscape() {
+			display: block;
+		}
+	}
+}

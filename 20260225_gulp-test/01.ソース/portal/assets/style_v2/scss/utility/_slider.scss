@@ -1,0 +1,14 @@
+// リストを横スクロールに変更するユティリティ
+// c-layout-sliderと組み合わせる
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.u-list-slider {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	@include onlyPc() {
+		margin-bottom: -20px;
+		padding-bottom: 20px;
+	}
+}

@@ -1,0 +1,58 @@
+// 要素配置用ラッパー
+// 横方向
+.u-wrapper-ht-gap2 {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 2px;
+}
+.u-wrapper-ht-gap4 {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 4px;
+}
+.u-wrapper-ht-gap6 {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 6px;
+}
+.u-wrapper-ht-gap8 {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 8px;
+}
+// 縦歩行
+.u-wrapper-vt-gap2 {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 2px;
+}
+.u-wrapper-vt-gap4 {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 4px;
+}
+.u-wrapper-vt-gap6 {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 6px;
+}
+.u-wrapper-vt-gap8 {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 8px;
+}
+.u-wrapper-jusify-start {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+.u-wrapper-jusify-center {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.u-wrapper-jusify-end {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}

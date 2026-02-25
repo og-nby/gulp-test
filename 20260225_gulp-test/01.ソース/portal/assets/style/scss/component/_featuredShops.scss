@@ -1,0 +1,118 @@
+// おすすめのショップ用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.c-featuredShops-wrapper {
+	margin-bottom: calc(0px - var(--wide));
+}
+.c-featuredShops {
+	@include onlySp() {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		width: 100%;
+		min-width: 343px;
+		.c-card-lite {
+			// グリッド表示時（SP)の枠線調整
+			border: 1px solid var(--gray200);
+			// 左の枠線を透明にする（画像サイズ崩れ防止の為colorで調整）
+			border-left-color: transparent; 
+			// 1列目のみ左線を表示
+			&:nth-child(4n + 1) {
+				border-left-color: var(--gray200);
+			}
+			// 2行目（5〜8番目）のみ border-top を削除
+			&:nth-child(n + 5):nth-child(-n + 8) {
+				border-top: none;
+			}
+		}
+		@include landscape() {
+        	display: flex;
+			flex-wrap: nowrap;
+			width: 100%;
+			overflow-x: auto;
+			padding: 0 var(--default);
+			border-left-color: transparent;
+			.c-card-lite {
+				// SP縦向き用border設定をリセット
+				&:nth-child(4n + 1) {
+					border-left-color: transparent; 
+				}
+				&:nth-child(n + 5):nth-child(-n + 8) {
+					border-top: 1px solid var(--gray200);
+				}
+				// 一番左のみ左線を表示
+				&:first-child {
+					border-left-color: var(--gray200);
+				}	
+				// スライダー表示時のカード調整
+				flex: 0 0 88px;
+			}
+			// pc以外はスクロールバーを非表示
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			// pcのみスクールバー表示
+			@include onlyPc() {
+				// スクロールバーと商品リンクが干渉しないよう隙間を作る
+				padding-bottom: var(--narrow);
+				&::-webkit-scrollbar {
+					display: block;
+					background-color:#fff;
+					height: 8px;
+				}
+				// スクールバーのデザイン
+				&::-webkit-scrollbar-thumb {
+					background-color: var(--gray200);
+					border-radius: 5px;
+				}
+			}
+		}
+	}
+	@include notSp() {
+		display: flex;
+		flex-wrap: nowrap;
+		width: 100%;
+		overflow-x: auto;
+		padding: 0 var(--default);
+		// pc以外はスクロールバーを非表示
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		// pcのみスクールバー表示
+		@include onlyPc() {
+			// スクロールバーと商品リンクが干渉しないよう隙間を作る
+			padding-bottom: var(--narrow);
+			&::-webkit-scrollbar {
+				display: block;
+				background-color:#fff;
+				height: 8px;
+			}
+			// スクールバーのデザイン
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--gray200);
+				border-radius: 5px;
+			}
+		}
+		// スライダー表示時のカード調整※線幅をカード幅に追加：2025.10.29
+		.c-card-lite {
+			flex: 0 0 88px;
+		}
+	}
+}
+// プリローダー
+.c-featuredShops-preloader {
+	// PC：640/130
+	// TAB：609/114
+	// SP：343/239
+	@include onlyPc() {
+		aspect-ratio: 640 / 130;
+	}
+	@include onlyTab() {
+		aspect-ratio: 609  /114;
+	}
+	@include onlySp() {
+		aspect-ratio: 343 / 239;
+	}
+	background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center;
+	background-size: 32px auto;
+}

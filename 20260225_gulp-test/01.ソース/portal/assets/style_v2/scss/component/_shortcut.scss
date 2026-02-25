@@ -1,0 +1,31 @@
+// ショートカットリンク用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// サービス導線 ★2024.4.23余白修正
+.c-shortcut-layout{
+	display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+	gap: 16px 6px;
+    margin-block-end: -8px;
+}
+
+.c-shortcut {
+	display: grid;
+    grid-template-rows: auto;
+    justify-content: center;
+	gap: 8px;
+	&__icon {
+        width: 32px;
+        height: 32px;
+        aspect-ratio: 1 / 1;
+        margin-inline: auto;
+    }
+	&__text {
+		text-align: center;
+		line-height: var(--narrow-lineHeight);
+		font-size: var(--xsmall-fontSize);
+		font-weight: var(--bold-700);
+	}
+}

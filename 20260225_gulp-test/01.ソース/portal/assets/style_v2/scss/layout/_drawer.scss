@@ -1,0 +1,80 @@
+// ドロワー
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 以下のCSSはviewport 1000px未満でのみ有効
+
+// ハンバーガー
+.l-drawer-hamburger {
+	display: flex;
+	justify-content: center;
+	width: 32px;
+	height: auto;
+	aspect-ratio: 1 / 1;
+	background: #fff;
+	@include onlyPc() {
+		display: none;
+	}
+	&__icon {
+		display: flex;
+		height: 20px;
+		margin: auto;
+		position: relative;
+		width: 28px;
+		align-items: center;
+	}
+}
+
+.l-drawer-bar {
+	background-color: var(--gray800);
+	height: 2px;
+	width: 100%;
+	.is-opened-nav & {
+		background-color: transparent;
+	}
+	&::before {
+		background-color: var(--gray800);
+		content: "";
+		height: 2px;
+		left: 0;
+		position: absolute;
+		top: 0;
+		transition: all .4s cubic-bezier(.19,1,.22,1);
+		width: 100%;
+		.is-opened-nav & {
+			transform: rotate(45deg) translate(6px, 6px);
+		}
+	}
+	&:after {
+		background-color: var(--gray800);
+		content: "";
+		height: 2px;
+		left: 0;
+		position: absolute;
+		transition: all .4s cubic-bezier(.19,1,.22,1);
+		width: 100%;
+		bottom: 0;
+		.is-opened-nav & {
+			transform: rotate(-45deg) translate(6px, -6px);
+		}
+	}
+}
+
+// Scroll lock
+body.is-opened-nav {
+	overflow: hidden;
+}
+
+// ドロワーメニュー用オーバーレイ
+.l-drawer-overlay {
+	background-color: rgba(0,0,0,.7);
+	position: fixed;
+	height: 150%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index: 8000;
+	background:url(#{$cdn}/assets/img/btn_assets_menu_close.svg#{$bgImgCache}) no-repeat calc(100% - 16px) 12px;
+	background-size: 23px auto;
+}

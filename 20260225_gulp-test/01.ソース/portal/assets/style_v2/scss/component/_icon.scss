@@ -1,0 +1,41 @@
+// アイコン用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// カード内やその他で使用されるポイント用ショップアイコン
+.c-icon-advertiserPoint {
+    flex: 0 0 16px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 100%;
+    width: 16px;
+    height: auto;
+    > img {
+        object-fit: cover;
+    }
+}
+// ショップアイコンとセットで使われるプラス記号の画像
+.c-icon-plus {
+    flex: 0 0 var(--bs8);
+    width: 8px;
+    height: auto;
+}
+
+// d払いアイコン用
+.c-icon-dpayment {
+	aspect-ratio: 1/1;
+	width: 24px;
+	height: 24px;
+	// テキスト付きの場合
+	&:has(.c-icon-dpayment__text) {
+		width: 20px;
+		height: 20px;
+		display: flex;
+		gap: 6px;
+	}
+	// d払いテキスト
+	&__text {
+		font-weight: var(--bold-700);
+		white-space: nowrap;
+	}
+}

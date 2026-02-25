@@ -1,0 +1,25 @@
+// ブロックカテゴリー用スタイル
+
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+%c-section-base {
+	background-color: #fff;
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 16px;
+}
+
+// dpm標準デザイン用セクション
+.c-section {
+	@extend %c-section-base;
+	border-top: 4px solid var(--gray200);
+	padding: var(--bs24) var(--bs16);
+
+}
+
+// ボーダー無セクション
+.c-section-noBorder {
+	@extend %c-section-base;
+	padding: 0 var(--bs16) var(--bs24);
+}

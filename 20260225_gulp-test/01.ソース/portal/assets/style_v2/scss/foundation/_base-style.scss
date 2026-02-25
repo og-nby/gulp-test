@@ -1,0 +1,39 @@
+// dpmベーススタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+html {
+	font-family: "Meiryo", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+	font-size: var(--medium-fontSize);
+	color: var(--gray800);
+	line-height: var(--default-lineHeight);
+	word-break:break-all;
+}
+
+body {
+	background-color:  #F5F5F5;
+	padding: 0;
+}
+
+a,
+a:hover,
+a:active {
+	text-decoration: none;
+	color: var(--gray800);
+}
+
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+	vertical-align: baseline;
+}
+
+ul,ol,li {
+	list-style: none;
+}
+dt,dd {
+	display: block;
+	font-weight: normal;
+}
+

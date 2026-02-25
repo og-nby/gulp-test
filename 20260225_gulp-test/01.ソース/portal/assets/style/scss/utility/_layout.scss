@@ -1,0 +1,129 @@
+// 要素配置用ラッパー
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+%cGapX {
+	display: flex;
+	flex-wrap: nowrap;
+}
+%cGapY {
+	display: grid;
+	grid-template-rows: auto;
+}
+
+// 廃止確定 start ====
+// 横方向に等間隔で並べる
+.u-layout-gap-x-very-narrow {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 4px;
+}
+.u-layout-gap-x-narrow {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 8px;
+}
+
+// 横方向均等並べ
+.u-layout-even-x {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	width: 100%;
+}
+.u-layout-even-x-start {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+.u-layout-even-x-center {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.u-layout-even-x-end {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+// c-section内の左右の余白をキャンセルする
+// 廃止確定 start
+.u-layout-no-margin-x {
+	margin-inline: -16px;
+	overflow: hidden;
+}
+// 縦方向に等間隔で並べる
+.u-layout-gap-y-very-narrow {
+	@extend %cGapY;
+	gap: 4px;
+}
+.u-layout-gap-y-narrow {
+	@extend %cGapY;
+	gap: var(--bs8);
+}
+.u-layout-gap-y-default {
+	@extend %cGapY;
+	gap: var(--bs16);
+}
+.u-layout-gap-y-wide {
+	@extend %cGapY;
+	gap: var(--bs24);
+}
+// 廃止確定 end ====
+
+// 変更確定 start ====
+// c-section内の左右の余白をキャンセルする
+.u-layout-noMargin-x {
+	margin-inline: -16px;
+	overflow: hidden;
+}
+
+// 縦方向4px
+.u-layout-gap-veryNarrow-y {
+	@extend %cGapY;
+	gap: var(--veryNarrow);
+}
+// 縦方向8px
+.u-layout-gap-narrow-y {
+	@extend %cGapY;
+	gap: var(--narrow);
+}
+// 縦方向16px
+.u-layout-gap-default-y {
+	@extend %cGapY;
+	gap: var(--default);
+}
+// 縦方向24px
+.u-layout-gap-wide-y {
+	@extend %cGapY;
+	gap: var(--wide);
+}
+
+// 左右均等並べ：デフォルト
+.u-layout-justify {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--narrow);
+}
+// 左右均等並べ：上揃え
+.u-layout-justify-gap-start-x {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+// 左右均等並べ：下揃え
+.u-layout-justify-gap-end-x {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+// 左右均等並べ：中央揃え、position:relative付き
+.u-layout-justify-gap-center-x {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	width: 100%;
+}
+// 変更確定 end ====

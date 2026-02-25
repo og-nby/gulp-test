@@ -1,0 +1,27 @@
+// ブロック内の位置調整
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 右寄せ（インライン要素）
+.c-position-right {
+	text-align: right;
+}
+// 右寄せ（ブロック要素）
+.c-position-right-flex {
+	display: flex;
+	justify-content: flex-end;
+}
+// 中央寄せ（インライン要素）
+.c-position-center {
+	text-align: center;
+}
+// 中央寄せ（ブロック要素）
+.c-position-center-flex {
+	display: flex;
+	justify-content: center;
+}
+// 左寄せ（ブロック要素）
+.c-position-left-flex {
+	display: flex;
+	justify-content: flex-start;
+}

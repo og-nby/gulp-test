@@ -1,0 +1,102 @@
+// オンボードコンテンツ
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// オンボードコンテンツ ★2024.03.22追加************************************
+
+.c-onboard-header {
+	position: absolute;
+	top: 24px;
+	left: 16px;
+	z-index: 6002;
+	width: calc(100% - 32px);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.c-onboard-step {
+	&__num {
+		display: inline-block;
+		width: 92px;
+		padding: 6px 0;
+		text-align: center;
+		font-weight: var(--bold-700);
+		line-height: 15px;
+	}
+}
+
+.c-onboard-skip-btn {
+	width: 72px;
+	font-size: var(--md);
+	text-align: center;
+	cursor: pointer;
+	color: var(--textLink);
+	line-height: 14px;
+	position: relative;
+	top: 0;
+	right: 0;
+}
+
+.c-onboard-slide {
+	padding-top: 16px;
+}
+
+// スライド画像
+.c-onboard-slide-img {
+	aspect-ratio: 13 / 15;//枠微調整
+	@include notSp() {
+		aspect-ratio: 3 / 2;//枠微調整
+	}
+	display: flex;
+	align-items: center;
+	> img {
+		object-fit: contain;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+// ログインボタン等
+.c-onboard-footer-area {
+	display: grid;
+	gap: var(--bs16);
+	grid-template-rows: 1fr;
+	min-height: 116px;
+	margin-top: 8px;
+	align-items: center;
+	&__btn {
+		opacity: 0;
+	}
+}
+
+// ボタン等の非表示
+@keyframes onboardContFadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.is-onboard-fade-out {
+	animation: onboardContFadeOut 0.5s;
+	opacity: 0;
+	pointer-events: none;
+}
+
+// ボタン等の表示
+@keyframes onboardContFadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.is-onboard-fade-in {
+	animation: onboardContFadeIn 0.5s;
+	opacity: 1;
+}

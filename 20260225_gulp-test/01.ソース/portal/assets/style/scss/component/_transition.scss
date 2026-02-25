@@ -1,0 +1,149 @@
+// サイト遷移中画面用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.c-transition {
+    display: grid;
+    gap: 50px;
+    grid-template-rows: 1fr;
+    place-items: center;
+  }
+
+// dpmロゴとショップ名
+.c-transition-destination {
+    display: grid;
+    gap: 16px;
+    grid-template-rows: 1fr;
+    place-items: center;
+    padding: 0 48px;
+  }
+  
+  .c-transition-destination__logo {
+    width: 162px;
+    height: auto;
+    padding: 4px 0;
+  }
+  
+  .c-transition-destination__icon-triangle {
+    width: 18px;
+    height: 18px;
+  }
+  
+  // ショップ名
+  .c-transition-destination__shopname {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTkiIHZpZXdCb3g9IjAgMCAxOCAxOSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9IkFsbCAvIFNob3AiPgo8cGF0aCBpZD0iVmVjdG9yIChTdHJva2UpIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIuNzM2MjUgMi44OTg4NUMzLjEwNTczIDIuMDg0ODcgMy45NDg0MyAxLjU4MjI4IDQuODUxODIgMS41ODIyOEgxMy4xNDgyQzE0LjA1MTYgMS41ODIyOCAxNC44OTQzIDIuMDg0ODcgMTUuMjYzOCAyLjg5ODg1TDE2LjY4NCA2LjAyOTQ0QzE2LjY4NCA2LjAyOTM2IDE2LjY4NCA2LjAyOTUyIDE2LjY4NCA2LjAyOTQ0QzE3LjE1NzggNy4wNzI4NCAxNi43MDUgOC4xNzM2NSAxNS44MjI0IDguNzE1MTZWMTUuMzUzMkMxNS44MjI0IDE1LjM1NDkgMTUuODIyNCAxNS4zNTY2IDE1LjgyMjQgMTUuMzU4M0gxNi4zNDcyQzE2LjYzNzEgMTUuMzU4MyAxNi44NzIgMTUuNTkzMiAxNi44NzIgMTUuODgzMUMxNi44NzIgMTYuMTcyOSAxNi42MzcxIDE2LjQwNzkgMTYuMzQ3MiAxNi40MDc5SDEuNjUyODRDMS4zNjMgMTYuNDA3OSAxLjEyODA0IDE2LjE3MjkgMS4xMjgwNCAxNS44ODMxQzEuMTI4MDQgMTUuNTkzMiAxLjM2MyAxNS4zNTgzIDEuNjUyODQgMTUuMzU4M0gyLjE3NzY2QzIuMTc3NjUgMTUuMzU2NiAyLjE3NzY0IDE1LjM1NDkgMi4xNzc2NCAxNS4zNTMyVjguNzE1NThDMS4yOTQ5OSA4LjE3NDI0IDAuODQyMjMxIDcuMDczMzYgMS4zMTU5NiA2LjAyOTY5QzEuMzE1OTQgNi4wMjk3MyAxLjMxNTk4IDYuMDI5NjQgMS4zMTU5NiA2LjAyOTY5TDIuNzM2MjUgMi44OTg4NVpNMy4yMjcyNCA5LjA1MDk2VjE1LjM1MzJDMy4yMjcyNCAxNS4zNTQ5IDMuMjI3MjMgMTUuMzU2NiAzLjIyNzIyIDE1LjM1ODNIOS41MjQ4M1YxMC44NDk1QzkuNTI0ODMgMTAuNTAxMiA5LjY2MTg1IDEwLjE2NjEgOS45MDczNCA5LjkxODIzQzEwLjE1MyA5LjY3MDIyIDEwLjQ4NzIgOS41Mjk5NiAxMC44MzY4IDkuNTI5OTZIMTIuOTM2QzEzLjI4NTYgOS41Mjk5NiAxMy42MTk5IDkuNjcwMjIgMTMuODY1NSA5LjkxODIzQzE0LjExMSAxMC4xNjYxIDE0LjI0OCAxMC41MDEyIDE0LjI0OCAxMC44NDk1VjE1LjM1ODNIMTQuNzcyOEMxNC43NzI4IDE1LjM1NjYgMTQuNzcyOCAxNS4zNTQ5IDE0Ljc3MjggMTUuMzUzMlY5LjA1MDkyQzE0Ljc0MDQgOS4wNTMyNiAxNC43MDc3IDkuMDU0OTYgMTQuNjc0OSA5LjA1NTk5TDE0LjY1ODQgOS4wNTYyNUgxNC41OTQ0QzEzLjg1NTIgOS4wNTYyNSAxMy4xNzQgOC43MzI4MSAxMi43Mjk3IDguMjEzMTlDMTIuMjg1MiA4LjczMjgzIDExLjYwMzggOS4wNTYyNSAxMC44NjQ3IDkuMDU2MjVDMTAuMTI3IDkuMDU2MjUgOS40NTM5MSA4LjcxNjUzIDkuMDExNDggOC4yMDA0OUM4LjU2ODAxIDguNzI3NDQgNy44ODI0MyA5LjA1NjI1IDcuMTM2OTkgOS4wNTYyNUM2LjM5MzA3IDkuMDU2MjUgNS43MTQ2OSA4LjcxMDc2IDUuMjcyMzUgOC4xODczMkM0LjgzMDA4IDguNzExMDMgNC4xNTE0OSA5LjA1NjI1IDMuNDA3MzEgOS4wNTYyNUgzLjM0MTcxTDMuMzI1NSA5LjA1NkMzLjI5MjUzIDkuMDU0OTggMy4yNTk3OCA5LjA1MzMgMy4yMjcyNCA5LjA1MDk2Wk01Ljc5Njc5IDYuODAxODRDNS43OTY3OSA3LjM4MTA4IDYuMzcxMjMgOC4wMDY2NSA3LjEzNjk5IDguMDA2NjVDNy45MTQzMiA4LjAwNjY1IDguNDc1MjMgNy40MzE0OCA4LjQ3NTIzIDYuODAxODRDOC40NzUyMyA2LjUxMiA4LjcxMDE5IDYuMjc3MDQgOS4wMDAwMyA2LjI3NzA0QzkuMjg5ODcgNi4yNzcwNCA5LjUyNDgzIDYuNTEyIDkuNTI0ODMgNi44MDE4NEM5LjUyNDgzIDcuMzgxMTkgMTAuMDk5MSA4LjAwNjY1IDEwLjg2NDcgOC4wMDY2NUMxMS42NDI4IDguMDA2NjUgMTIuMjA0OSA3LjQzMDc5IDEyLjIwNDkgNi44MDE4NEMxMi4yMDQ5IDYuNTEyIDEyLjQzOTkgNi4yNzcwNCAxMi43Mjk3IDYuMjc3MDRDMTMuMDE5NiA2LjI3NzA0IDEzLjI1NDUgNi41MTIgMTMuMjU0NSA2LjgwMTg0QzEzLjI1NDUgNy40MzA5IDEzLjgxNjQgOC4wMDY2NSAxNC41OTQ0IDguMDA2NjVIMTQuNjQ5NUMxNS41NDgzIDcuOTczNzQgMTYuMDMyMiA3LjEzMjQ3IDE1LjcyODQgNi40NjM1NUwxNC4zMDgxIDMuMzMyNjlDMTQuMzA4MSAzLjMzMjY1IDE0LjMwODEgMy4zMzI3MiAxNC4zMDgxIDMuMzMyNjlDMTQuMTIyNiAyLjkyNDEgMTMuNjc0MiAyLjYzMTg3IDEzLjE0ODIgMi42MzE4N0g0Ljg1MTgyQzQuMzI1ODQgMi42MzE4NyAzLjg3NzU2IDIuOTIzOTkgMy42OTIwNCAzLjMzMjU3QzMuNjkyMDIgMy4zMzI2MSAzLjY5MjA2IDMuMzMyNTQgMy42OTIwNCAzLjMzMjU3TDIuMjcxOCA2LjQ2MzNDMS45Njc2NiA3LjEzMzI0IDIuNDUyMTQgNy45NzQzMiAzLjM1MDQ0IDguMDA2NjVIMy40MDczMUM0LjE3MzI4IDguMDA2NjUgNC43NDcxOSA3LjM4MjU0IDQuNzQ3MTkgNi44MDE4NEM0Ljc0NzE5IDYuNTEyIDQuOTgyMTUgNi4yNzcwNCA1LjI3MTk5IDYuMjc3MDRDNS41NjE4MyA2LjI3NzA0IDUuNzk2NzkgNi41MTIgNS43OTY3OSA2LjgwMTg0Wk0xMy4xOTg0IDE1LjM1ODNWMTAuODQ5NUMxMy4xOTg0IDEwLjc3NjMgMTMuMTY5NiAxMC43MDcxIDEzLjExOTggMTAuNjU2OEMxMy4wNzAyIDEwLjYwNjggMTMuMDA0IDEwLjU3OTYgMTIuOTM2IDEwLjU3OTZIMTAuODM2OEMxMC43Njg5IDEwLjU3OTYgMTAuNzAyNyAxMC42MDY4IDEwLjY1MzEgMTAuNjU2OEMxMC42MDMzIDEwLjcwNzEgMTAuNTc0NCAxMC43NzYzIDEwLjU3NDQgMTAuODQ5NVYxNS4zNTgzSDEzLjE5ODRaTTUuMDY0MDQgMTAuNTc5NkM0Ljk5NjA3IDEwLjU3OTYgNC45Mjk4NyAxMC42MDY4IDQuODgwMjYgMTAuNjU2OEM0LjgzMDQ5IDEwLjcwNzEgNC44MDE2NCAxMC43NzYzIDQuODAxNjQgMTAuODQ5NVYxMy4yMzg5SDcuOTUwNDNWMTAuODQ5NUM3Ljk1MDQzIDEwLjc3NjMgNy45MjE1OCAxMC43MDcxIDcuODcxODEgMTAuNjU2OEM3LjgyMjIgMTAuNjA2OCA3Ljc1NiAxMC41Nzk2IDcuNjg4MDMgMTAuNTc5Nkg1LjA2NDA0Wk00LjEzNDU0IDkuOTE4MjNDNC4zODAxOSA5LjY3MDIyIDQuNzE0NDQgOS41Mjk5NiA1LjA2NDA0IDkuNTI5OTZINy42ODgwM0M4LjAzNzYzIDkuNTI5OTYgOC4zNzE4OCA5LjY3MDIyIDguNjE3NTMgOS45MTgyM0M4Ljg2MzAxIDEwLjE2NjEgOS4wMDAwMyAxMC41MDEyIDkuMDAwMDMgMTAuODQ5NVYxMy43NjM3QzkuMDAwMDMgMTQuMDUzNSA4Ljc2NTA3IDE0LjI4ODUgOC40NzUyMyAxNC4yODg1SDQuMjc2ODRDMy45ODcgMTQuMjg4NSAzLjc1MjA0IDE0LjA1MzUgMy43NTIwNCAxMy43NjM3VjEwLjg0OTVDMy43NTIwNCAxMC41MDEyIDMuODg5MDYgMTAuMTY2MSA0LjEzNDU0IDkuOTE4MjNaIiBmaWxsPSIjNjA2MDYwIi8+CjwvZz4KPC9zdmc+Cg==) no-repeat left center;
+    background-size: 18px auto;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 0 0 0 21px;
+    text-align: center;
+    line-height: var(--narrow-lineHeight);
+  }
+  
+  // プリローダー
+  .c-transition-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 76px;
+    height: 76px;
+  }
+  
+  .c-transition-loader__preloader {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    -webkit-animation: load5 1.1s infinite ease;
+    animation: load5 1.1s infinite ease;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  // ローディングアニメーション設定
+  @keyframes load5 {
+    0%,
+    100% {
+      box-shadow: 0px -31px 0px 0px rgba(81, 79, 78, 1),
+        22px -22px 0px 0px rgba(235, 234, 234, 1),
+        31px 0px 0px 0px rgba(219, 216, 215, 1),
+        22px 22px 0px 0px rgba(187, 182, 180, 1),
+        0px 31px 0px 0px rgba(178, 175, 173, 1),
+        -22px 22px 0px 0px rgba(142, 139, 137, 1),
+        -31px 0px 0px 0px rgba(132, 127, 125, 1),
+        -22px -22px 0px 0px rgba(114, 111, 110, 1);
+    }
+    12.5% {
+      box-shadow: 0px -31px 0px 0px rgba(114, 111, 110, 1),
+        22px -22px 0px 0px rgba(81, 79, 78, 1),
+        31px 0px 0px 0px rgba(235, 234, 234, 1),
+        22px 22px 0px 0px rgba(219, 216, 215, 1),
+        0px 31px 0px 0px rgba(187, 182, 180, 1),
+        -22px 22px 0px 0px rgba(178, 175, 173, 1),
+        -31px 0px 0px 0px rgba(142, 139, 137, 1),
+        -22px -22px 0px 0px rgba(132, 127, 125, 1);
+    }
+    25% {
+      box-shadow: 0px -31px 0px 0px rgba(132, 127, 125, 1),
+        22px -22px 0px 0px rgba(114, 111, 110, 1),
+        31px 0px 0px 0px rgba(81, 79, 78, 1),
+        22px 22px 0px 0px rgba(235, 234, 234, 1),
+        0px 31px 0px 0px rgba(219, 216, 215, 1),
+        -22px 22px 0px 0px rgba(187, 182, 180, 1),
+        -31px 0px 0px 0px rgba(178, 175, 173, 1),
+        -22px -22px 0px 0px rgba(142, 139, 137, 1);
+    }
+    37.5% {
+      box-shadow: 0px -31px 0px 0px rgba(142, 139, 137, 1),
+        22px -22px 0px 0px rgba(132, 127, 125, 1),
+        31px 0px 0px 0px rgba(114, 111, 110, 1),
+        22px 22px 0px 0px rgba(81, 79, 78, 1),
+        0px 31px 0px 0px rgba(235, 234, 234, 1),
+        -22px 22px 0px 0px rgba(219, 216, 215, 1),
+        -31px 0px 0px 0px rgba(187, 182, 180, 1),
+        -22px -22px 0px 0px rgba(178, 175, 173, 1);
+    }
+    50% {
+      box-shadow: 0px -31px 0px 0px rgba(178, 175, 173, 1),
+        22px -22px 0px 0px rgba(142, 139, 137, 1),
+        31px 0px 0px 0px rgba(132, 127, 125, 1),
+        22px 22px 0px 0px rgba(114, 111, 110, 1),
+        0px 31px 0px 0px rgba(81, 79, 78, 1),
+        -22px 22px 0px 0px rgba(235, 234, 234, 1),
+        -31px 0px 0px 0px rgba(219, 216, 215, 1),
+        -22px -22px 0px 0px rgba(187, 182, 180, 1);
+    }
+    62.5% {
+      box-shadow: 0px -31px 0px 0px rgba(187, 182, 180, 1),
+        22px -22px 0px 0px rgba(178, 175, 173, 1),
+        31px 0px 0px 0px rgba(142, 139, 137, 1),
+        22px 22px 0px 0px rgba(132, 127, 125, 1),
+        0px 31px 0px 0px rgba(114, 111, 110, 1),
+        -22px 22px 0px 0px rgba(81, 79, 78, 1),
+        -31px 0px 0px 0px rgba(235, 234, 234, 1),
+        -22px -22px 0px 0px rgba(219, 216, 215, 1);
+    }
+    75% {
+      box-shadow: 0px -31px 0px 0px rgba(219, 216, 215, 1),
+        22px -22px 0px 0px rgba(187, 182, 180, 1),
+        31.5px 0px 0px 0px rgba(178, 175, 173, 1),
+        22px 22px 0px 0px rgba(142, 139, 137, 1),
+        0px 31.5px 0px 0px rgba(132, 127, 125, 1),
+        -22px 22px 0px 0px rgba(114, 111, 110, 1),
+        -31.5px 0px 0px 0px rgba(81, 79, 78, 1),
+        -22px -22px 0px 0px rgba(235, 234, 234, 1);
+    }
+    87.5% {
+      box-shadow: 0px -31px 0px 0px rgba(235, 234, 234, 1),
+        22px -22px 0px 0px rgba(219, 216, 215, 1),
+        31.5px 0px 0px 0px rgba(187, 182, 180, 1),
+        22px 22px 0px 0px rgba(178, 175, 173, 1),
+        0px 31.5px 0px 0px rgba(142, 139, 137, 1),
+        -22px 22px 0px 0px rgba(132, 127, 125, 1),
+        -31.5px 0px 0px 0px rgba(114, 111, 110, 1),
+        -22px -22px 0px 0px rgba(81, 79, 78, 1);
+    }
+  }

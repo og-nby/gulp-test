@@ -1,0 +1,87 @@
+// 要素のレイアウト用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// c-section内の左右の余白をキャンセルする
+.c-layout-no-margin-x {
+	margin-inline: -16px;
+	overflow: hidden;
+}
+
+// セクション内に要素を定間隔で配置※新スタイル
+%cGap {
+	display: grid;
+	grid-template-rows: auto;
+}
+.c-layout-gap-y-very-narrow {
+	@extend %cGap ;
+	gap: 4px;
+}
+.c-layout-gap-y-narrow {
+	@extend %cGap ;
+	gap: var(--bs8);
+}
+.c-layout-gap-y-default {
+	@extend %cGap ;
+	gap: var(--bs16);
+}
+.c-layout-gap-y-wide {
+	@extend %cGap ;
+	gap: var(--bs24);
+}
+
+// 要素を均等にならべる
+.c-layout-even-spacing {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	width: 100%;
+}
+
+// スライダー枠
+.c-layout-slider {
+	background-color: #fff;
+	padding-left: var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+	// スクロールバーと商品リンクが干渉しないよう隙間を作る
+	padding-bottom: var(--bs8);
+	// スクロールバーのデザイン
+	&::-webkit-scrollbar {
+		background-color:#fff;
+		height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--gray200);
+		border-radius: 5px
+	}
+}
+
+// スライダー枠(背景グレー)
+.c-layout-slider-gray {
+	background-color: var(--gray100);
+	padding: var(--bs16) 0 var(--bs16) var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	@include onlyPc() {
+		overflow-x: scroll;
+	}
+}
+
+// パンくずリスト用※SPのみ
+.c-layout-breadcrumbs {
+	padding: 0 var(--bs16) var(--bs16);
+	// ページネーションと隣接時にボーダーと上方向のpaddingを指定する※SPのみ
+	@include onlySp() {
+		.c-layout-pagination + & {
+			padding-top: var(--bs16);
+			border-top: 1px solid var(--gray200);
+		}
+	}
+}
+

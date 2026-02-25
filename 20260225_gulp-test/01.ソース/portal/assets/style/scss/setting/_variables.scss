@@ -1,0 +1,18 @@
+// 変数
+// 演算用mathモジュール
+@use "sass:math";
+
+// 共通変数 start ****************************************************
+
+// サーバードメイン
+$cdn: '$!{cdnServerUrl}';
+
+$assets: 'assets';
+
+// 共通背景画像
+$common_img_dir: '$!{cdnServerUrl}/assets/img/';
+
+// 背景画像用キャッシュ
+$bgImgCache: '?v=$!{cache_css_assets}&d=$!{categoryOfDevice}';
+
+// 共通変数 end ****************************************************

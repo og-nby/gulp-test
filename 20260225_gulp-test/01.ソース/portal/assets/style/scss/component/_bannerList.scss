@@ -1,0 +1,87 @@
+// バナーリスト
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+.c-bannerList {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--narrow);
+	padding: var(--wide) var(--default);
+	background-color: var(--gray100);
+	&__item {
+		display: block;
+        background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 32px auto;
+		// 読み込み後に背景プリローダーを消す
+		@include imgLoadedStyle();
+		img {
+			height: 100%;
+			object-fit: contain;
+			width: 100%;
+		}
+	}
+	
+	// 正方形バナー横スクロール
+	&.--horizontal {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: var(--veryNarrow);
+		width: 100%;
+		overflow-x: auto;
+		padding: 0 var(--veryNarrow) var(--wide);
+		background-color: #fff;
+		// pc以外はスクロールバーを非表示
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		// pcのみスクールバー表示
+		@include onlyPc() {
+			// スクロールバーと商品リンクが干渉しないよう隙間を作る
+			padding-bottom: var(--narrow);
+			margin-bottom: var(--narrow);
+			&::-webkit-scrollbar {
+				display: block;
+				background-color:#fff;
+				height: var(--narrow);
+			}
+			// スクールバーのデザイン
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--gray200);
+				border-radius: var(--veryNarrow);
+			}
+		}
+		// バナー幅調整
+		li {
+			flex: 0 0 100px;
+			aspect-ratio: 1;
+
+		}
+	}
+}
+
+// プリローダー
+.c-bannerList-preloarder {
+	height: 100%;
+	width: 100%;
+	// PC：640/335
+	// TAB：609/319
+	// SP：343/180
+	@include onlyPc() {
+		aspect-ratio: 640 / 335;
+	}
+	@include onlyTab() {
+		aspect-ratio: 609 / 319;
+	}
+	@include onlySp() {
+		aspect-ratio: 343 / 180;
+	}
+	background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center var(--gray100);
+	background-size: 32px auto;
+	&.--horizontal {
+		justify-content: flex-start;
+		align-items: center;
+		height: 124px;
+		width: 100%;
+		background-color: #fff;
+	}
+}

@@ -1,0 +1,141 @@
+// 商品(広告枠)
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// カード基本設定
+.c-card {
+	flex: 0 0 146px;
+	padding: var(--bs8);
+	border: 1px solid var(--gray200);
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs8);
+	cursor: pointer;
+	// 商品検索ページで表示する簡易カード用
+	.c-layout-card-scroll-x.--narrow & {
+		flex: 0 0 96px;
+	}
+	// 掲載終了した商品・ショップ枠で使用
+	&.c-card--disabled {
+		cursor: default;
+	}
+}
+
+// カード配置用
+// 2カラム
+.c-card-layout-col-2 {
+	display: grid;
+	grid-template-columns: 130px 1fr;
+	gap: var(--bs8);
+	@include lowSp() {
+		grid-template-columns: 80px 1fr;
+	}
+}
+
+// カード内の要素を4pxの間隔で横並びにする
+.c-card-layout-innerColumn {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 4px;
+	flex-wrap: wrap;
+}
+// 縦並び
+.c-card-layout-y {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs8);
+}
+
+
+
+.c-card-item:not(:last-child) {
+	margin-bottom: var(--bs8);
+}
+
+.c-image-thumb-square {
+	display: block;
+	overflow: hidden;
+	aspect-ratio: 1 / 1;
+	background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center;
+	background-size: 32px auto; 
+	@include imgLoadedStyle();
+	img {
+		object-fit: contain;
+		width: 100%;
+		height: 100%;
+	}
+}
+// お気に入りボタン
+.c-card-button-favorite {
+	position: relative;
+	display: block;
+	background: url(#{$cdn}/assets/img/icon_assets_like.svg#{$bgImgCache}) no-repeat center center;
+	background-size: contain;
+	width: 20px;
+	height: 19px;
+	flex: 0 0 20px;
+	cursor: pointer;
+	&.is-favorite-added {
+		background: url(#{$cdn}/assets/img/icon_assets_like_added.svg#{$bgImgCache}) no-repeat center center;
+	}
+}
+// ポイント数、ショップアイコン用ラッパー要素
+.c-layout-card-dpoint {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+// dポイント
+// テキスト共通スタイル
+%c-text-dpoint-base {
+	color: var(--primary500);
+	font-weight: var(--bold-700);
+	line-height: 16px;
+	white-space: nowrap;
+}
+// ポイント表示
+.c-text-dpoint {
+	display: flex;
+	@extend %c-text-dpoint-base;
+	&:before {
+		content: "";
+		display: block;
+		width: var(--bs16);
+		height: var(--bs16);
+		flex: 0 0 var(--bs16);
+		aspect-ratio: 1 / 1;
+		background: url(#{$cdn}/assets/img/icon_assets_dpoint.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+}
+// 最大等のサブテキスト
+.c-text-dpoint-sm {
+	@extend %c-text-dpoint-base;
+	font-size: var(--small-fontSize);
+	margin-right: -1px;
+}
+
+.c-text-stock-close {
+	color: var(--primary500);
+}
+// 出稿主ポイント用
+.c-card-advertiserPoint-layout {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	// 内包するアイコン用クラス：c-icon-plus / c-icon-advertiserPoint
+}
+
+// 価格表記
+.c-card-price {
+	display: flex;
+	align-items: baseline;
+	font-size: 18px;
+	font-weight: var(--bold-700);
+	&::before {
+		content: "¥";
+		font-size: 12px;
+	}
+}

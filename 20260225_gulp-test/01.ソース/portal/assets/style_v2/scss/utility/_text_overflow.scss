@@ -1,0 +1,32 @@
+
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+
+.u-textOverflow-1 {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+}
+
+.u-textOverflow-2 {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+.u-textOverflow-3 {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+.u-textOverflow-4 {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	overflow: hidden;
+}

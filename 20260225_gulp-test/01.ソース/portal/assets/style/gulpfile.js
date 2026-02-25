@@ -1,7 +1,11 @@
 // gulpプラグインの読み込み
-const { src, dest, watch, series } = require("gulp");
+const { src, dest, watch, series } = require('gulp');
+
 // Sassをコンパイルするプラグインの読み込み
-const sass = require("gulp-sass")(require('sass'));
+// v5 以降の gulp‑sass はファクトリ関数として動作し、内部で Dart Sass をバインドします。
+const sass = require('gulp-sass')(require('sass'));
+// 文字コード変換用（タブ変換に使用）
+const through = require('through2');
 // ベンダープレフィックス自動付与
 const autoprefixer = require('gulp-autoprefixer');
 // css圧縮プラグイン
@@ -10,6 +14,9 @@ const vmRenameFile = require("gulp-rename");
 // 改行コード変換プラグイン
 const gulpLoadPlugins = require ('gulp-load-plugins');   
 const linePlugins = gulpLoadPlugins(); 
+// fibers は Dart Sass v1.33 以降では不要なため読み込みを削除
+// 処理を一つタスクにまとめるためのプラグイン
+//const merge = require('merge-stream');
 // コンパイルエラー検知 強制終了防止
 const plumber = require('gulp-plumber');
 // デスクトップ通知
@@ -17,75 +24,47 @@ const notify = require('gulp-notify');
 // css整形
 var csscomb = require("gulp-csscomb");
 const gulpStylelint = require('gulp-stylelint');
-// 文字コード変換（Node.js 16対応）
-const iconv = require('iconv-lite');
-const through = require('through2');
-const vinylBuffer = require('vinyl-buffer');
-
-/**
- * 文字コード変換関数
- */
-const convertToEncoding = (encoding, addBOM = false) => {
-  return through.obj((file, enc, cb) => {
-    if (file.isNull()) {
-      return cb(null, file);
-    }
-    
-    if (file.isStream()) {
-      return cb(new Error('Streaming not supported'));
-    }
-    
-    if (file.isBuffer()) {
-      let content = file.contents.toString();
-      
-      // BOM付きUTF-8の場合
-      if (encoding === 'utf8' && addBOM) {
-        content = '\ufeff' + content;
-        file.contents = Buffer.from(content, 'utf8');
-      } else {
-        // その他のエンコーディング
-        file.contents = iconv.encode(content, encoding);
-      }
-    }
-    
-    cb(null, file);
-  });
-};
 /**
  * コンパイル処理
  */
-const compileSass = () => src('./scss/*.scss')
+exports.compileSass = () => src('./scss/*.scss')
                   .pipe(plumber(
                     { errorHandler: notify.onError('Error: <%= error.message %>') }
                   ))
-
                   .pipe(gulpStylelint({
                     reporters: [
                       {formatter: 'string', console: true}
                     ]
                   }))
                   // Sassのコンパイルを実行
-                  .pipe(sass
-                    ({ // 形式を指定して出力
-                      outputStyle:'expanded',
-                      indentType: 'tab',
-                      indentWidth: 1
-                    }).on('error', sass.logError)
-                  )
+                  // ※ gulp-sass v6 以降は新しい Dart Sass API を使用するため、
+                  //   indentType / indentWidth オプションは無効です（タブ変換は後続の through2 で対応）。
+                  .pipe(sass({
+                    // 形式を指定して出力
+                    outputStyle: 'expanded',
+                  }))
+                  // インデントをタブ文字に変換
+                  // （gulp-sass v6 の新 API では indentType: 'tab' が無効なため through2 で対処）
+                  .pipe(through.obj(function(file, enc, cb) {
+                    if (file.isBuffer()) {
+                      const content = file.contents.toString('utf8');
+                      const converted = content.replace(/^( {2})+/gm, (match) => '\t'.repeat(match.length / 2));
+                      file.contents = Buffer.from(converted, 'utf8');
+                    }
+                    cb(null, file);
+                  }))
                   .pipe(autoprefixer([
-                    'iOS >= 16.5',                // iOS 16.5以上
-                    'Android >= 7',               // Android 7以上
-                    'last 2 Chrome versions',     // Chrome 最新2バージョン
-                    'last 2 Edge versions',       // Edge 最新2バージョン
-                    'last 2 Safari versions',     // Safari 最新2バージョン
-                    'not IE > 0',                 // ieサポート終了における除外対応
-                    'not ie_mob > 0',             // ieサポート終了における除外対応
-                    'not dead'                    // サポートされているブラウザのみ
-                    
+                    'iOS >= 16.5',
+                    'Android >= 7',
+                    'last 1 Safari version',
+                    'last 1 Chrome version',
+                    'last 1 Edge version',
+                    'not IE 11',
+                    'not IE > 0',
+                    'not Firefox > 0'
                   ])) // ベンダープレフィックスに関するバージョン設定
                   .pipe(csscomb())
-                  .pipe(convertToEncoding('utf8'))  // UTF-8（BOMなし）に変換
-                  .pipe(linePlugins.lineEndingCorrector({ // 改行コード変換
+                                    .pipe(linePlugins.lineEndingCorrector({ // 改行コード変換
                     verbose: false,
                     eolc: 'CRLF'
                   }))
@@ -94,7 +73,7 @@ const compileSass = () => src('./scss/*.scss')
 /**
  * cssを圧縮し、vm出力する処理
  */
-const compVM = () => src('./css/*.css')
+exports.compVM = () => src('./css/*.css')
                 .pipe(plumber(
                   {errorHandler: notify.onError('Error: <%= error.message %>')}
                 ))
@@ -104,40 +83,11 @@ const compVM = () => src('./css/*.css')
                 }))
                 // cssフォルダー以下に保存
                 .pipe(dest("./vm"))
-
-/**
- * CSS文字コード別出力処理
- */
-// UTF-8 BOM付き
-const compileUTF8BOM = () => src('./css/*.css')
-                .pipe(plumber(
-                  {errorHandler: notify.onError('Error: <%= error.message %>')}
-                ))
-                .pipe(convertToEncoding('utf8', true))  // UTF-8 BOM付き
-                .pipe(vmRenameFile({ 
-                  suffix: '-utf8bom'
-                }))
-                .pipe(dest("./css"))
-
-// Shift_JIS
-const compileShiftJIS = () => src('./css/*.css')
-                .pipe(plumber(
-                  {errorHandler: notify.onError('Error: <%= error.message %>')}
-                ))
-                .pipe(convertToEncoding('shift_jis'))   // Shift_JIS
-                .pipe(vmRenameFile({ 
-                  suffix: '-sjis'
-                }))
-                .pipe(dest("./css"))
 /**
  * Sassファイルを監視し、変更があったらSassを変換します
  */
-const watchSassFiles = () => watch("./scss/*.scss", series(compileSass, compVM));
- // npx gulpコマンドを実行した時、watchSassFilesが実行される
-exports.default = watchSassFiles;
-exports.compileSass = compileSass;
-exports.compVM = compVM;
-exports.compileUTF8BOM = compileUTF8BOM;
-exports.compileShiftJIS = compileShiftJIS;
-exports.build = series(compileSass, compVM);
-exports.buildAll = series(compileSass, compVM, compileUTF8BOM, compileShiftJIS);
+// watchタスクを定義
+exports.watch = () => watch("./scss/*.scss", series(exports.compileSass, exports.compVM));
+
+// デフォルトタスクとしてwatchを設定
+exports.default = exports.watch;

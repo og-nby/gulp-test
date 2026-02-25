@@ -1,0 +1,152 @@
+// テキスト
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 下線付き文字
+.c-text-link-underline {
+	font-size: var(--small-fontSize);
+	color: var(--primary500);
+	border-bottom: 1px solid var(--primary500);
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--primary500);
+		border-bottom: 1px solid var(--primary500);
+	}
+}
+.c-text-link-underline-bold {
+	font-size: var(--small-fontSize);
+	color: var(--primary500);
+	border-bottom: 1px solid var(--primary500);
+	font-weight: var(--bold-700);
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--primary500);
+		border-bottom: 1px solid var(--primary500);
+	}
+}
+// 家のアイコン付きテキスト
+// プレースホルダー
+%textShopName {
+	display: flex;
+	align-items: center;
+	background: url(#{$cdn}/assets/img/icon_assets_shopname.svg#{$bgImgCache}) no-repeat left 2px;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	overflow: hidden;
+	color: var(--textLink);
+	&:hover,&:active,&:visited {
+		color: var(--textLink);
+	}
+}
+.c-text-shopName {
+	@extend %textShopName;
+	padding: 0 0 0 20px;
+	background-size: 17px auto;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+.c-text-shopName-sm {
+	@extend %textShopName;
+	padding: 0 0 0 var(--bs16);
+	background-size: 14px auto;
+	font-size: var(--small-fontSize);
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+}
+.c-text-shopName-noicon {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	line-height: var(--narrow-lineHeight);
+}
+
+// テキストリンク
+// プレースホルダー
+%textLink {
+	color: var(--textLink);
+	cursor: pointer;
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--textLink);
+	}
+}
+// デフォルト
+.c-text-link {
+	@extend %textLink;
+    font-size: var(--small-fontSize);
+}
+
+// 本文中にリンク挿入
+.c-text-link-insert {
+	@extend %textLink;
+}
+// 矢印付リンク
+.c-text-link-arrow {
+	@extend %textLink;
+	font-size: var(--small-fontSize);
+	padding-right: 14px;
+	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+		display: block;
+		width: 10px;
+		height: 10px;
+		flex: 0 0 10px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link.svg#{$bgImgCache}) no-repeat center center;
+		background-size: auto 10px;
+	}
+}
+// 矢印付戻るリンク
+.c-text-link-arrow-prev {
+	@extend %textLink;
+	padding-left: 14px;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_previus.svg#{$bgImgCache}) no-repeat center left;
+	background-size: auto 12px;
+	font-size: var(--small-fontSize);
+}
+// ページ内アンカーリンク
+.c-text-link-anchor {
+	@extend %textLink;
+	display: inline-block;
+	font-size: var(--small-fontSize);
+	padding-right: 16px;
+	position: relative;
+	&::after {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: 3px;
+		right: 0;
+		width: 12px;
+		height: 12px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_pageanchor.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+}
+// 警告アイコン付リンク
+.c-text-link-warning {
+	padding-left: 20px;
+	@extend %textLink;
+	background: url(#{$cdn}/assets/img/icon_assets_warning.svg#{$bgImgCache}) no-repeat center left;
+	background-size: 16px auto;
+	font-size: var(--small-fontSize);
+}
+
+// エラーコード
+.c-text-errorCode {
+	font-size: var(--large-fontSize);
+	color: var(--gray400);
+}
+

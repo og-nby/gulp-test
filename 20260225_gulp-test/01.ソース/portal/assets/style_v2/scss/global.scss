@@ -1,0 +1,7 @@
+// dPM共通スタイル
+// 変数
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// UIスタイル読み込み
+@use "component" as *;

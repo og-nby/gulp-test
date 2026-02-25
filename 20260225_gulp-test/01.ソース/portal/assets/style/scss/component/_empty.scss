@@ -1,0 +1,30 @@
+// セクション等に使用する空のボックス要素（中に表示後の要素を設置）
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+.c-empty {
+	width: 100%;
+	display: grid;
+	overflow: hidden;
+	background: url(#{$cdn}/assets/img/icon_assets_preload.svg#{$bgImgCache}) no-repeat center center;
+	background-size: 32px auto;
+	transition: .3s ease;
+	padding-bottom: 8px;
+	position: relative;
+	// 内包する要素を非表示にする
+	&__hideContent {
+		opacity: 0;
+	}
+	// 非表示エリアに要素を表示する
+	&__info {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+}

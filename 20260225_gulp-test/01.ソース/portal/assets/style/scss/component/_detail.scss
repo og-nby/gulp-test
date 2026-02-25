@@ -1,0 +1,73 @@
+// プログラム/商品詳細ページで使用されるUIパーツ用スタイル
+// ★将来的にはctaファイルの中身もこちらに統合予定
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 赤背景キャンペーンポイント表示パーツ ※DPMDEV-5772にて追加
+.c-detail-point {
+	padding: var(--narrow);
+	background-color: #FFF6F8;
+	border-radius: var(--narrow);
+	display: flex;
+	justify-content: space-between;
+	gap: var(--veryNarrow);
+	flex-wrap: wrap;
+	width: 100%;
+	align-items: center;
+	// タイトルテキスト
+	&__ttl {
+		color: var(--primary500);
+		display: flex;
+    	gap: var(--narrow);
+	}
+	// タイトルアイコン
+	&__ttlIcon {
+		display: inline-flex;
+		flex: 0 0 20px;
+		img {
+			width: 20px;
+			height: fit-content;
+		}
+	}
+	// ポイント表示
+	&__value {
+		display: flex;
+		align-items: baseline;
+		line-height: var(--narrow-lineHeight);
+		color: var(--primary500);
+	}
+	// +アイコン
+	&__plusIcon {
+		display: inline-flex;
+		flex: 0 0 10px;
+		position: relative;
+		top: -1px;
+		img {
+			width: 10px;
+			height: fit-content;
+		}
+	}
+	// 最大テキスト
+	&__maxSymbol {
+		margin-left: var(--veryNarrow);
+		font-size: var(--small-fontSize);
+		position: relative;
+		top: -1px;
+	}
+	// ポイント数字
+	&__number {
+		font-size: var(--large-fontSize);
+	}
+	// ポイント単位
+	&__unit {
+		font-size: var(--small-fontSize);
+	}
+}
+
+// キャンペーンポイント説明テキスト
+.c-detail-point-info {
+	font-size: var(--small-fontSize);
+	line-height: var(--narrow-lineHeight);
+	display: flex;
+	gap: var(--veryNarrow);
+}

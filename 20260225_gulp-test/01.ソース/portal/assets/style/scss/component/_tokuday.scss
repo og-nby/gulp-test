@@ -1,0 +1,183 @@
+// トニかくトクする日用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.c-tokuday {
+	border-top: 4px solid var(--gray200);
+	// 背景画像追加※DPMDEV-6646にて更新
+	background: url(#{$cdn}/assets/img/bg_assets_tokuday_top_ribbon_sp_20260209100.png) no-repeat top left #FF4800;
+	background-size: 100%;
+	color: #fff;
+	padding: var(--default) var(--default) 0;
+	// PCの場合余白調整
+	@include onlyPc() {
+		// 背景画像追加※DPMDEV-6646にて更新
+		background-image: url(#{$cdn}/assets/img/bg_assets_tokuday_top_ribbon_pc_202602091000.png);
+		padding: var(--default);
+	}
+	// 期間前：カードトルツメの場合
+	&:not(:has(.c-featuredShops)) {
+		padding: var(--default);
+	}
+
+	> * {
+		min-width: 0;
+		+ * {
+			margin-top: var(--default);
+		}
+	}
+	// ヘッダー
+	&__header {
+		display: grid;
+		gap: var(--narrow);
+		// もっと見るリンク調整
+		.c-text-link-arrow {
+			display: inline-flex;
+			align-items: center;
+			height: 27px;
+			color: #fff;
+			&::after {
+				content: "";
+				background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_white_202601200000.svg#{$bgImgCache}) no-repeat center center;
+				background-size: auto 10px;
+			}
+		}
+	}
+	// タイトル
+	&__title {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: var(--veryNarrow);
+	}
+	// タイトル用アイコン
+	&__titleIcon {
+		flex: 0 0 56px;
+		height: 27px;
+		img {
+			object-fit: contain;
+			height: 27px;
+		}
+	}
+	// タイトルテキスト
+	&__titleText {
+		font-weight: var(--bold-700);
+		font-size: var(--large-fontSize);
+		// 1行省略
+		&.--ellipsis-1 {
+			line-height: var(--narrow-lineHeight);
+			-webkit-box-orient: vertical;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			overflow: hidden;
+			word-break: break-all
+		}
+		// 2行省略
+		&.--ellipsis-2 {
+			line-height: var(--narrow-lineHeight);
+			-webkit-box-orient: vertical;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+			word-break: break-all
+		}
+	}
+	// カウントダウン※DPMDEV-6646にて新規追加
+	&__countDown {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: nowrap;
+		gap: var(--default);
+		font-weight: var(--bold-700);
+		color: #fff;
+		line-height: 1;
+		width: fit-content;
+		margin-inline: auto;
+		// モダンブラウザ対応※iOS18.2以上対応
+		text-box-trim: both;
+		text-box-edge: cap alphabetic;
+		> * {
+			white-space: nowrap;
+		}
+	}
+	// テキスト
+	&__countDownText {
+		font-size: 20px;
+	}
+	// 数字
+	&__countDownNum {
+		font-size: 30px;
+		transform: translateY(1px);
+	}
+
+	// バナー
+	&__banner {
+		background-color: #fff;
+		padding: var(--narrow);
+		display: grid;
+		grid-template-rows: auto;
+		@include onlyPc {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		gap: var(--narrow);
+	}
+	// カード
+	// SPTAB共とPCで表示切替
+	// SPTAB表示
+	&__cardShowSptab {
+		height: auto;
+		overflow: visible;
+		@include landscape() {
+			height: auto;
+			overflow: visible;
+		}
+		@include onlyPc() {
+			height: 0;
+			overflow: hidden;
+			// 非表示の際にmargin-topを無効化
+			margin-top: 0;
+		}
+	}
+	// PC表示
+	&__cardShowPc {
+		display: block;
+		@include notPc() {
+			display: none;
+		}
+	}
+	// D-1用レイアウトを調整
+	.c-featuredShops {
+		// PC以外
+		@include notPc() {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			width: 100%;
+			min-width: 343px;
+			padding: 0;
+		}
+		// PCのみ
+		@include onlyPc() {
+			&::-webkit-scrollbar {
+				background-color: transparent;
+			}
+			.c-card.--compact {
+				flex:0 0 86px;
+			}
+		}
+	}
+	// SP用Swiper調整※ページネーションデザイン調整
+	.c-swiper-pagination {
+		gap: 11px;
+		// ページネーションの中身が無い場合の高さ調整
+		&:not(:has(.swiper-pagination-bullet)) {
+			height: var(--wide);
+		}
+		// ページネーションのドットデザイン調整
+		.swiper-pagination-bullet {
+			opacity: 0.5;
+			&.swiper-pagination-bullet-active {
+				background: #fff;
+				opacity: 1;
+			}
+		}
+	}
+}

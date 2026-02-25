@@ -1,0 +1,13 @@
+// 余白打ち消し用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// c-section等で左右のpaddingを打ち消して要素を配置したい場合に使用※デフォルトは16px
+.l-spaceCancel-x {
+	margin-inline: calc(0px - var(--default));
+	min-width: 0;
+	// 16px以外の余白打ち消しを作成したい場合は以下にモディファイヤを追加すること
+	// &.--narrow {
+	// 	margin-inline: calc(0px - var(--narrow));
+	// }
+}

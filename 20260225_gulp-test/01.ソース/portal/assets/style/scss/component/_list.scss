@@ -1,0 +1,111 @@
+// リスト
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// リスト作成用Mixin
+@mixin listStyle() {
+	display: grid;
+    grid-template-rows: auto;
+	gap: var(--list-gap);
+	@content;
+	// リストタグをネストした際の上方向のmarginを設定する
+	ul,ol {
+		margin-top: var(--narrow);
+	}
+}
+
+// デフォルトリスト
+.c-list {
+	@include listStyle();
+}
+
+// 番号付きリスト ************************************
+// ()で数字を表示
+.c-list-num-brackets {
+	@include listStyle();
+	counter-reset: listNum; /* 親リストのカウンターをリセット */
+	> li {
+		counter-increment: listNum; /* 親リストの各項目に連番を付ける */
+		position: relative;
+		padding-left: calc((37 / 14) * var(--rem));
+		&::before {
+			content: "(" counter(listNum) ")"; /* 親リストの連番を表示 */
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: calc((37 / 14) * var(--rem));
+			height: calc(var(--rem) * var(--default-lineHeight));
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			line-height: 1;
+		}
+	}
+	.c-list-num-brackets {
+		counter-reset: innerListNum; /* 入れ子リストのカウンターをリセット */
+		> li {
+			counter-increment: innerListNum; /* 入れ子リストの各項目に連番を付ける */
+			&::before {
+				content: "(" counter(innerListNum) ")"; /* 入れ子リストの連番を表示 */
+				/* その他のスタイルは親リストの ::before と同様 */
+			}
+		}
+	}
+}
+// .で数字を表示
+.c-list-num-dots {
+	@include listStyle();
+	counter-reset: listNum;
+	> li {
+		counter-increment: listNum;
+		position: relative;
+		padding-left: calc((39 / 14) * var(--rem));
+		&::before {
+			content: counter(listNum)". ";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: calc((39 / 14) * var(--rem));
+			height: calc(var(--rem) * var(--default-lineHeight));
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			line-height: 1;
+		}
+	}
+}
+// .でローマ数字（小文字）を表示
+.c-list-num-roman-lower {
+	@include listStyle();
+	counter-reset: listNum;
+	> li {
+		counter-increment: listNum;
+		position: relative;
+		padding-left: calc((31 / 14) * var(--rem));
+		&::before {
+			display: inline-block;
+			content: counter(listNum, lower-roman)". ";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: calc((31 / 14) * var(--rem));
+			height: calc(var(--rem) * var(--default-lineHeight));
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			text-align: center;
+			line-height: 1;
+			padding-right: var(--narrow);
+		}
+	}
+}
+
+// 説明リスト
+.c-list-definition {
+	@include listStyle();
+	div {
+		@include listStyle();
+	}
+}

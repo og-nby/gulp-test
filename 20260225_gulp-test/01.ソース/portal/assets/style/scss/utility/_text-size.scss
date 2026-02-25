@@ -1,0 +1,7 @@
+// テキストサイズ調整
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.u-text-size-8 {
+	font-size: 8px;
+}

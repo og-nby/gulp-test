@@ -1,0 +1,19 @@
+// ランキング
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.rankImg {
+	background: url(#{$cdn}/assets/img/icon_header_dpointclub_rank_norank.png#{$bgImgCache}) no-repeat right center;
+	background-size: contain;
+	height: 100%;
+	width: auto;
+	aspect-ratio: 404 / 388;
+	// ランク1位から5位までのスタイルを出力
+	@for $i from 1 through 5 {
+		&.rank#{$i} {
+			background: url(#{$cdn}/assets/img/icon_header_dpointclub_rank_#{$i}.png#{$bgImgCache}) no-repeat;
+			background-position: center center;
+			background-size: contain;
+		}
+	}
+}

@@ -1,0 +1,31 @@
+// ショートカットリンク用スタイル（マイページ）
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// サービス導線 ★2024.4.23 余白修正
+.c-shortcutlink-container {
+	display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+	gap: 16px 6px;
+	margin-bottom: -8px;
+}
+
+.c-shortcutlink-link {
+	display: grid;
+    justify-content: center;
+	gap: 4px;
+	position: relative;
+	grid-template-rows: auto 1fr;
+	&__icon {
+        width: 32px;
+        height: 32px;
+		justify-self: center;
+    }
+	&__text {
+		text-align: center;
+		line-height: var(--narrow-lineHeight);
+		font-size: var(--xsmall-fontSize);
+		font-weight: var(--bold-700);
+	}
+}

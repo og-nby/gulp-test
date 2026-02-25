@@ -1,0 +1,350 @@
+// テキスト
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 文字系 ************************************
+
+// 文字サイズ大&強調
+.c-text-xlg-em {
+	font-size: 28px;
+	font-weight: var(--bold-700);
+}
+
+// 文字サイズ大&強調
+.c-text-lg-em {
+	font-size: var(--large-fontSize);
+	font-weight: var(--bold-700);
+}
+
+// 文字サイズ大&強調
+.c-text-lg {
+	font-size: var(--large-fontSize);
+}
+
+// 文字サイズ小
+.c-text-sm {
+	font-size: var(--small-fontSize);
+}
+
+// 文字サイズ最小
+.c-text-xsm {
+	font-size: var(--xsmall-fontSize);
+}
+
+// 説明文等で使われる、行間の広いテキスト
+.c-text-lh-wide {
+	line-height: var(--wide-lineHeight);
+}
+// ※予備※ 行間の狭いテキスト
+.c-text-lh-narrow {
+	line-height: var(--narrow-lineHeight);
+}
+
+// 汎用マーカー付き文
+// ※付文字等、文先頭文字に1文字分インデントさせる
+// 2024.8.28追記：text-indentの影響で一部のAndroid端末で改行時にpaddingエリアにテキストが回り込む事象がみられたため廃止の方向
+.c-text-indent {
+	padding-left: 1em;
+	text-indent: -1em;
+}
+// 文頭にアイコン付きかつ回り込み解除用共通
+@mixin markerStyle($markerTxt) {
+	position: relative;
+	padding-left: var(--rem);
+	&::before {
+		content: "#{$markerTxt}";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--rem);
+		height: calc(var(--rem)* var(--default-lineHeight));
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		line-height: 1;
+	}
+}
+
+// 中黒付文字（リスト、テキスト共用で”・”付文章にする）
+.c-text-marker {
+	@include markerStyle("・");
+}
+
+// ※付文字（リスト、テキスト共用で※付文章にする）
+.c-text-notes {
+	@include markerStyle("※");
+}
+
+// 黒丸付文字（リスト、テキスト共用で●付文章にする）DPMDEV-6069
+.c-text-dot {
+	margin-left: 1.25em;
+	position: relative;
+	&::before {
+		content: "●";
+		display: inline-block;
+		height: 1.5em;
+		left: -1.25em;
+		padding-right: .5em;
+		position: absolute;
+		text-align: right;
+		top: 0;
+		width: 1.25em;
+	}
+}
+
+// 下線付き文字
+.c-text-link-underline {
+	font-size: var(--small-fontSize);
+	color: var(--primary);
+	border-bottom: 1px solid var(--primary);
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--primary);
+		border-bottom: 1px solid var(--primary);
+	}
+}
+.c-text-link-underline-bold {
+	font-size: var(--small-fontSize);
+	color: var(--primary);
+	border-bottom: 1px solid var(--primary);
+	font-weight: var(--bold-700);
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--primary);
+		border-bottom: 1px solid var(--primary);
+	}
+}
+
+// 価格表記
+.c-text-price {
+	display: flex;
+	align-items: baseline;
+	font-size: 18px;
+	font-weight: var(--bold-700);
+	line-height: var(--narrow-lineHeight); // デザイン通りに修正2025.10.14
+	&::before {
+		content: "¥";
+		font-size: 12px;
+	}
+}
+// 価格表記（打ち消し線）
+.c-text-price-down {
+	display: flex;
+	align-items: baseline;
+	font-size: var(--xsmall-fontSize);
+	color: var(--gray400);
+	text-decoration: line-through;
+	&::before {
+		content: "¥";
+	}
+}
+
+// line-height
+// Narrow
+.c-text-lh-narrow {
+	line-height: var(--narrow-lineHeight);
+}
+
+// text-color
+.c-color-primary {
+	color: var(--primary);
+}
+
+// テキストリンク
+// テキストリンク共通スタイル
+%textLink {
+	color: var(--textLink);
+	cursor: pointer;
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--textLink);
+	}
+}
+@mixin textLink {
+	color: var(--Semantic-Link_text);
+	cursor: pointer;
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--Semantic-Link_text);
+	}
+}
+
+.c-text-link {
+	@extend %textLink;
+	font-size: var(--small-fontSize);
+}
+// テキストリンク文字サイズ14px※2025.10.29追加
+.c-text-link-normal {
+	@include textLink;
+	font-size: var(--small-fontSize);
+	line-height: var(--narrow-lineHeight);
+	// 行省略
+	// 1行省略
+	&.--ellipsis-1 {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
+		word-break: break-all;
+	}
+	// 2行省略
+	&.--ellipsis-2 {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		word-break: break-all;
+	}
+	// 3行省略
+	&.--ellipsis-3 {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		word-break: break-all;
+	}
+}
+
+// 本文挿入
+.c-text-link-insert {
+	@extend %textLink;
+}
+
+// 矢印付リンク
+.c-text-link-arrow {
+	@extend %textLink;
+	font-size: var(--small-fontSize);
+	padding-right: 14px;
+	position: relative;
+	display: inline-block;
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+		display: block;
+		width: 10px;
+		height: 10px;
+		flex: 0 0 10px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link.svg#{$bgImgCache}) no-repeat center center;
+		background-size: auto 10px;
+	}
+}
+
+// 矢印付戻るリンク
+.c-text-link-arrow-previus {
+	@extend %textLink;
+	padding-left: 14px;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_previus.svg#{$bgImgCache}) no-repeat center left;
+	background-size: auto 12px;
+	font-size: var(--small-fontSize);
+}
+
+// ページ内アンカーリンク
+.c-text-link-anchor {
+	@extend %textLink;
+	display: inline-block;
+	font-size: var(--small-fontSize);
+	padding-right: 16px;
+	position: relative;
+	&::after {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: 3px;
+		right: 0;
+		width: 12px;
+		height: 12px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_pageanchor.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+}
+
+// 廃止 start ===
+.c-text-link-in-page-anchor-down {
+	@extend %textLink;
+	display: inline-block;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_pageanchor.svg#{$bgImgCache}) no-repeat center right;
+	background-size: 12px auto;
+	font-size: var(--small-fontSize);
+	padding-right: 16px;
+}
+// 廃止 end ===
+
+// 警告付リンク
+.c-text-link-warning {
+	padding-left: 20px;
+	@extend %textLink;
+	background: url(#{$cdn}/assets/img/icon_assets_warning.svg#{$bgImgCache}) no-repeat center left;
+	background-size: 16px auto;
+	font-size: var(--small-fontSize);
+}
+
+// エラー画面専用
+// エラーメッセージ
+.c-text-error {
+	background-color: #fff;
+	border: 1px solid var(--primary);
+	padding: var(--bs16);
+	color: var(--primary);
+	font-size: 16px;
+	font-weight: var(--bold-700);
+}
+
+// エラーメッセージ下に表示するキャプション
+.c-text-error-caption {
+	line-height: var(--wide-lineHeight);
+    padding: 0 4px;
+}
+
+// エラーコード
+// 廃止
+.c-text-error-code {
+	font-size: var(--large-fontSize);
+	color: var(--gray400);
+	text-align: right;
+}
+//  New
+.c-text-errorCode {
+	font-size: var(--large-fontSize);
+	color: var(--gray400);
+}
+
+// 情報表示リンク※20240729新規追加
+.c-text-link-information {
+	display: grid;
+	grid-template-columns: 12px 1fr;
+	gap: 4px;
+	@extend %textLink;
+	font-size: var(--small-fontSize);
+	width: fit-content;
+	margin-inline: auto;
+	&::before {
+		content: "";
+		display: block;
+		width: 12px;
+		height: 12px;
+		background: url(#{$cdn}/assets/img/icon_assets_link_information.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		transform: translateY(3px);
+	}
+
+}
+
+// 「・」付きリンク
+.c-text-link-marker {
+	@extend %textLink;
+	@include markerStyle("・");
+	display: block;
+	// 別窓アイコンの位置調整用
+	.c-icon-newTab {
+		transform: translateY(4px);
+		margin-left: 2px;
+	}
+}

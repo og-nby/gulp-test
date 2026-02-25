@@ -1,0 +1,309 @@
+@use "sass:map";
+@use "variables" as *;
+
+// Mixin管理用
+// line-heightの上下の余白を打ち消す
+@mixin lineHeightCrop($line-height) {
+	&::before {
+		display: block;
+		width: 0;
+		height: 0;
+		margin-top: calc((1 - #{$line-height}) * .5em);
+		content: "";
+	}
+	&::after {
+		display: block;
+		width: 0;
+		height: 0;
+		margin-bottom: calc((1 - #{$line-height}) * .5em);
+		content: "";
+	}
+}
+
+// 旧メディアクエリ start ==========================
+// PC専用
+@mixin onlyPc() {
+	@media screen and (min-width: 1000px) {
+		@content;
+	}
+}
+
+// PCを除いたデバイス
+@mixin notPc() {
+	@media screen and (max-width: 999px) {
+		@content;
+	}
+}
+
+// SPを除いたデバイス
+@mixin notSp() {
+	@media screen and (min-width: 641px) {
+		@content;
+	}
+}
+
+// タブレット専用
+@mixin onlyTab() {
+	@media screen and (min-width: 641px) and (max-width: 999px) {
+		@content;
+	}
+}
+
+// SP専用
+@mixin onlySp() {
+	@media screen and (max-width: 640px) {
+		@content;
+	}
+}
+
+// SPを除いたデバイス
+@mixin notSp() {
+	@media screen and (min-width: 641px) {
+		@content;
+	}
+}
+
+// 低解像度SP
+@mixin lowSp() {
+	@media screen and (max-width: 360px) {
+		@content;
+	}
+}
+// 旧メディアクエリ end ==========================
+
+
+// オーバーレイ汎用
+@mixin baseOverlay($zindexNum: 7000) {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--Semantic-Bg_overlay);
+	z-index: $zindexNum;
+	transition: ease .3s;
+}
+
+@mixin landscape() {
+	@media (orientation: landscape) {
+		@content;
+	}
+}
+
+@mixin spLandscape() {
+	@media screen and (max-width: 640px) and (orientation: landscape) {
+		@content;
+	}
+}
+
+// 新メディアクエリ start ==========================
+// ブレイクポイントのマップを定義
+$breakpoints: (
+	"pc":         1000px,
+	"tablet":     641px,
+	"sp":         640px,
+	"low-res-sp": 360px
+);
+// メディアクエリのMixinを定義
+@mixin media($breakpoint) {
+	$breakpoint-value: map.get($breakpoints, $breakpoint);
+
+	@if $breakpoint-value {
+
+		@if $breakpoint == "pc" {
+			@media (min-width: #{$breakpoint-value}) {
+				@content;
+			}
+		} @else if $breakpoint == "tablet" {
+			@media (min-width: #{$breakpoint-value}) and (max-width: 999px) {
+				@content;
+			}
+			
+		} @else if $breakpoint == "sp" {
+			@media (max-width: #{$breakpoint-value}) {
+				@content;
+			}
+		
+		} @else if $breakpoint == "low-res-sp" {
+			@media (max-width: #{$breakpoint-value}) {
+				@content;
+			}
+		}
+		
+
+	} @else {
+		@error "無効なブレークポイント: #{$breakpoint}";
+
+	}
+}
+// 使用例
+// .foo {
+// 	width: 100%;
+// 	@include media("pc") {
+// 	// PC専用スタイル
+// 	}
+// 	@include media("tablet") {
+// 	// タブレット専用スタイル
+// 	}
+// 	@include media("sp") {
+// 	// SP専用スタイル
+// 	}
+// 	@include media("low-res-sp") {
+// 	// 低解像度SP専用スタイル
+// 	}
+// 	@include media("foo") {
+// 	// エラーメッセージが表示されます
+// 	}
+// }
+// 新メディアクエリ end   ==========================
+
+// ツールチップ位置調整用Mixin
+//  第1引数：クラスの種別（コンポーネントクラス(c) or プロジェクトクラス(p)）
+//  第2引数：ユニークな小カテゴリ名（最終的な用途が予測できる語句が望ましい）
+//  第3引数：topの数値※単位まで含めること、calc関数も可
+//  第4引数：rightの数値※単位まで含めること、calc関数も可
+@mixin tooltipStyle($type: 'c', $parentName:null, $top: '-62px', $right: '1px') {
+	.c-tooltip-favorite {
+		// 基準となるユニークな親クラスの配下で位置決め
+		.#{$type}-tooltip-parent-#{$parentName} & {
+			position: absolute;
+			top: $top;
+			right: $right;
+		}
+	}
+}
+
+// 画像系スタイルに背景用プリローダーを仕込んである場合、読み込み後にプリローダーbgを消す
+@mixin imgLoadedStyle() {
+	&.is-image-loaded {
+		background-image: none;
+	}
+}
+
+// テキスト省略用スタイル用Mixin
+@mixin textOverflowStyle($num) {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: #{$num};
+	overflow: hidden;
+}
+
+// 枠付きリスト型リンク用矢印背景画像設置用疑似要素
+@mixin listLinkArwStyle() {
+	&:after {
+		content: "";
+		background: url(#{$cdn}/assets/img/arw_assets_gry400.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		display: block;
+		height: 12px;
+		width: 12px;
+		@content;
+	}
+}
+
+// テキスト省略用
+// テキスト省略用スタイル用Mixin
+@mixin textOverflowStyle($num) {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	-webkit-line-clamp: #{$num};
+	overflow: hidden;
+}
+// アニメーション
+@mixin transitionStyle($speed: ".3s") {
+	transition: #{$speed} ease;
+}
+
+// ラジオボタン、チェックボックスのチェックありなしで兄弟要素のスタイルを変更する
+@mixin inputBtnStyle ($elmName, $inputType) {
+	.c-form-#{$inputType} {
+		// チェックボックスを非表示
+		input[type=#{$inputType}] {
+			display: none;
+			// チェックボックスにチェックが入っていた場合の兄弟要素のスタイル
+			&:checked + .#{$elmName} {
+				@content;
+			} 
+		}
+	}
+}
+
+
+// 情報常時枠作成用
+@mixin infoStyle($bdw: '1px', $bdc: 'var(--border)') {
+	background-color: #fff;
+	border: #{$bdw} solid #{$bdc};
+	padding: var(--bs16);
+	width: 100%;
+	@content;
+}
+
+// 2025.6.17 スマートフォン縦スクロール時のスクロールバーをコンテンツエリアに重ならないようにする対策よ言う
+@mixin verticalScrollbarStyle() {
+	@include notPc() {
+		box-sizing: content-box;
+		padding-right: var(--default); 
+	}
+	@media (hover: none) and (pointer: coarse) {
+		box-sizing: content-box;
+		padding-right: var(--default); 
+	}
+}
+
+// カードスタイル作成用
+@mixin c-cardStyle($categoryName: null, $width: null, $border: false, $padding: var(--narrow), $gap: var(--narrow)) {
+	// $categoryNameが空でなければ「-」の有無を吸収しつつクラス生成
+	$cat: if($categoryName != null and str-index($categoryName, '-') != 1, '-' + $categoryName, $categoryName);
+	.c-card#{$cat} {
+		display: grid;
+		grid-template-rows: auto;
+		padding: $padding;
+		gap: $gap;
+		@if $width {
+			flex: 0 0 $width;
+			width: $width;
+		}
+		@if $border == true {
+			border: 1px solid var(--gray200);
+		}
+		@content;
+		> * {
+			min-width: 0;
+			min-height: 0;
+		}
+		// card-itemは現状BEM化しない前提
+		.c-card-item + .c-card-item {
+			margin-top: $gap;
+		}
+	}
+}
+
+// 横スライダー共通スタイル
+@mixin slider-horz {
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	// PCのみスクロールバーを表示
+	@include onlyPc() {
+		// スクロールバースタイル
+		padding-bottom: var(--narrow);
+		&::-webkit-scrollbar {
+			display: block;
+			background-color: #fff;
+			height: 8px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--gray200);
+			border-radius: 5px;
+		}
+	}
+}
+
+// GridセルやFlexコンテントのmin-width初期値を0にリセットする
+@mixin minWidthReset() {
+	min-width: 0;
+	* {
+		min-width: 0;
+	}
+}

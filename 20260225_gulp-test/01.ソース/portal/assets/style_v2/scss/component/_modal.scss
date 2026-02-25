@@ -1,0 +1,85 @@
+// モーダル用
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+.c-modal-overlay {
+	@include baseOverlay(8000);
+}
+
+// モーダル外枠
+.c-modal {
+	width: calc(100% - 32px);
+	max-width: 680px;
+	margin: auto;
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	z-index: 8001;
+	border-radius: 16px;
+	border: 1px solid var(--gray200);
+	&.modalFixedCancel {
+		position: absolute;
+		top: 57px;
+		transform: translate(-50%, 0);
+	}
+	padding: 32px;
+	// 閉じるボタン(c-modal-close)がある場合のみpadding-topを48pxにする
+	&:has(.c-modal-close) {
+		padding: 48px 32px 32px;
+	}
+}
+
+// 閉じるボタン
+.c-modal-close {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	height: auto;
+	justify-content: center;
+	line-height: 1;
+	position: absolute;
+	right: 16px; // ★2023.10.16 8pxから変更
+	top: 16px; // ★2023.10.16 8pxから変更
+	width: 16px;
+	z-index: 6002;
+	aspect-ratio: 1 / 1;
+}
+
+.c-modal-content {
+	position: relative;
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--bs16);
+	// 改良版ソース：閉じるボタン配置エリア
+	&__btnArea {
+		margin: -16px -16px 0;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		min-height: 16px;
+	}
+}
+// 閉じるボタン：改良版用ソース
+.c-modal-closeBtn {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	height: auto;
+	justify-content: center;
+	width: 16px;
+	aspect-ratio: 1 / 1;
+}
+
+// ショップ詳細、プログラム詳細でショップを見る、ポイントをゲットするボタン押下時に表示する注意事項用
+.c-modal-textArea-scroll-y {
+	max-height: 248px;
+    overflow-y: auto;
+}
+
+// モーダルが開いている場合にページのスクロールをロックする
+.c-modal-bodyLock {
+	overflow: hidden;
+}

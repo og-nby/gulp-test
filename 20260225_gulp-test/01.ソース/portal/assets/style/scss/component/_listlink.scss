@@ -1,0 +1,91 @@
+// リストリンク
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// リストリンクアンダーライン右矢印用スタイル★2023.9.27追加
+.c-layout-list-bottomline-arrowright {
+	align-items: center;
+	display: flex;
+	padding: 0 22px var(--bs16) 0;
+	border-bottom: 1px solid var(--gray200);
+	position: relative;
+	&::after {
+		content: "";
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_right_gry.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		width: 12px;
+		height: 12px;
+		right: 0;
+		position: absolute;
+	}
+}
+
+// リストリンクアウトライン＆アコーディオン用スタイル★2023.9.27追加 start ========
+// 大枠
+.c-layout-list-frame-border {
+	border-color: var(--gray200);
+	border-style: solid;
+	border-width: 2px 2px 0 2px;
+}
+
+// ulの下罫線＆liの下罫線（last除く）
+.c-list-bottom-border {
+	border-style: solid;
+	border-color: var(--gray200);
+	border-width: 0 0 2px 0;
+	&__item {
+		&:not(:last-child) {
+			border-bottom: 2px solid var(--gray200);
+		}
+		
+	}
+}
+
+// リストリンク枠＆右矢印
+.c-link-list-container {
+	align-items: center;
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_right_gry.svg#{$bgImgCache}) no-repeat calc(100% - 8px) center;
+	background-size: 12px 12px;
+	display: flex;
+	height: 100%;
+	padding: var(--bs8) 38px var(--bs8) var(--bs16);
+	width: 100%;
+
+}
+
+// アコーディオンタイトル
+.c-accordion-title {
+	display: flex;
+	padding: var(--bs8) 38px var(--bs8) var(--bs16);
+	align-items: center;
+	gap: 10px;
+	background-color: var(--gray500);
+	color: var(--monoWhite);
+	position: relative;
+	cursor: pointer;
+	border-color: var(--gray200);
+	border-style: solid;
+	border-width: 0 0 2px 0;
+
+	&::after {
+		aspect-ratio: 1;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_updown_white.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		content: "";
+		height: 12px;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		transition: .3s ease;
+		width: 12px;
+		right: 10px;
+	}
+
+}
+
+.is-open-accordion-title {
+	&::after {
+		transform: rotate(180deg) translateY(50%);
+	}
+}
+// リストリンクアウトライン＆アコーディオン用スタイル★2023.9.27追加 end ========

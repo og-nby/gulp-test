@@ -1,0 +1,57 @@
+// ブロックカテゴリー用スタイル
+
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+%c-section-base {
+	background-color: #fff;
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 16px;
+}
+// セクションの区切り線用MIxin 2025.10.14追加
+@mixin sectionSeparator() {
+	border-top: 4px solid var(--gray200);
+}
+
+// dpm標準デザイン用セクション
+.c-section {
+	@extend %c-section-base;
+	@include sectionSeparator();
+	padding: var(--wide) var(--default);
+	@include minWidthReset();
+	// padding・gridをリセット
+	&.--noPaddingBlock {
+		display: block;
+		padding: 0;
+	}
+	// ヘッダー等で要素を両端並べにする
+	&__justify {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		justify-content: space-between;
+		position: relative;
+	}
+	// c-sectionからのスタイルを内部の子要素には継承したいが自身は無視されるように設定する
+	&__hide {
+		display: contents;
+	}
+}
+
+// ボーダー無セクション
+.c-section-noBorder {
+	@extend %c-section-base;
+	padding: 0 var(--default) var(--wide);
+}
+
+// dカードセグメント切替用セクション
+.c-section-segment {
+	@include sectionSeparator();
+	padding: var(--wide) var(--default);
+	background-color: var(--bg100);
+	&__inner {
+		max-width: 452px;
+		margin: 0 auto;
+	}
+}

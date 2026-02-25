@@ -1,0 +1,453 @@
+// // 並べ替え・絞り込み
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 並び替え・絞り込み画面設置用ラッパー
+.c-layout-sort {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+}
+// 並び替えボタン
+.c-button-sort-order {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	cursor: pointer;
+	color: var(--gray600);
+	font-weight: var(--bold-700);
+	&::after {
+		content: "";
+		display: block;
+		width: 11px;
+		height: 12px;
+		flex: 0 0 11px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_sort.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+	&.is-order-list-open::after {
+		content: "";
+		transform: rotate(180deg);
+	}
+	&.is-order-selected {
+		color: var(--textLink);
+		&::after {
+			background: url(#{$cdn}/assets/img/icon_assets_arrow_sort_selected.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+	}
+}
+
+.c-layout-order {
+	padding: 6px var(--bs16);
+	border-radius: 8px;
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	top: 22px;
+	left: 0;
+	width: 214px;
+	height: auto;
+	z-index: 5001;
+}
+.c-list-order li:not(:last-child) {
+	border-bottom: 1px solid var(--gray100);
+}
+.c-list-order-terms-radio {
+	display: none;
+}
+
+// 並び替え画面注釈追加 2024.7.8 start ====
+
+// 並び替え・絞り込み配置用
+.c-sort-area {
+	position: relative;
+}
+.c-sort-btnList {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+}
+
+// 並び替え用注釈テキスト
+.c-sort-order-btnNote {
+	font-size: var(--small-fontSize);
+	color: var(--Semantic-Text_gray);
+}
+
+// 並び替えメニューテキスト
+.c-sort-order-terms-btnText {
+	cursor: pointer;
+	padding: var(--bs8) 0;
+}
+// ラジオボタン選択時
+.c-list-order-terms-radio:checked + .c-sort-order-terms-btnText .c-list-order-terms {
+	font-weight: var(--bold-700);
+	color: var(--textLink);
+	cursor: default;
+	padding-right: var(--bs16);
+	background: url(#{$cdn}/assets/img/icon_assets_sort_order_terma_selected.svg#{$bgImgCache}) no-repeat center right; 
+	background-size: var(--bs16) auto;
+}
+// 並び替え画面注釈追加 2024.7.8 end ====
+
+// 並び替え用オーバーレイ
+.c-ovaerlay-order {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	z-index: 5000;
+}
+
+// 絞り込み start ============
+.c-button-sort-filter {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	cursor: pointer;
+	color: var(--gray600);
+	font-weight: var(--bold-700);
+	&::before {
+		content: "";
+		display: block;
+		width: 18px;
+		height: 18px;
+		flex: 0 0 18px;
+		background: url(#{$cdn}/assets/img/icon_assets_sort_filter.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+	&.is-fliter-selected {
+		color: var(--other-red);
+		&::before {
+			background: url(#{$cdn}/assets/img/icon_assets_sort_filter_selected.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+	}
+}
+
+// 絞り込み系スタイル start ===========
+
+// 絞り込み画面オーバーレイ
+.c-ovaerlay-filter {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 7000;
+}
+
+
+// 絞り込み画面外枠
+.c-screen-filter {
+	z-index: 7001;
+	background-color: #fff;
+	padding: 32px 32px 0;
+	width: 100%;
+	height: 81.4vh;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	border-radius: var(--bs16) var(--bs16) 0 0;
+	@media screen and (min-width: 1000px) {
+		max-width: 750px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border-radius: var(--bs16);
+	}
+	// スライド格納部分
+	&__inner {
+		overflow: hidden;
+		width: 100%;
+	}
+}
+
+// 絞り込みを閉じるボタン※20240725追加
+.c-sort-filter-closeBtn {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    cursor: pointer;
+    z-index: 7001;
+}
+
+// 絞り込み画面スライド切替用 start ============
+.c-layout-filter-category {
+	display: table;
+	table-layout: fixed;
+	width:  100%;
+	transition: .5s ease-out;
+	&__slide {
+		display: table-cell;
+		width: 100%;
+		height: 100%;
+	}
+}
+// 絞り込み画面スライド切替用 end ============
+
+// 絞り込み項目配置用コンテナ start ============
+.c-layout-filter {
+	display: grid;
+	grid-template-rows: 1fr 80px; // 80px: c-layout-filter__btnareaの高さ
+	.c-layout-filter-category__slide:nth-child(1) & {
+		height: calc(81.4vh - 32px); // モーダルの高さからpadding-topの値を引いた値
+	}
+	.c-layout-filter-category__slide:nth-child(n+2) & {
+		height: calc(81.4vh - (32px + 45px)); // モーダルの高さからpadding-top + c-layout-filter-category-navigationの値(高さ+margin-bottom)を引いた値
+	}
+	// フィルター項目エリア★スクロール有り
+	&__main {
+		width: 100%;
+		overflow-y: auto;
+		scroll-snap-type: y;
+		height: 100%;
+		@include onlyPc() {
+			overflow-y: scroll;
+			margin-right: -20px; // スクロールバー分右にオフセットさせる
+			padding-right: 20px;
+		}
+		// .c-layout-filter__main配下の隣接要素にmargin-topを設定する
+		> * + * {
+			margin-top: 24px;
+		}
+	}
+	// 選択したフィルター項目の決定ボタンエリア
+	&__btnarea {
+		// background-color: #fff;
+		padding: 17px 1px 14px;
+		max-height: 80px;
+		position: relative;
+	}
+}
+// 絞り込み項目配置用コンテナ end ============
+
+// フィルター項目用セクション start ============
+.c-section-filter {
+	display: grid;
+	grid-template-rows: auto;
+	gap: 16px;
+	// 配下のc-tagまたはc-rangeが無い場合はgapを0にする
+	&:not(:has(.c-tag), :has(.c-range)){
+		gap: 0;
+	}
+	// 先頭のc-layout-filter-category__slide配下のc-section-filterのみ罫線およびpadding-bottom(--default)を表示する
+	.c-layout-filter-category__slide:nth-child(1) & {
+		border-bottom: 1px solid var(--gray200);
+		padding-bottom: var(--default);
+	}
+	&__header {
+		flex: 0 0 18px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 3px;
+		cursor: pointer;
+		&::after {
+			content: "";
+			display: block;
+			flex: 0 0 16px;
+			aspect-ratio: 1 / 1;
+			background: url(#{$cdn}/assets/img/icon_assets_filter_arrow.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+		&.is-filter-open::after {
+			transform: rotate(180deg);
+		}
+	}
+	&__body {
+		display: none;
+		&.is-filter-open {
+			display: block;
+		}
+	}
+}
+// フィルター項目用セクション end ============
+
+// フィルター画面内タグ配置用ラッパー start ============
+.c-layout-filter-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 10px;
+}
+// フィルター画面内タグ配置用ラッパー end ============
+
+
+// カテゴリ選択系 start ============
+// カテゴリ選択画面用戻るリンク
+.c-layout-filter-category-navigation {
+	display: flex;
+	align-items: center;
+	height: 27px;
+	// リンク下の16pxの余白用スタイル★2023.11.1追加
+	margin-bottom: 16px;
+}
+// 選択カテゴリリスト
+.c-list-fliter-category {
+	li {
+		border-bottom: 1px solid var(--gray200);
+	}
+}
+// 選択カテゴリ共通スタイル
+%categoryItemStyle {
+	font-size: var(--small-fontSize);
+	background: url(#{$cdn}/assets/img/icon_assets_filter_category.svg#{$bgImgCache}) no-repeat center right; 
+	background-size: 12px auto;
+	cursor: pointer;
+	color: var(--gray600);
+}
+// 1階層目
+.c-text-category-item-first {
+	@extend %categoryItemStyle;
+	font-weight: var(--bold-700);
+	padding: var(--bs8) 12px var(--bs8) 0;
+}
+// 2階層目
+.c-text-category-item-second {
+	@extend %categoryItemStyle;
+	padding: var(--bs8) 12px;
+}
+// 3階層目
+.c-text-category-item-third {
+	@extend %categoryItemStyle;
+	padding: var(--bs8) 12px var(--bs8) 24px;
+}
+// 4階層目
+.c-text-category-item-fourth {
+	display: block;
+	padding: var(--bs8) 0 var(--bs8) 36px;
+	cursor: pointer;
+	// カテゴリ名テキスト
+	&__value {
+		font-size: var(--small-fontSize);
+		color: var(--gray600);
+	}
+	// ラジオボタン
+	input[type=radio] {
+		display: none;
+		&:checked + .c-text-category-item-fourth__value {
+			font-weight: var(--bold-700);
+			background: url(#{$cdn}/assets/img/icon_assets_checkmark.svg#{$bgImgCache}) no-repeat center right;
+			background-size: 12px auto;
+		}
+	}
+}
+
+// 選択済みカテゴリ名 -------
+// 選択カテゴリ名共通CSS
+%categoryItemSelected {
+	font-size: var(--small-fontSize);
+	font-weight: var(--bold-700);
+	border-bottom: 1px solid var(--gray200);
+	color: var(--gray600);
+	cursor: pointer;
+	// 選択済みアイテム
+	&.--item-checked {
+		background: url(#{$cdn}/assets/img/icon_assets_checkmark.svg#{$bgImgCache}) no-repeat center right; 
+		background-size: 12px auto;
+		padding-right: 12px;
+	}
+}
+// カテゴリ画面各階層の選択カテゴリ名表示用
+.c-text-category-item-first-selected {
+	@extend %categoryItemSelected;
+	padding: var(--bs8) 0;
+}
+.c-text-category-item-second-selected {
+	@extend %categoryItemSelected;
+	padding: var(--bs8) 0 var(--bs8) 12px;
+}
+.c-text-category-item-third-selected {
+	@extend %categoryItemSelected;
+	padding: var(--bs8) 0 var(--bs8) 24px;
+}
+// カテゴリ選択系 end ============
+
+// 絞り込み系スタイル end ===========
+
+
+// 絞り込みプルダウン start ============
+.c-layout-pulldown-filter {
+	position: relative;
+}
+.c-button-pulldown-filter {
+	align-items: center;
+	border: 1px solid var(--gray200);
+	border-radius: var(--radius-low);
+	display: flex;
+	justify-content: space-between;
+	padding: var(--bs8) 12px;
+	width: 100%;
+	cursor: pointer;
+	&.is-opened-pulldown-filter {
+		border-radius: var(--radius-low) var(--radius-low) 0 0;
+		border-bottom-color: #fff;
+	}
+}
+.c-icon-pulldown-arrow {
+	width: 12px;
+	height: auto;
+	&.is-rotate-pulldown-arrow {
+		transform: rotate(180deg);
+	}
+}
+.c-layout-list-filter {
+	border-radius: 0 0 var(--radius-low) var(--radius-low);
+	background-color: #fff;
+	position: absolute;
+	border: 1px solid var(--gray200);
+	border-width: 0 1px 1px;
+	width: 100%;
+	height: auto;
+	z-index: 5001;
+}
+.c-layout-list-filter__item {
+	padding: var(--bs8) 12px;
+	cursor: pointer;
+	&:has(.c-list-filter-terms-radio:checked) {
+		background-color: #FFF6F8;
+	}
+}
+.c-list-filter-terms-radio {
+	display: none;
+}
+.c-list-filter-terms {
+	display: block;
+	cursor: pointer;
+}
+.c-list-filter-terms-radio:checked + .c-list-filter-terms {
+	font-weight: var(--bold-700);
+	color: var(--other-red);
+	padding-right: var(--bs16);
+	background: url(#{$cdn}/assets/img/icon_assets_pulldown_check.svg#{$bgImgCache}) no-repeat center right; 
+	background-size: var(--bs16) auto;
+}
+
+// カテゴリーアイテム（1階層目のみ）用スタイル★2023.11.1追加 start ========
+.c-text-category-item-first-only {
+	display: block;
+	cursor: pointer;
+	padding: var(--bs8) 0;
+	// カテゴリ名テキスト
+	&__value {
+		font-size: var(--small-fontSize);
+		color: var(--gray600);
+		font-weight: var(--bold-700);
+	}
+	// ラジオボタン
+	input[type=radio] {
+		display: none;
+		&:checked + .c-text-category-item-first-only__value {
+			background: url(#{$cdn}/assets/img/icon_assets_checkmark.svg#{$bgImgCache}) no-repeat center right;
+			background-size: 12px auto;
+		}
+	}
+}
+// ︎カテゴリーアイテム（1階層目のみ）用スタイル★2023.11.1追加 end ========

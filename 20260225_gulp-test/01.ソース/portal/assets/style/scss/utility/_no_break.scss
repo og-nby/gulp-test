@@ -1,0 +1,7 @@
+// 改行位置調整
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+.u-noBreak {
+	display: inline-block;
+}

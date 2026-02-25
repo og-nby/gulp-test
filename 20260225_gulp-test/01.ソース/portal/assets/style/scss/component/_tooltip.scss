@@ -1,0 +1,74 @@
+// ツールチップ用スタイル
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// ツールチップ共通スタイル
+%tooltipBaseStyle {
+	position: absolute;
+    display: inline-block;
+	padding: 8px 16px;
+	text-align: center;
+	color: #fff;
+	white-space: nowrap;
+	font-weight: normal;
+	border-radius: 4px;
+	background-color: rgba(0,0,0,.6);
+	font-size: var(--small-fontSize);
+	animation: bubbleUp 0.4s ease-in-out 1;
+}
+
+// お気に入りボタン※旧クラス名
+.c-tooltip-favorite {
+	top: -62px;
+	right: 1px;
+	@extend %tooltipBaseStyle;
+	.c-button-secondary & {
+		position: absolute;
+		right: calc(50% - 70px);
+	}
+}
+
+// 新クラス名
+.c-tooltip-favorite {
+	top: -62px;
+	right: 1px;
+	@extend %tooltipBaseStyle;
+}
+
+// お気に入りショップ追加ボタン
+@include tooltipStyle('c', 'shop', -62px, 1px);
+
+// お気に入り追加ボタン
+@include tooltipStyle('c', 'favorite', -62px, calc(50% - 70px));
+
+// 上限エラーメッセージ
+.c-tooltip-limit {
+	top: -41px;
+	left: 50%;
+    margin-left: -70px;
+	width: 140px;
+	@extend %tooltipBaseStyle;
+}
+
+@keyframes bubbleUp {
+	0% {scale:.8; opacity:0;}
+	50% {scale:1.1; opacity:1;}
+	100% {scale:1; opacity:1;}
+}
+
+// ツールチップ共通スタイルのクラスを作成 ※2025.09
+// ツールチップ
+.c-tooltip {
+	position: absolute;
+    display: inline-block;
+	padding: var(--narrow) var(--default);
+	text-align: center;
+	color: #fff;
+	white-space: nowrap;
+	font-weight: normal;
+	border-radius: 4px;
+	background-color: rgba(0,0,0,.6);
+	font-size: var(--small-fontSize);
+	animation: bubbleUp 0.4s ease-in-out 1;
+}
+

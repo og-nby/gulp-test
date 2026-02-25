@@ -1,0 +1,15 @@
+// ルートセクション用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// h1を内包するコンテンツのルートセクション
+.c-root {
+	padding-top: var(--bs24);
+	border-top: 4px solid var(--gray200);
+	&__top-content {
+		display: grid;
+		grid-template-rows: auto;
+		gap: var(--bs16);
+		padding: 0 var(--bs16) var(--bs24);
+	}
+}

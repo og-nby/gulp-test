@@ -1,0 +1,69 @@
+// デバイス別に表示非表示を切り替える
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// PCの時は非表示にする
+.u-display-hide-pc {
+	display: block;
+	@include onlyPc() {
+		display: none;
+	}
+}
+
+// SP（縦向き）の時のみ非表示にする
+.u-display-hide-sp {
+	display: block;
+	min-width: 0;
+	@include onlySp() {
+		display: none;
+		@include landscape() {
+			display: block;
+		}
+	}
+}
+
+// PC・TB・SP横向きの時は非表示にする
+.u-display-hide-pc-tb {
+	display: block;
+	@include notSp() {
+		display: none;
+	}
+	@include onlySp() {
+		@include landscape() {
+			display: none;
+		}
+	}
+}
+// SP時にSwiperを使う場合は以下のクラスを使用する※DPMDEV-6594にて新規追加
+// SP（縦）のみ表示
+.u-display-spOnly {
+    // 基本は非表示
+	height: 0;
+	overflow: hidden;
+    @include onlySp() {
+        // SPのみ表示
+        height: auto;
+		overflow: visible;
+        @include landscape() {
+            // ただし横向きなら非表示
+			height: 0;
+			overflow: hidden;
+        }
+    }
+}
+
+// PC・TAB・スマホ横向きで表示
+.u-display-pcTabOnly {
+    // 基本は表示
+    display: block;
+	min-width: 0;
+    // SP時の挙動
+    @include onlySp() {
+        // SPは基本的にに非表示
+        display: none; 
+        // ただし、横向きなら表示する
+        @include landscape() {
+            display: block; 
+        }
+    }
+}

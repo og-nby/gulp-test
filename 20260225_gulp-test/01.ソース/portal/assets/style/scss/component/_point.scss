@@ -1,0 +1,842 @@
+// ポイント改修仮設
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+
+// ポイント表示標準仕様
+// 表示させる場所、用途によってモディファイヤーをつけて内容を調整する
+.c-point {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	height: 20px;
+	line-height: 20px;
+	color: var(--primary500);
+	font-weight: var(--bold-700);
+	gap: var(--mostNarrow);
+	// 詳細ページフローティングバナー用
+	.c-floating-detailPage-flInfo & {
+		// フローティングバナーの場合はgap無し
+		gap: 0;
+		// PC以外は左にマージンをつける
+		@include notPc() {
+			margin-left: var(--veryNarrow);
+		}
+
+	}
+		// ポイント詳細モーダル用
+	&.--pointModal {
+		align-items: baseline;
+		height: 21px;
+		line-height: 21px;
+		gap: 1px;
+	}
+
+	// 最大アイコン※縦書き
+	&__saidaiIcon {
+		flex: 0 0 10px;
+		height: 20px;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		> img {
+			display: inline;
+			height: 20px;
+			width: inherit;
+		}
+	}
+	// dポイントアイコン
+	&__dpIcon {
+		flex: 0 0 20px;
+		height: 20px;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		> img {
+			display: inline;
+			height: 20px;
+			width: inherit;
+		}
+// ポイント詳細モーダル用
+		.--pointModal & {
+			flex: 0 0 26px;
+			height: 21px;
+			transform: translateY(1px);
+			> img {
+				height: 26px;
+				vertical-align: middle;
+			}
+		}
+	}
+	// ポイント表示
+	&__content {
+		display: inline-flex;
+		align-items: baseline;
+		transform: translateY(-4px);	
+	}
+	// ポイント数値
+	&__value {
+		line-height: 1;
+		white-space: nowrap;
+		// 詳細ページ用
+		.--detailPage & {
+			font-size: var(--large-fontSize);
+			height: 18px;
+			transform: translateY(1px);
+		}
+		// ポイント詳細モーダル用
+		.--pointModal & {
+			font-size: 24px;
+			white-space: normal;
+		}
+	}
+	// テキスト、ラベル用
+	&__text {
+		white-space: nowrap;
+		line-height: 1;
+		// 詳細ページ用
+		.--detailPage & {
+			transform: translateY(2px);
+			font-size: var(--small-fontSize);
+		}
+		// ポイント詳細モーダル「最大」用
+		.--pointModal & {
+			transform: translateY(-4px);
+			white-space: normal;
+		}
+	}
+}
+// フローティングバナーの場合、最大アイコンとdポイントアイコンの間のみ余白をつける
+.flDetailPageInfoRewardRate .c-point__text + .c-point__dpIcon {
+	margin-left: 2px;
+}
+// .c-floating-detailPage:not(.--static) {
+// 	// 最大還元率表示
+// 	.c-floating-detailPage-flInfo-rewardRate {
+// 		display: inline-flex;
+// 		align-items: center;
+// 		@include notPc() {
+// 			margin-left: 4px;
+// 		}
+// 	}
+// 	.c-floating-detailPage-flInfo-rewardRate-icon {
+// 		display: inline-block;
+// 		width: 20px;
+// 		height: 20px;
+// 	}
+// 	.c-floating-detailPage-flInfo-rewardRate-text {
+// 		display: inline-flex;
+// 		align-items: baseline;
+// 		transform: translateY(2px);
+// 		color: var(--primary500);
+// 		font-weight: var(--bold-700);
+// 		&__value {
+// 			font-size: var(--lg);
+// 			line-height: 1;
+// 			white-space: nowrap;
+// 		}
+// 		&__unit {
+// 			font-size: var(--sm);
+// 			line-height: 18px;
+// 			white-space: nowrap;
+// 		}
+// 	}
+
+// }
+
+// ポイント表示エリア用外枠
+.c-point-area {
+	width: fit-content;
+	min-height: 24px;
+}
+
+// ポイント表示エリアコンテナ共通プレースホルダー
+%cPointContent {
+	display: flex;
+	flex-wrap: wrap;
+	width: fit-content;
+	align-items: center;
+	// コンテナ内の折り返しを禁止する
+	&.--nowrap {
+		flex-wrap: nowrap;
+	}
+}
+// 一覧ページ、商品詳細ページの他のショップの同じ商品を見るで使用する
+.c-point-content-narrow {
+	@extend %cPointContent;
+	gap: 4px;
+}
+// 商品・プログラム詳細ページで使用する
+.c-point-content-wide {
+	@extend %cPointContent;
+	gap: 6px;
+}
+
+// dポイント
+.c-point-pointNum {
+	display: flex;
+	gap: 2px;
+	align-items: center;
+	color: var(--primary500);
+	font-weight: var(--bold-700);
+	// overflow-wrap: break-word;
+	// max-width: 11em;
+	// height: 24px;
+	// white-space: nowrap;
+	// 詳細ページで文字を大きくする
+	&.--lg {
+		font-size: var(--large-fontSize);
+	}
+	// ｄアイコン
+	&::before {
+		aspect-ratio: var(--asp-1);
+		background: url(#{$cdn}/assets/img/icon_assets_dpoint.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		content: "";
+		display: block;
+		flex: 0 0 20px;
+		height: 20px;
+		width: 100%;
+	}
+}
+
+// 出稿主ポイント名
+.c-point-publisher {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: 6px;
+	// プラスアイコン
+	&::before {
+		content: "";
+		display: block;
+		width: 8px;
+		height: 8px;
+		flex: 0 0 8px;
+		background: url(#{$cdn}/assets/img/img_assets_plus.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+	// 出稿主ポイントアイコン
+	&__icon {
+		aspect-ratio: var(--asp-1);
+		flex: 0 0 20px;
+		width: 100%;
+		height: 20px;
+	}
+	// 出稿主ポイントテキスト
+	&__text  {
+		font-size: var(--small-fontSize);
+		letter-spacing: -0.6px;
+		flex: 1;
+	}
+	// 出稿主ポイントアイコン横の余白調整
+	&.--narrow {
+		gap: var(--veryNarrow);
+	}
+	// 還元率拡大表示、余白調整と折り返しDPMDEV-5937
+	&.--mostNarrow {
+		gap: var(--mostNarrow);
+	}
+}
+
+// ポイント詳細ポップアップ用ボタン
+.c-point-button-pointDetail {
+	color: var(--Semantic-Text_light);
+	font-size: var(--small-fontSize);
+	font-weight: var(--bold-700);
+	text-decoration-line: underline;
+	margin-left: 2px;
+	white-space: nowrap;
+}
+
+// ランク特典あり表記用ラベル
+.c-point-label-benefitRank {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	width: fit-content;
+	// 詳細ページ用
+	.c-point-content-wide & {
+		gap: 6px;
+	}
+	// 一覧ページ用
+	.c-point-content-narrow & {
+		gap: 4px;
+	}
+	// プラスアイコン
+	&::before {
+		content: "";
+		display: block;
+		width: 8px;
+		height: 8px;
+		flex: 0 0 8px;
+		background: url(#{$cdn}/assets/img/img_assets_plus.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+	// ランク特典ラベル本体
+	&__content {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 2px;
+		align-items: center;
+		font-size: var(--xsmall-fontSize);
+		white-space: nowrap;
+		width: fit-content;
+		&::before {
+			content: "";
+			display: block;
+			width: 16px;
+			height: 15px;
+			flex: 0 0 16px;
+			background: url(#{$cdn}/assets/img/icon_assets_benefit_rank.svg#{$bgImgCache}) no-repeat center center;
+			background-size: contain;
+		}
+	}
+}
+
+// ポイント読み込み中
+.c-point-preloader {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	flex-wrap: nowrap;
+	color: var(--Semantic-Text_light);
+	font-size: var(--small-fontSize);
+	height: 24px;
+	min-width: 100px;
+	&::before {
+		aspect-ratio: 1/1;
+		background: url(#{$cdn}/assets/img/icon_assets_dpoint.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+		content: "";
+		display: block;
+		flex: 0 0 20px;
+		height: 20px;
+		width: 100%;
+	}
+	// テキスト横の画像の大きさ調整 DPMDEV-5937
+	&.--detailpreloader {
+		height: 32px;
+
+		&::before {
+			width: 32px;
+			height: 32px;
+		}
+	}
+}
+// ドットアニメーション
+.c-preload-textDots {
+	&::after {
+		display: inline-block;
+		margin-left: 2px;
+		content: '';
+		animation: dot-blink 2s linear infinite;
+	}
+	// テキストの行間調整 DPMDEV-5937
+	&.--detailpreloaderdots {
+		line-height: 14px;
+	}
+}
+// キーフレーム
+@keyframes dot-blink {
+	0%, 20% {
+		content: '';
+	}
+	40% {
+		content: '.';
+	}
+	60% {
+		content: '..';
+	}
+	80%, 100% {
+		content: '...';
+	}
+}
+
+// 簡易版カード用ポイント表記
+.c-point-compact {
+	display: grid;
+	&:has(> div:not([class])) {
+		grid-template-columns: 10px 1fr;
+	}
+	// 2025.4.2修正
+	&:has(.c-point-compact__icon) {
+		display: flex;
+	}
+	gap: 0;
+	width: 100%;
+	font-weight: var(--bold-700);
+	color: var(--primary500);
+	// 出稿主ポイントと詳細がある場合にwidthをキャンセルする
+	&.--widthCancel{
+		width: auto;
+	}
+	// 最大アイコン画像用スタイル
+	&__icon {
+		display: inline-flex;
+		width: 10px;
+		flex: 0 0 10px;
+	}
+	// ポイント表示
+	&__point {
+		display: grid;
+		grid-template-columns: 20px 1fr;
+		&::before {
+			content: "";
+			display: block;
+			width: 100%;
+			height: 20px;
+			background: url(#{$cdn}/assets/img/icon_assets_dpoint.svg#{$bgImgCache}) no-repeat top center;
+			background-size: contain;
+		}
+		// フォントカラー、フォントウェイトをノーマルにする
+		&.--plain {
+			color: var(--Semantic-Text_normal);
+			font-weight: normal;
+		}
+	}
+	// 簡易版より小さいカード（w86）用ポイント表記 ※2025.05追加
+	&.--narrow {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 20px;
+		.c-point-compact__point {
+			grid-template-columns: 16px 1fr;
+			line-height: var(--narrow-lineHeight);
+			align-items: flex-start;
+			&::before {
+				height: 16px;
+				background-position: center 1px;
+			}
+			// 赤文字を通常テキストにする
+			&.--plain {
+				color: var(--Semantic-Text_normal);
+				font-weight: 400;
+				-webkit-transform: translateY(1px);
+				transform: translateY(1px);
+			}
+		}
+	}
+}
+
+.c-point-unit {
+	font-size: var(--xsmall-fontSize);
+	white-space: nowrap;
+}
+
+// 通常サイズ版カード 最大アイコン表記用
+.c-point-returnRate {
+	display: grid;
+	&:has(> div:not([class])) {
+		grid-template-columns: 10px 1fr;
+	}
+	&:has(.c-point-returnRate__icon) {
+		display: flex;
+	}
+	gap: 0;
+	// 最大アイコン画像用スタイル
+	&__icon {
+		display: inline-flex;
+		width: 10px;
+	}
+}
+
+// ポイント詳細モーダル：2025.06改修 ※c-modalから移設
+.c-point-modal {
+	width: calc(100% - 32px);
+	max-width: 680px;
+	margin: auto;
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	z-index: 8001;
+	border-radius: 16px;
+	padding: 48px 24px 24px;
+	// モーダルが画面の高さを超えた場合に画面固定をキャンセルするクラス
+	&.modalFixedCancel {
+		top: 16px;
+		transform: translate(-50%, 0);
+		left: 50%;
+	}
+}
+
+// 獲得ポイント
+.c-point-modal-point-expectation {
+	display: flex;
+	justify-content: space-between;
+	&__label {
+		font-weight: var(--bold-700);
+	}
+}
+
+// スクロールエリア
+.c-point-modal-scrollable {   
+	width: 100%;
+	overflow-y: auto;
+	overscroll-behavior: auto;
+	box-sizing: border-box;
+	min-height: 0;
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--default);
+	// 32px: 画面上下余白、37px: 獲得ポイントと下余白、48px: 上padding、24px: 下padding
+	max-height: calc(100 * var(--vh-unit) - 32px - 37px - 48px - 24px); 
+}
+// SP横向き
+@media (orientation: landscape) and (max-height: 430px) {
+	.c-point-modal-scrollable {
+		// 縦幅が狭くなることによるスクロールのやりずらさ解消の為、指定のmin-heightを設定
+		min-height: 71px;
+	}
+}
+// スマホ・タブレット等タッチデバイスのみ、スクロールバーの位置をテキストと被らないように調整
+// (hover: none) and (pointer: coarse)が一部android端末に効かないため、notPc()を併記
+@include notPc() {
+	.c-point-modal-scrollable {
+		box-sizing: content-box;
+		padding-right: 16px; 
+	}
+}
+@media (hover: none) and (pointer: coarse) {
+	.c-point-modal-scrollable {
+		box-sizing: content-box;
+		padding-right: 16px; 
+	}
+}
+
+// ポイント内訳
+
+// 内訳全体用ラッパー要素※DPMDEV-1806にて追加
+.c-point-modal-breakdown-wrapper {
+	background-color: var(--Semantic-Bg_50);
+	width: 100%;
+	padding: var(--default);
+	display: grid;
+	grid-template-rows: auto;
+	gap: var(--narrow);
+	& * {
+		min-width: 0;
+	}
+}
+// 内訳項目区切り線※DPMDEV-1806にて追加
+.c-point-modal-breakdown-separator {
+	border: none;
+	height: 1px;
+	margin-block: var(--narrow);
+	background-image:
+	repeating-linear-gradient(
+		to right,
+		#b0b0b0 0 2px,       /* 2px の線 */
+		transparent 2px 4px  /* 2px の隙間 */
+	);
+}
+
+// ポイント内訳内セクション
+.c-point-modal-breakdown-section {
+	display: grid;
+	grid-template-rows: auto;
+	gap: var(--narrow);
+	// 見出し
+	&__header {
+		line-height: var(--narrow-lineHeight);
+	}
+	// ポイント内枠表格納用
+	&__body {
+		padding-left: var(--default);
+	}
+}
+
+// ポイント内訳表全体※単独使用時用、背景色、上下左右余白設定
+.c-point-modal-table-breakdown {
+	background-color: var(--Semantic-Bg_50);
+	width: 100%;
+	// ポイント内訳表の外枠付きの場合の挙動※DPMDEV-1806にて追加
+	.c-point-modal-breakdown-wrapper & {
+		background-color: transparent;
+	}
+}
+// ポイント内訳表本体
+.c-point-modal-breakdown {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: 8px;
+	padding: var(--default);
+	// ポイント内訳表の外枠付きの場合の挙動※DPMDEV-1806にて追加
+	.c-point-modal-breakdown-wrapper & {
+		padding: 0;
+	}
+	// ポイント内訳表内各ポイント項目
+	&__row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--veryNarrow);
+	}
+	&__error {
+		color: var(--primary500);
+		margin-right: -16px;
+	}
+	&__content {
+		display: flex;
+		align-items: center;
+		flex: 0 0 64px;
+		justify-content: flex-end;
+		color: var(--primary500);
+	}
+	&__rank {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 24px;
+	}
+	&__star {
+		flex: 0 0 26px;
+		width: auto;
+		height: 26px;
+		transform: translateX(2px);
+	}
+	// キャンペーン名：DPMDEV-1806にて追加
+	&__title {
+		font-size: var(--small-fontSize);
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		word-break: break-all;
+	}
+}
+
+// ポイント内枠表内ポイント数用※DPMDEV-1806にて追加
+.c-point-modal-breakdown-points {
+	display: flex;
+	align-items: center;
+	color: var(--primary500);
+	// ポイント数値
+	&__value {
+		text-align: right;
+		line-height: var(--narrow-lineHeight);
+	}
+	// ポイント単位
+	&__unit {
+		font-size: var(--small-fontSize);
+		line-height: 18px;
+		white-space: nowrap;
+		flex: 0 0 12px;
+	}
+}
+
+// 追加ポイント（ショップ進呈分・d払い）
+.c-point-modal-section-bonus {
+	border-bottom: 1px solid var(--gray400);
+	padding-bottom: 15px;
+	// 下に補足文章がない場合はボーダー線をとる
+	&:last-of-type {
+		border-bottom: none;
+		padding-bottom: 0;
+		&:has(+ .c-point-modal-section-info) {
+			border-bottom: 1px solid var(--gray400);
+			padding-bottom: 15px;
+		}
+	}
+}
+.c-point-modal-bonus-list {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 7px;
+	&__title {
+		font-weight: var(--bold-700);
+		white-space: nowrap;
+	}
+	&__item {
+		align-items: flex-start;
+		display: flex;
+		gap: var(--mostNarrow);
+		// プラスアイコン
+		&::before {
+			background: url(#{$cdn}/assets/img/icon_assets_plus_2_20250617.svg) no-repeat center center;
+			background-size: contain;
+			content: "";
+			display: block;
+			flex: 0 0 10px;
+			height: 20px;
+			width: 10px;
+		}
+	}
+	&__value {
+		font-weight: var(--bold-700);
+	}
+	// ショップアイコン画像
+	&__icon {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
+		align-items: flex-start;
+		margin-left: 2px;
+		> img {
+			width: 20px;
+			height: 20px;
+		}
+	}
+	&__name {
+		font-weight: var(--bold-700);
+		word-break: break-all;
+		line-height: 19px;
+	}
+}
+
+// インフォメーションエリア ※DPMDEV-1789にて追加予定だったが未リリースのためDPMDEV-5772にて追加
+.c-point-modal-section-info {
+	&__text {
+		display: grid;
+		gap: var(--narrow);
+		font-size: var(--small-fontSize);
+		color: var(--Semantic-Text_gray);
+		.c-text-marker {
+			&::before {
+				height: calc(var(--small-fontSize)* var(--default-lineHeight));
+			}
+		}
+	}
+}
+
+// キャンペーンについての注意事項ボタン ※DPMDEV-1789にて追加予定だったが未リリースのためDPMDEV-5772にて追加
+.c-point-modal-btn-attentionNote {
+	display: inline-block;
+	font-size: var(--small-fontSize);
+	color: var(--textLink);
+	background: url(#{$cdn}/assets/img/icon_assets_arrow_text_link_pageanchor.svg) no-repeat right 3px;
+	background-size: 14px auto;
+	padding-right: 17px;
+	cursor: pointer;
+}
+
+// キャンペーンポイントリスト ※DPMDEV-5772にて追加
+.c-point-modal-campaign-list {
+	display: grid;
+	grid-template-rows: 1fr;
+	gap: var(--narrow);
+	padding-left: var(--default);
+	&__row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	// テキストリンク
+	&__textLink {
+		cursor: pointer;
+		color: var(--textLink);
+		font-size: var(--small-fontSize);
+		&:hover,
+		&:active,
+		&:visited {
+			color: var(--textLink);
+		}
+		// 2行省略表示
+		&.--ellipsis-2 {
+			-webkit-box-orient: vertical;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+			word-break: break-all;
+		}
+	}
+	// ポイント表示
+	&__value {
+		display: flex;
+		white-space: nowrap;
+		align-items: baseline;
+	}
+	// +アイコン
+	&__plusIcon {
+		display: inline-flex;
+		flex: 0 0 10px;
+		img {
+			width: 10px;
+			height: fit-content;
+		}
+	}
+	// 最大テキスト
+	&__maxSymbol {
+		margin-left: var(--mostNarrow);
+		font-size: var(--small-fontSize);
+	}
+	// ポイント単位
+	&__unit {
+		font-size: var(--small-fontSize);
+	}
+}
+
+// ABテスト用Bパターン還元率拡大表示、余白調整と折り返しDPMDEV-5937
+.c-point-detail {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--veryNarrow);
+	align-items: center;
+	// SP(640px以下)で.c-point-detailの親要素となる.p-program-main__info が grid＋min-height となり 
+	// c-point-detail が下側に押し下げられてレイアウトが崩れるため上寄せで固定
+	@include onlySp() {
+		align-self: flex-start;
+	}
+
+	&__label {
+		white-space: nowrap;
+	}
+
+	&__group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--veryNarrow) 0;
+	}
+
+	&__max {
+		width: 12px;
+		height: 32px;
+
+		img {
+			height: 32px;
+			object-fit: contain;
+		}
+	}
+
+	&__icon {
+		width: 32px;
+		height: 32px;
+
+		img {
+			object-fit: contain;
+		}
+	}
+
+	&__value {
+		display: inline-flex;
+		align-items: center;
+		height: 32px;
+		line-height: 1;
+		font-size: 28px;
+		color: var(--primary500);
+		font-weight: var(--bold-700);
+	}
+	
+	&__unit {
+		font-size: var(--large-fontSize);
+		color: var(--primary500);
+		font-weight: var(--bold-700);
+		// pt,%の位置調整
+		align-self: flex-end;
+	}
+	// 詳細ボタン位置調整
+	& .c-point-button-pointDetail {
+		transform: translateY(-1px);
+	}
+	// 下部配置
+	>.c-point-publisher,
+	>.c-point-button-pointDetail {
+		align-self: flex-end;
+	}
+}

@@ -1,0 +1,117 @@
+// PCTABページネーション用
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 表示件数
+.c-pagelist-nav-result {
+	display: none;
+	@include notSp() {
+		display: block;
+	}
+	padding: 5px;
+	text-align: center;
+	border: solid var(--gray200);
+	border-width: 1px 0;
+}
+// ページネーション
+.c-pagelist-nav-pagination {
+	%pageListNavHidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+	display: none;
+	@include notSp() {
+		display: flex;
+	}
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--bs16) 0;
+	// ページNo表示エリア
+	&__center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		flex: 1;	
+	}
+	// 左（戻る）エリア
+	&__left {
+		display: flex;
+		align-items: center;
+		flex: 0 0 80px;
+		&.--hidden {
+			@extend %pageListNavHidden;
+		}
+	}
+	// 右（進む）エリア
+	&__right {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		flex: 0 0 80px;
+		&.--hidden {
+			@extend %pageListNavHidden;
+		}
+	}
+}
+// ページネーション表示要素
+// デフォルト（数字）
+.c-pagination-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: fit-content;
+	min-width: 30px;
+	height: 30px;
+	font-size: 15px;
+	font-weight: var(--bold-700);
+	color: var(--gray400);
+	white-space: nowrap;
+	cursor: pointer;
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--gray400);
+	}
+	// カレント
+	&.--current {
+		color: var(--gray800);
+		cursor: default;
+	}
+	// 左矢印
+	&.--left {
+		font-size: 0;
+		color: transparent;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_left.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 7px 16px;
+		display: block;
+		width: 30px;
+		height: 30px;
+		aspect-ratio: 1 / 1;
+	}
+	// 右矢印
+	&.--right {
+		font-size: 0;
+		color: transparent;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_right.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 7px 16px;
+		display: block;
+		width: 30px;
+		height: 30px;
+		aspect-ratio: 1 / 1;
+	}
+	//  最初に戻る
+	&.--back-to-top {
+		aspect-ratio: 1 / 1;
+		display: block;
+		width: 100%;
+		height: 100%;
+		flex: 0 0 38px;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_back-to-top.svg#{$bgImgCache}) no-repeat center center;
+		background-size: auto 14px;
+		color: transparent;
+		&.--hidden {
+			display: none;
+		}
+	}
+}

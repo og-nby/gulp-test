@@ -1,0 +1,67 @@
+// 要素配置用ラッパー
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+%cGapX {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	gap: var(--bs8);
+	width: 100%;
+	height: 100%;
+}
+%cGapY {
+	display: grid;
+	grid-template-rows: auto;
+}
+
+// c-section内の左右の余白をキャンセルする
+.u-layout-noMargin-x {
+	margin-inline: -16px;
+	overflow: hidden;
+}
+
+// 縦方向に対して均等に余白を設定する
+// 4px
+.u-layout-gap-veryNarrow-y {
+	@extend %cGapY;
+	gap: 4px;
+}
+// 8px
+.u-layout-gap-narrow-y {
+	@extend %cGapY;
+	gap: var(--bs8);
+}
+// 16px
+.u-layout-gap-default-y {
+	@extend %cGapY;
+	gap: var(--bs16);
+}
+// 24px
+.u-layout-gap-wide-y {
+	@extend %cGapY;
+	gap: var(--bs24);
+}
+
+// 左右均等配置※左右両端に要素を配置する
+// 左右均等並べ：デフォルト
+.u-layout-justify-center {
+	@extend %cGapX;
+	align-items: center;
+}
+.u-layout-justify-center-relative {
+	@extend %cGapX;
+	align-items: center;
+	position: relative;
+}
+// 左右均等並べ：上揃え
+.u-layout-justify-start {
+	@extend %cGapX;
+	align-items: flex-start;
+}
+// 左右均等並べ：下揃え
+.u-layout-justify-end {
+	@extend %cGapX;
+	align-items: flex-end;
+}
+
+// 変更確定 end ====

@@ -1,0 +1,14 @@
+// 太文字
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 廃止確定 start ====
+.u-text-em {
+	font-weight: var(--bold-700);
+}
+// 廃止確定 end ====
+// 変更確定 start ====
+.u-fontWeight-bold700 {
+	font-weight: var(--bold-700);
+}
+// 変更確定 end ====

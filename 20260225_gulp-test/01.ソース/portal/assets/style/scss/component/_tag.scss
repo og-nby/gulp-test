@@ -1,0 +1,61 @@
+// タグ
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+// 2025.5.20：style_v2からの引っ越し
+// タグ
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.c-tag-layout {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+// タグ(デフォルト※ボタン的な振る舞い)
+%tagBase {
+	position: relative;
+	min-width: 35px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 8px 12px;
+	border: 1px solid var(--gray200);
+	display: inline-block;
+	cursor: pointer;
+}
+%tagActive {
+	border-color: var(--other-red);
+	color: var(--other-red);
+}
+// デフォルト
+.c-tag {
+	@extend %tagBase;
+	// 押下後にJSで以下のクラスを付与することを想定
+	&.is-tags-checked {
+		@extend %tagActive;
+	}
+	&.--tag-selected {
+		@extend %tagActive;
+		padding-left: 26px;
+		background: url(#{$cdn}/assets/img/icon_assets_category_tag_close.svg#{$bgImgCache}) no-repeat 8px 50%;
+		background-size: 14px auto;
+	}
+}
+
+// タグ(チェックボックス、ラジオボタン)
+input[type="checkbox"], input[type="radio"] {
+	display: none;
+	&:checked + .c-tag {
+		@extend %tagActive;
+	}
+}
+
+// 絞り込み画面カテゴリ選択後用タグ
+.c-tag-selected {
+	@extend %tagBase;
+	@extend %tagActive;
+	padding-left: 26px;
+	background: url(#{$cdn}/assets/img/icon_assets_category_tag_close.svg#{$bgImgCache}) no-repeat 8px 50%;
+	background-size: 14px auto;
+}

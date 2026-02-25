@@ -1,0 +1,62 @@
+// ページリスト用ナビ用
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 旧ページネーション★今後廃止予定
+// 表示件数
+.c-pagelist-nav-result {
+	padding: 5px;
+	text-align: center;
+	border: solid var(--gray200);
+	border-width: 1px 0;
+}
+// ページネーション
+.c-pagelist-nav-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--bs16) 38px;
+	position: relative;
+}
+.c-pagination-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	flex: 0 0 30px;
+	aspect-ratio: 1 / 1;
+	font-size: 15px;
+	font-weight: var(--bold-700);
+	color: var(--gray400);
+	cursor: pointer;
+	&:hover,
+	&:active,
+	&:visited {
+		color: var(--gray400);
+	}
+	&.--current {
+		color: var(--gray800);
+		cursor: default;
+	}
+	&.--left {
+		font-size: 0;
+		color: transparent;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_left.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 7px 16px;
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+	}
+	&.--right {
+		font-size: 0;
+		color: transparent;
+		background: url(#{$cdn}/assets/img/icon_assets_arrow_right.svg#{$bgImgCache}) no-repeat center center;
+		background-size: 7px 16px;
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+	}
+}

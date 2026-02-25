@@ -1,0 +1,59 @@
+// 広告枠用スタイル
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// 広告枠エリア全体
+.c-ad {
+	background-color: var(--gray100);
+	padding-bottom: var(--wide);
+	display: grid;
+	gap: 12px;
+	& .c-card {
+		// スマホ以外（PC、タブレット）
+		@include notSp() {
+			flex: 0 0 174px;
+		}
+	}
+}
+// バナーを含むクリッカブル箇所全体
+.c-ad-banner{
+	display: grid;
+	gap: 12px;
+	cursor: pointer;
+	// バナーテキスト・還元率
+	&__info {
+		display: grid;
+		grid-template-columns: 1fr 106px;
+		padding: 0 var(--default);
+	}
+	// バナーテキスト
+	&__title {
+		font-weight: var(--bold-700);
+		font-size: var(--large-fontSize);
+		border-right: 1px solid var(--gray200);
+		padding-right: var(--narrow);
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		overflow: hidden;
+		word-break: break-all;
+		-webkit-line-clamp: 1;
+		// SP時のみ2行表示
+		@include onlySp() {
+			-webkit-line-clamp: 2;
+		}
+	}
+	& .c-point-card {
+		margin-left: auto;
+		padding-left: var(--narrow);
+	}
+	& .c-point-card__returnRate {
+		color: var(--gray800);
+	}
+}
+// 商品カードエリア
+.c-ad-cardContainer {
+	display: grid;
+	gap: var(--narrow);
+	grid-template-columns: repeat(2, 1fr);
+	padding: 0 var(--default);
+}

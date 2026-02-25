@@ -1,0 +1,38 @@
+// タブメニュー
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.c-navigation-global-tabs {
+	display: flex;
+	border-bottom: 2px solid var(--primary);
+	padding-top: 4px;
+	%trendGlobalTabs {
+		flex: 1;
+		font-size: var(--small-fontSize);
+		font-weight: var(--bold-700);
+		line-height: var(--narrow-lineHeight);
+		width: 100%;
+		border-radius: 4px 4px 0px 0px;
+		border-style: solid;
+		border-width: 1px 1px 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+	&__tab {
+		@extend %trendGlobalTabs;
+		margin-top: -2px;
+		padding: 8px 4px 6px;
+		border-color: var(--gray200);
+		background-color: #fff;
+		&.--current-tab {
+			@extend %trendGlobalTabs;
+			border-color: var(--primary);
+			background-color: var(--primary);
+			color: #fff;
+			padding: 10px 0 8px;
+			margin-top: -4px;
+		}
+	}
+}

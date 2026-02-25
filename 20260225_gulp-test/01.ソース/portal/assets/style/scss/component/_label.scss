@@ -1,0 +1,248 @@
+// ラベル用スタイル
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+%c-label-primary {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	background-color: var(--primary);
+	color: #fff;
+	font-weight: var(--bold-600);
+	font-size: var(--medium-fontSize);
+	cursor: pointer;
+	&:hover,&:active,&:visited {
+		color: #fff;
+	}
+}
+.c-label-primary-lg {
+	@extend %c-label-primary;
+	padding: 14px 24px;
+	border-radius: var(--radius-medium);
+}
+.c-label-primary-md {
+	@extend %c-label-primary;
+	padding: 8px 16px;
+	border-radius: var(--radius-medium);
+}
+.c-label-primary-sm {
+	@extend %c-label-primary;
+	padding: 4px 8px;
+	border-radius: 6px;
+}
+.c-label-primary-xsm {
+	display: inline-block;
+	color: #fff;
+	font-weight: var(--bold-700);
+	background-color: var(--primary);
+	padding: 0 3px;
+	border-radius: 2px;
+	font-size: var(--xsmall-fontSize);
+	text-align: center;
+	white-space: nowrap;
+	line-height: 18px;
+	@include lowSp() {
+		zoom: 0.9;
+	}
+}
+
+%c-label-secondary {
+	position: relative;
+	display: inline-block;
+	background-color: #fff;
+	white-space: nowrap;
+	text-align: center;
+	color:  var(--gray800);
+	border: 1px solid var(--gray400);
+	font-weight: var(--bold-600);
+	font-size: var(--medium-fontSize);
+}
+.c-label-secondary-lg {
+	@extend %c-label-secondary;
+	padding: 14px 24px;
+	border-radius: var(--radius-medium);
+}
+.c-label-secondary-md {
+	@extend %c-label-secondary;
+	padding: 8px 16px;
+	border-radius: var(--radius-medium);
+}
+.c-label-secondary-sm {
+	@extend %c-label-secondary;
+	padding: 4px 8px;
+	border-radius: 6px;
+}
+.c-label-secondary-xsm {
+	@extend %c-label-secondary;
+	padding: 4px 8px;
+	border-radius: 30px;
+}
+
+// アフィリエイトのステータス用ラベル
+// 未確定・否認
+.c-label-xsm {
+	width: 36px;
+	height: 18px;
+	// line-height: var(--narrow-lineHeight);
+	display: inline-block;
+	background-color: var(--gray100);
+	white-space: nowrap;
+	text-align: center;
+	color: var(--gray600);
+	font-size: var(--xsmall-fontSize);
+	padding: 2px 3px;
+	border-radius: 2px;
+}
+// 確定
+.c-label-xsm-confirmed {
+	width: 36px;
+	height: 18px;
+	line-height: var(--narrow-lineHeight);
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid var(--gray800);
+	white-space: nowrap;
+	text-align: center;
+	font-size: var(--xsmall-fontSize);
+	padding: 2px 3px;
+	border-radius: 2px;
+}
+
+// d払い対応ラベル用
+// アイコンのみ
+.c-icon-dpayment {
+	aspect-ratio: 1/1;
+	width: 24px;
+	height: 24px;
+}
+// アイコン+テキスト
+.c-label-dpayment {
+	font-weight: var(--bold-700);
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	height: 20px;
+    gap: 6px;
+	&:before {
+		content: "";
+		display: block;
+		width: 20px;
+		height: 20px;
+		flex: 0 0 20px;
+		aspect-ratio: 1 / 1;
+		background: url(#{$cdn}/assets/img/icon_assets_dpayment.svg#{$bgImgCache}) no-repeat center center;
+		background-size: contain;
+	}
+	// カード内表示サイズ調整
+	.c-card & {
+		font-size: var(--sm);
+		height: 18px;
+		&:before {
+			content: "";
+			height: 18px;
+			flex: 0 0 18px;
+		}
+	}
+}
+
+%labelBoderStyle {
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	font-weight: var(--bold-700);
+	padding: 2px 3px;
+	border-radius: 2px;
+	border: 1px solid var(--gray500);
+}
+.c-label-border-right-margin-xsm {
+	@extend %labelBoderStyle;
+	font-size: var(--xsmall-fontSize);
+	margin-right: 4px;
+}
+
+// style_v2から引っ越し※20240806
+// ラベル共通スタイル用プレースホルダー
+%labelStyle {
+	align-items: center;
+	width: min-content;
+	min-block-size: 18px;
+	font-weight: var(--bold-700);
+	padding: 2px 3px;
+	border-radius: var(--rc-mostNarrow);
+	font-size: var(--xsm);
+	white-space: nowrap;
+	line-height: calc(var(--xsm) / (var(--xsm) * 1.5));
+	@include lowSp() {
+		zoom: 0.9;
+	}
+}
+// カード内や商品詳細等で商品情報に付随する情報を表示するラベル
+.c-label-promotion {
+	@extend %labelStyle;
+	display: flex;
+	color: #fff;
+	background-color: var(--primary500);
+}
+
+// 商品名や説明文の頭に挿入されるラベル
+.c-label-info {
+	@extend %labelStyle;
+	display: inline-flex;
+	border: 1px solid var(--gray500);
+	margin-right: 4px;
+	background-color: #fff;
+}
+
+// 見出しの左横に表示する極小ラベル（汎用）
+%labelXsmStyle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: fit-content;
+	min-width: 36px;
+	height: 18px;
+	padding: 2px 3px;
+	font-size: var(--xsm);
+	white-space: nowrap;
+	text-align: center;
+	font-weight: normal;
+	border-radius: var(--rc-mostNarrow);
+	// c-heading-lv1配下の場合の位置調整
+	.c-heading-lv1 & {
+		transform: translateY(3px);
+	}
+}
+// 見出しの左横に表示する赤背景の極小ラベル
+.c-label-secondary200-xsm {
+	@extend %labelXsmStyle;
+	color: var(--Semantic-Primary_text-btn-tag-arrow-border);
+	background-color: var(--secondary200);	
+}
+// 見出しの左横に表示するグレー背景の極小ラベル
+.c-label-gray100-xsm {
+	@extend %labelXsmStyle;
+	background-color: var(--gray100);	
+}
+
+// ポイントアップ・セールアイコンを画像化した場合のスタイル※10pxの文字サイズのラベルを今後は画像に置きかえする事を想定
+// 今後のバリエーション展開を考えてMIxin化
+@mixin labelImgStyle($nameSuffix: null, $imageHeight: null) {
+	.c-label-img-#{$nameSuffix} {
+		img {
+			height: #{ $imageHeight} + px;
+			width: auto;
+			max-width: 100%;
+			object-fit: contain;
+		}
+	}
+}
+
+// c-label-primary-xsm相当
+@include labelImgStyle(xsm, 18);
+
+// c-label-img-xsm対策
+.c-card-item:has(.c-label-img-xsm) {
+    display: flex;
+    gap: var(--narrow);
+}

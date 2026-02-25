@@ -1,0 +1,10 @@
+## ページ専用CSS
+@charset "UTF-8";
+## ブラウザキャッシュをさせるために、Last-Modifiedをセット
+$res.setHeader('Last-Modified','Tue, 27 Jun 2017 17:10:30 GMT')
+
+## プロジェクトページ用キャッシュ
+#parse("$!{baseDirectory}/test/nby/gulp-test/define/define_cache_static_page.vm")
+
+## プロジェクトページ用CSS
+#parse("$!{baseDirectory}/test/nby/gulp-test/style/vm/index.vm")

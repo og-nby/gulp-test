@@ -1,0 +1,149 @@
+// dpm共通フッター
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+.l-footer {
+	background-color: #fff;
+	display: grid;
+	gap: 16px;
+	grid-template-rows: auto;
+	padding-bottom: var(--bs16);
+	// サポート系
+	&__surpport {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1px;
+		// リンク背景
+		li {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 12px;
+			gap: 4px;
+			background-color: var(--bg100);
+		}
+	}
+	// アカウント
+	&__account {
+		display: grid;
+		grid-template-columns: repeat(1, 195px);
+		justify-content: center;
+		gap: var(--bs8);
+	}
+	// SNS
+	&__sns {
+		align-items: center;
+		display: grid;
+		grid-template-columns: 41px 41px;
+		justify-content: space-between;
+		margin-inline: auto;
+		width: 150px;
+	}
+	// 規約系
+	&__terms {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--bs8);
+		margin-inline: auto;
+		max-width: calc(100% - 100px);
+	}
+	&__copy {
+		align-items: center;
+		color: var(--gray500);
+		font-size: var(--small-fontSize);
+		display: flex;
+		justify-content: center;
+	}
+}
+// サポートリンク新
+// クラス名、画像名で使用する文字列で配列を作成
+$footer-surpport-links: beginner, faq, notice, inquiry;
+// 配列からクラスを生成
+@each $footer-surpport-link in $footer-surpport-links {
+	.l-link-footer-surpport-#{$footer-surpport-link} {
+		background: url(#{$cdn}/assets/img/icon_assets_footer_#{$footer-surpport-link}.svg#{$bgImgCache}) no-repeat 0 1px;
+		background-size: 17px auto;	
+		display: inline-block;
+		font-size: var(--small-fontSize);
+		padding-left: 21px;
+	}
+}
+
+// SNSアイコン画像用
+.l-footer-snsIcon {
+    display: block;
+    overflow: hidden;
+    border-radius: 9px;
+}
+
+// サポートリンク旧※最終的に削除予定
+.l-list-guide-footer {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1px;
+}
+.l-link-guide-footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	gap: 4px;
+	background-color: var(--bg100);
+	&__icon {
+		flex: 0 0 16px;
+	}
+	&__text {
+		font-size: var(--small-fontSize);
+	}
+}
+
+.l-button-dac-logo {
+	display: inline-block;
+	width: 73px;
+	height: auto;
+	aspect-ratio: 73 / 15.87;
+	transform: translateY(-2px);
+	margin: 0 4px;
+}
+
+.l-text-link-footer {
+	font-size: var(--small-fontSize);
+	display: inline-block;
+	white-space: nowrap;
+}
+
+// ページトップへ戻る
+.l-footer-button-backtotop {
+	bottom: 10px;
+	height: 45px;
+	position: fixed;
+	right: 10px;
+	width: 45px;
+	z-index: 200;
+	filter: drop-shadow(0px 2px 3px rgba(1, 1, 1, 0.40));
+	&__button {
+		background-color: #fff;
+		border-radius: 50%;
+		display: block;
+		height: 100%;
+		position: relative;
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		width: 100%;
+		border: 1px solid var(--primary500);
+		&::after {
+			border-right: 2px solid var(--primary500);
+			border-top: 2px solid var(--primary500);
+			content: "";
+			height: 12px;
+			left: 16px;
+			position: absolute;
+			top: 18px;
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+			width: 12px
+		}
+	}
+}

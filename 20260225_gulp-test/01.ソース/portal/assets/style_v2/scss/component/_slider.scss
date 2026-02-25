@@ -1,0 +1,38 @@
+// スライダー用
+@use "../setting/variables" as *;
+@use "../setting/mixins" as *;
+
+
+// スライダー枠
+.c-slider {
+	background-color: #fff;
+	padding-left: var(--bs16);
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+	// スクロールバーと商品リンクが干渉しないよう隙間を作る
+	padding-bottom: var(--bs8);
+	// スクロールバーのデザイン
+	&::-webkit-scrollbar {
+		background-color:#fff;
+		height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--gray200);
+		border-radius: 5px
+	}
+	// スライダー本体
+	&__inner {
+		display: flex;
+		gap: var(--bs8);
+		&::after {
+			content: "";
+			display: block;
+			width: 100%;
+			height: 100%;
+			flex: 0 0 8px;
+		}
+	}
+}

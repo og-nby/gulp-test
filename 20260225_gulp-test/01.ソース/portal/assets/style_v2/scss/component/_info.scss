@@ -1,0 +1,17 @@
+// 情報表示エリア用
+@use "setting/variables" as *;
+@use "setting/mixins" as *;
+
+// デフォルトデザイン(ボーダーカラー：gray200 / パディング：16px)
+.c-info {
+	@include infoStyle();
+	&__content {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		min-height: 134px;
+		* {
+			width: 100%;
+		}
+	}
+}

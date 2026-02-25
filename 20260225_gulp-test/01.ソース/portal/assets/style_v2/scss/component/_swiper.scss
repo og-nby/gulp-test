@@ -1,0 +1,29 @@
+// Swiperカスタマイズ
+.swiper-container {
+	width: 100%;
+	height: auto!important;
+}
+
+// ページネーション
+.c-swiper-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	gap: var(--bs16);	
+}
+
+// Swiperカスタマイズ start ----------------
+.swiper-pagination-bullet {
+	width: 6px;
+	height: 6px;
+	background: var(--gray200);
+	opacity: 1;
+}
+.swiper-pagination-bullet-active {
+	background: var(--primary500)
+}
+// デフォルトシステムの打消し
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+	margin: 0;
+}
